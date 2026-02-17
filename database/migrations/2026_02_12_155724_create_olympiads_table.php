@@ -15,18 +15,19 @@ return new class extends Migration {
 
             $table->string('title');
             $table->string('description');
-            $table->
+            $table->date('start_date');
+            $table->date('end_date');
 
             $table
                 ->foreignId('olympiad_status_id')
                 ->constrained()
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
+                ->cascadeOnUpdate()
+                ->cascadeOnDelete();
             $table
                 ->foreignId('olympiad_direction_id')
                 ->constrained()
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
+                ->cascadeOnUpdate()
+                ->cascadeOnDelete();
 
             $table->timestamps();
         });

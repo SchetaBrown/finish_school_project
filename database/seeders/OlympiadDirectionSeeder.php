@@ -2,16 +2,18 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\OlympiadDirection;
 use Illuminate\Database\Seeder;
 
 class OlympiadDirectionSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
+    private array $directions = ['программирование', 'математика', 'иностранный язык'];
     public function run(): void
     {
-        //
+        foreach ($this->directions as $direction) {
+            OlympiadDirection::create([
+                'title' => $direction
+            ]);
+        }
     }
 }

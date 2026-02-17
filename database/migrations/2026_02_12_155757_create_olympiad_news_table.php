@@ -19,13 +19,13 @@ return new class extends Migration {
             $table
                 ->foreignId('user_id')
                 ->constrained()
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
+                ->cascadeOnUpdate()
+                ->cascadeOnDelete();
             $table
-                ->foreignId('event_id')
+                ->foreignId('olympiad_id')
                 ->constrained()
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
+                ->cascadeOnUpdate()
+                ->cascadeOnDelete();
 
             $table->timestamps();
         });

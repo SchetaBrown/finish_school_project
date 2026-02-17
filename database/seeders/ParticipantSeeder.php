@@ -2,14 +2,15 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class ParticipantSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
+    private array $participants = [
+        [
+            ''
+        ]
+    ];
     public function run(): void
     {
         //

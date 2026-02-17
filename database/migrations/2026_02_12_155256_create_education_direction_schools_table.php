@@ -10,17 +10,18 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('user_roles', function (Blueprint $table) {
+        Schema::create('education_direction_schools', function (Blueprint $table) {
             $table
-                ->foreignId('user_id')
+                ->foreignId('education_direction_id')
                 ->constrained()
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
+                ->cascadeOnUpdate()
+                ->cascadeOnDelete();
             $table
-                ->foreignId('role_id')
+                ->foreignId('education_school_id')
                 ->constrained()
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
+                ->cascadeOnUpdate()
+                ->cascadeOnDelete();
+            $table->timestamps();
         });
     }
 
@@ -29,6 +30,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('user_roles');
+        Schema::dropIfExists('education_direction_education_schools');
     }
 };

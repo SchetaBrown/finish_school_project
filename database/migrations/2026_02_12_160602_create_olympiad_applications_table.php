@@ -13,16 +13,16 @@ return new class extends Migration {
         Schema::create('olympiad_applications', function (Blueprint $table) {
             $table->id();
 
-            $table->decimal('score', 8, 2)->default(0);
+            $table->float('score')->default(0);
             $table->integer('place')->nullable();
 
             $table
-                ->foreignId('user_id')
+                ->foreignId('participant_id')
                 ->constrained()
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
             $table
-                ->foreignId('event_id')
+                ->foreignId('olympiad_id')
                 ->constrained()
                 ->onDelete('cascade')
                 ->onUpdate('cascade');

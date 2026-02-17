@@ -2,14 +2,11 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class EducationDirectionSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
+    private array $directions = ['информационные системы', ''];
     public function run(): void
     {
         //
