@@ -1,8 +1,8 @@
-import "../css/main.css";
+import "../css/app.css";
 import { createApp, h } from "vue";
-import { createInertiaApp, Link } from "@inertiajs/vue3";
+import { createInertiaApp, Link } from "@inertiajs/inertia-vue3";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
-import { ZiggyVue } from "../../vendor/tightenco/ziggy/dist/index.js";
+import { ZiggyVue } from "ziggy-js";
 import { InertiaProgress } from "@inertiajs/progress";
 
 const appName = import.meta.env.VITE_APP_NAME || "EventHub";

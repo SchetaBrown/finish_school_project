@@ -14,9 +14,11 @@ return new class extends Migration {
             $table->id();
 
             $table->string('title');
-            $table->string('description');
+            $table->text('description');
             $table->date('start_date');
             $table->date('end_date');
+            $table->integer('player_count');
+            $table->integer('player_limit');
 
             $table
                 ->foreignId('olympiad_status_id')

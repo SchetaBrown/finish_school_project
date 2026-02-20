@@ -71,6 +71,6 @@ class User extends Authenticatable
 
     public function news()
     {
-        return $this->hasMany(Olympiad::class);
+        return $this->hasMany(OlympiadNew::class);
     }
 }

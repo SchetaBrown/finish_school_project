@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Resources\Olympiad;
+namespace App\Http\Resources\User;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class OlympiadApplicationResource extends JsonResource
+class RoleResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,7 +15,8 @@ class OlympiadApplicationResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id'
+            'id' => $this->when($request->routeIs('admin.*'), $this->id),
+            'title' => $this->title,
         ];
     }
 }

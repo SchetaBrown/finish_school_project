@@ -22,12 +22,12 @@ class Olympiad extends Model
         return $this->belongsToMany(OlympiadType::class, 'olympiad_olympiad_types', 'olympiad_id', 'olympiad_type_id');
     }
 
-    public function status()
+    public function olympiadStatus()
     {
         return $this->belongsTo(OlympiadStatus::class);
     }
 
-    public function direction()
+    public function olympiadDirection()
     {
         return $this->belongsTo(OlympiadDirection::class);
     }

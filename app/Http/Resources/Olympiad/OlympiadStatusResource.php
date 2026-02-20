@@ -14,6 +14,8 @@ class OlympiadStatusResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            $this->title,
+        ];
     }
 }
