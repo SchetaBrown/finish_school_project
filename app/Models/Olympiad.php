@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class Olympiad extends Model
 {
@@ -12,6 +14,9 @@ class Olympiad extends Model
         'description',
         'start_date',
         'end_date',
+        'player_count',
+        'player_limit',
+        'slug',
         'olympiad_status_id',
         'olympiad_direction_id',
     ];
@@ -40,5 +45,26 @@ class Olympiad extends Model
     public function news()
     {
         return $this->hasMany(OlympiadNew::class);
+    }
+
+    // Мутаторы и аксессоры
+    protected function startDate(): Attribute
+    {
+        return Attribute::make(
+            get: function ($value) {
+                $carbon = new Carbon($value);
+                return $carbon->format('d.m.Y');
+            }
+        );
+    }
+
+    protected function endDate(): Attribute
+    {
+        return Attribute::make(
+            get: function ($value) {
+                $carbon = new Carbon($value);
+                return $carbon->format('d.m.Y');
+            }
+        );
     }
 }

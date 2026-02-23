@@ -22,6 +22,7 @@ class OlympiadResource extends JsonResource
             'end_date' => $this->end_date,
             'player_count' => $this->player_count,
             'player_limit' => $this->player_limit,
+            'slug' => $this->slug,
             'status' => $this->whenLoaded('olympiadStatus', fn() => $this->olympiadStatus?->title),
             'direction' => $this->whenLoaded('olympiadDirection', fn() => $this->olympiadDirection?->title),
             'types' => $this->whenLoaded('types', function () {

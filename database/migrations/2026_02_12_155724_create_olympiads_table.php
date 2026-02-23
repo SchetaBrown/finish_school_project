@@ -19,6 +19,7 @@ return new class extends Migration {
             $table->date('end_date');
             $table->integer('player_count');
             $table->integer('player_limit');
+            $table->string('slug');
 
             $table
                 ->foreignId('olympiad_status_id')
@@ -30,6 +31,8 @@ return new class extends Migration {
                 ->constrained()
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
+
+            $table->index(['slug']);
 
             $table->timestamps();
         });

@@ -1,20 +1,18 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Repositories\Olympiad;
 
-use App\Http\Resources\Olympiad\OlympiadDirectionResource;
 use App\Http\Resources\Olympiad\OlympiadResource;
-use App\Http\Resources\Olympiad\OlympiadStatusResource;
-use App\Http\Resources\Olympiad\OlympiadTypeResource;
 use App\Models\Olympiad;
 use App\Models\OlympiadDirection;
 use App\Models\OlympiadStatus;
 use App\Models\OlympiadType;
+use App\Repositories\BaseRepository;
 use App\Repositories\Interfaces\OlympiadRepositoryInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
-class OlympiadRepository implements OlympiadRepositoryInterface
+class OlympiadRepository extends BaseRepository implements OlympiadRepositoryInterface
 {
     // Получение всех олимпиад
     public function getAllOlympiads(Request $request, $paginate = 10)
@@ -23,7 +21,7 @@ class OlympiadRepository implements OlympiadRepositoryInterface
 
         $filterRequest = $this->filterOlympiadRequest($request, $query);
 
-        $olympiads = $filterRequest->paginate($paginate)->withQueryString();
+        $olympiads = $filterRequest->paginate(parent::PER_PAGE)->withQueryString();
 
         return OlympiadResource::collection($olympiads);
     }
@@ -31,19 +29,19 @@ class OlympiadRepository implements OlympiadRepositoryInterface
     // Получение всех статустов олимпиад
     public function getAllOlympiadStatuses()
     {
-        return OlympiadStatusResource::collection(OlympiadStatus::get());
+        return OlympiadStatus::get();
     }
 
     // Получение всех типов учатстия олимпиад
     public function getAllOlympiadTypes()
     {
-        return OlympiadTypeResource::collection(OlympiadType::get());
+        return OlympiadType::get();
     }
 
     // Получение всех направлений олимпиад
     public function getAllOlympiadDirections()
     {
-        return OlympiadDirectionResource::collection(OlympiadDirection::get());
+        return OlympiadDirection::get();
     }
 
     // Получение конкретных данных об олимпиаде
@@ -61,22 +59,19 @@ class OlympiadRepository implements OlympiadRepositoryInterface
     // Фильтрация олимпиад по запросу пользователя
     private function filterOlympiadRequest(Request $request, Builder $query)
     {
-        $search_parameters = [
-            'title' => 'title',
-            'direction' => 'olympiad_direction_id',
-            'status' => 'olympiad_status_id',
-        ];
-
-        foreach ($search_parameters as $key => $value) {
-            if ($request->has($key) && $request->$key) {
-                if ($key == 'title') {
-                    $query->where($value, 'LIKE', "%{$request->$key}%");
-                } else {
-                    $query->where($value, $request->$key);
-                }
-            }
-        }
-
-        return $query;
+        return $query
+            ->when($request->filled('title'), function ($q) use ($request) {
+                $q->where('title', 'LIKE', "%{$request->title}%");
+            })
+            ->when($request->filled('direction'), function ($q) use ($request) {
+                $q->whereHas('olympiadDirection', function ($subQ) use ($request) {
+                    $subQ->where('slug', $request->direction);
+                });
+            })
+            ->when($request->filled('status'), function ($q) use ($request) {
+                $q->whereHas('olympiadStatus', function ($subQ) use ($request) {
+                    $subQ->where('slug', $request->status);
+                });
+            });
     }
 }

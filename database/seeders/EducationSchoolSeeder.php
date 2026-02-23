@@ -14,8 +14,10 @@ class EducationSchoolSeeder extends Seeder
             'inn' => '3808015469',
             'phone' => '+7(999) 888-77-66',
             'email' => 'iat@iat.com',
+            'director_surname' => 'Userovs',
+            'director_name' => 'User',
+            'director_patronymic' => 'Userovich',
             'city_id' => 1,
-            'director_id' => 2,
         ],
     ];
     public function run(): void

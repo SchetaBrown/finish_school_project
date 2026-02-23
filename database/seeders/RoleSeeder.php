@@ -7,7 +7,7 @@ use Illuminate\Database\Seeder;
 
 class RoleSeeder extends Seeder
 {
-    private array $roles = ['участник', 'руководитель', 'сопровождающий', 'ответственный', 'администратор', 'директор учебного заведения'];
+    private array $roles = ['участник', 'руководитель', 'сопровождающий', 'ответственный', 'администратор'];
     public function run(): void
     {
         foreach ($this->roles as $role) {

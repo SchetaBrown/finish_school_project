@@ -1,6 +1,12 @@
 <script setup>
+import AppBaseLayout from "../layouts/AppBaseLayout.vue";
+import OlympiadSection from "../components/ui/sections/olympiad/OlympiadSection.vue";
+import FilterSection from "../components/ui/sections/filter/IndexPageFilterSection.vue";
 const props = defineProps(["olympiads"]);
-
-console.log(props.olympiads);
 </script>
-<template></template>
+<template>
+  <AppBaseLayout>
+    <FilterSection></FilterSection>
+    <OlympiadSection></OlympiadSection>
+  </AppBaseLayout>
+</template>

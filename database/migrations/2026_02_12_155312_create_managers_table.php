@@ -20,13 +20,11 @@ return new class extends Migration {
                 ->constrained()
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
-            ;
             $table
                 ->foreignId('education_school_id')
                 ->constrained()
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
-            ;
 
             $table->timestamps();
         });

@@ -9,6 +9,7 @@ class OlympiadStatus extends Model
     // Поля
     protected $fillable = [
         'title',
+        'slug',
     ];
 
     // Связи

@@ -13,8 +13,10 @@ class EducationSchool extends Model
         'inn',
         'phone',
         'email',
+        'director_surname',
+        'director_name',
+        'director_patronymic',
         'city_id',
-        'director_id',
     ];
 
     // Связи
@@ -31,11 +33,6 @@ class EducationSchool extends Model
     public function managers()
     {
         return $this->hasMany(Manager::class);
-    }
-
-    public function director()
-    {
-        return $this->belongsTo(User::class, 'director_id');
     }
 
     public function city()

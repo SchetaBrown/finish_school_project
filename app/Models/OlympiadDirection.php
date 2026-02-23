@@ -8,11 +8,13 @@ class OlympiadDirection extends Model
 {
     // Поля
     protected $fillable = [
-        'title'
+        'title',
+        'slug',
     ];
 
     // Связи
-    public function olympiads() {
+    public function olympiads()
+    {
         return $this->hasMany(Olympiad::class);
     }
 }
