@@ -10,5 +10,5 @@ interface OlympiadRepositoryInterface
     public function getAllOlympiadStatuses();
     public function getAllOlympiadTypes();
     public function getAllOlympiadDirections();
-    public function getOlympiadById($id);
+    public function getOlympiadBySlug($slug);
 }

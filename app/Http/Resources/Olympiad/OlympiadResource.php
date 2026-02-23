@@ -23,8 +23,8 @@ class OlympiadResource extends JsonResource
             'player_count' => $this->player_count,
             'player_limit' => $this->player_limit,
             'slug' => $this->slug,
-            'status' => $this->whenLoaded('olympiadStatus', fn() => $this->olympiadStatus?->title),
-            'direction' => $this->whenLoaded('olympiadDirection', fn() => $this->olympiadDirection?->title),
+            'status' => $this->whenLoaded('olympiadStatus', fn() => mb_ucfirst($this->olympiadStatus?->title)),
+            'direction' => $this->whenLoaded('olympiadDirection', fn() => mb_ucfirst($this->olympiadDirection?->title)),
             'types' => $this->whenLoaded('types', function () {
                 return $this->types->pluck('title')->toArray();
             }),

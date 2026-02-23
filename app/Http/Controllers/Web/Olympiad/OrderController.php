@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Web\Olympiad;
 
 use App\Http\Controllers\Controller;
 
-class OrderController extends Controller
+class OlympiadOrderController extends Controller
 {
     public function create()
     {

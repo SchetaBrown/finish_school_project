@@ -5,7 +5,7 @@ const IS_AUTH = false;
 </script>
 <template>
   <header
-    class="flex items-center justify-center bg-white h-20 w-full border-b border-(--gray-color) mb-20"
+    class="flex items-center justify-center bg-white h-20 w-full border-b border-(--gray-color) mb-20 px-4 sm:px-6 lg:px-8"
   >
     <div class="flex items-center justify-between max-w-360 w-full mx-auto">
       <Logotype></Logotype>

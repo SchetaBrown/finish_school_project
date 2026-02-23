@@ -19,19 +19,16 @@ class OlympiadController extends Controller
 
     public function index(Request $request)
     {
-        return response()->json($this->olympiadRepository->getAllOlympiads($request, 10));
-
-        return Inertia::render('Index', [
-            'olympiads' => $this->olympiadRepository->getAllOlympiads($request, 10),
-        ]);
+        return Inertia::render(
+            'Index',
+            ['data' => $this->olympiadRepository->getAllOlympiads($request, 10)],
+        );
     }
 
-    public function show(Olympiad $olympiad)
+    public function show($slug)
     {
-        return response()->json($this->olympiadRepository->getOlympiadById($olympiad->id));
-
         return Inertia::render('olympiad/Show', [
-            'olympiad' => $this->olympiadRepository->getOlympiadById($olympiad->id),
+            'olympiad' => $this->olympiadRepository->getOlympiadBySlug($slug),
         ]);
     }
 }

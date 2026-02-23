@@ -23,7 +23,10 @@ class OlympiadRepository extends BaseRepository implements OlympiadRepositoryInt
 
         $olympiads = $filterRequest->paginate(parent::PER_PAGE)->withQueryString();
 
-        return OlympiadResource::collection($olympiads);
+        return [
+            'olympiads' => OlympiadResource::collection($olympiads),
+            'olympiad_count' => $this->getOlympiadCount($olympiads)
+        ];
     }
 
     // Получение всех статустов олимпиад
@@ -45,9 +48,9 @@ class OlympiadRepository extends BaseRepository implements OlympiadRepositoryInt
     }
 
     // Получение конкретных данных об олимпиаде
-    public function getOlympiadById($id)
+    public function getOlympiadBySlug($slug)
     {
-        return new OlympiadResource($this->getOlympiadWithCalls()->findOrFail($id));
+        return new OlympiadResource($this->getOlympiadWithCalls()->where('slug', $slug)->first());
     }
 
     // Получить Query-запрос для олимпиад с загруженными связями
@@ -73,5 +76,10 @@ class OlympiadRepository extends BaseRepository implements OlympiadRepositoryInt
                     $subQ->where('slug', $request->status);
                 });
             });
+    }
+
+    private function getOlympiadCount($olympiads)
+    {
+        return $olympiads->count();
     }
 }

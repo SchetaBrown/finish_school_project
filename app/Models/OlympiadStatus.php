@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class OlympiadStatus extends Model
 {
@@ -13,7 +14,8 @@ class OlympiadStatus extends Model
     ];
 
     // Связи
-    public function olympiads() {
+    public function olympiads()
+    {
         return $this->hasMany(Olympiad::class);
     }
 }

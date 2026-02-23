@@ -7,7 +7,8 @@ use App\Http\Controllers\Web\Admin\User\AdminUserController;
 use App\Http\Controllers\Web\Auth\LoginController;
 use App\Http\Controllers\Web\Auth\RegisterController;
 use App\Http\Controllers\Web\Olympiad\OlympiadController;
-use App\Http\Controllers\Web\Olympiad\OrderController;
+use App\Http\Controllers\Web\Olympiad\OlympiadOrderController;
+use App\Http\Controllers\Web\Olympiad\OlympiadResultController;
 use App\Http\Controllers\Web\Profile\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -17,14 +18,19 @@ Route::get('/', function () {
 });
 
 // Олимпиады
-Route::controller(OlympiadController::class)->prefix('/olympiads')->name('olympiad.')->group(function () {
-    Route::get('/', 'index')->name('index'); // Главная страница
+Route::prefix('/olympiads')->name('olympiad.')->group(function () {
+    Route::get('/', [OlympiadController::class, 'index'])->name('index'); // Главная страница
 
-    Route::prefix('/{olympiad}')->group(function () {
-        Route::get('/', 'show')->name('show'); // Просмотр конкретной олимпиады
-        Route::middleware(['is_auth'])->controller(OrderController::class)->prefix('/order')->name('order.')->group(function () {
+    Route::prefix('/{slug}')->group(function () {
+        Route::get('/', [OlympiadController::class, 'show'])->name('show'); // Просмотр конкретной олимпиады
+        Route::middleware(['is_auth'])->controller(OlympiadOrderController::class)->prefix('/order')->name('order.')->group(function () {
             Route::get('/create', 'create')->name('create'); // Страница для записи на олимпиаду
             Route::post('/store', 'store')->name('store'); // Маршрут для записи на олимпиаду
+        });
+
+        // Просмотр результатов олимпиады
+        Route::controller(OlympiadResultController::class)->prefix('/results')->name('result.')->group(function () {
+            Route::get('/', 'index')->name('index');
         });
     });
 });

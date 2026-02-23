@@ -4,7 +4,7 @@ import TheFooter from "../components/ui/partials/TheFooter.vue";
 </script>
 <template>
   <TheHeader></TheHeader>
-  <main class="">
+  <main class="mx-auto max-w-360 w-full px-4 sm:px-6 lg:px-8">
     <slot></slot>
   </main>
   <TheFooter></TheFooter>

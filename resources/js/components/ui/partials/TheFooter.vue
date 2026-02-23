@@ -3,7 +3,7 @@ import Logotype from "./Logotype.vue";
 </script>
 <template>
   <footer
-    class="flex items-center justify-between border-t border-(--gray-color) mt-20 bg-white h-20"
+    class="flex items-center justify-between border-t border-(--gray-color) mt-20 bg-white h-20 px-4 sm:px-6 lg:px-8"
   >
     <div class="flex items-center justify-between max-w-360 w-full mx-auto">
       <Logotype></Logotype>
