@@ -1,7 +1,7 @@
 <script setup>
 const PROPS = defineProps(["olympiad"]);
 import OlympiadProgress from "./components/OlympiadProgress.vue";
-import OlympiadTitle from "./components/OlympiadTitle.vue";
+import OlympiadTitle from "@titles/OlympiadTitle.vue";
 import OlympiadDescription from "./components/OlympiadDescription.vue";
 import OlympiadStatus from "./components/OlympiadStatus.vue";
 import OlympiadLink from "./components/OlympiadLink.vue";

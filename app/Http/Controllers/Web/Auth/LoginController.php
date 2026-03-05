@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -14,7 +15,11 @@ class LoginController extends Controller
 
     public function store(LoginRequest $request)
     {
-
+        if (Auth::attempt($request->validated())) {
+            return redirect()->route('index');
+        } else {
+            return redirect()->back()->with('success', 'Произошла ошибка');
+        }
     }
 
     public function destroy()

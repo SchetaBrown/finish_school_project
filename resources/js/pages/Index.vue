@@ -1,7 +1,7 @@
 <script setup>
-import AppBaseLayout from "../layouts/AppBaseLayout.vue";
-import OlympiadSection from "../components/ui/sections/olympiad/OlympiadSection.vue";
-import FilterSection from "../components/ui/sections/filter/IndexPageFilterSection.vue";
+import AppBaseLayout from "@layouts/AppBaseLayout.vue";
+import OlympiadSection from "@sections/OlympiadSection.vue";
+import FilterSection from "@sections/filter/IndexPageFilterSection.vue";
 
 const PROPS = defineProps([
   "olympiads",

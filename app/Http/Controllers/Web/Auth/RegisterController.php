@@ -3,7 +3,8 @@
 namespace App\Http\Controllers\Web\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Auth\RegisterRequest;
+use App\Http\Requests\Auth\StoreManagerRequest;
+use App\Http\Requests\Auth\StoreParticipantRequest;
 
 class RegisterController extends Controller
 {
@@ -12,7 +13,12 @@ class RegisterController extends Controller
         return inertia('auth/Register');
     }
 
-    public function store(RegisterRequest $request)
+    public function storeManagar(StoreManagerRequest $request)
+    {
+
+    }
+
+    public function storeParticipant(StoreParticipantRequest $request)
     {
 
     }

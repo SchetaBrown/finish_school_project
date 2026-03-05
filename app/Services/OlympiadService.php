@@ -6,7 +6,7 @@ use App\Services\Interfaces\OlympiadServiceInterface;
 
 class OlympiadService implements OlympiadServiceInterface
 {
-    public function createOlympiadOrder()
+    public function createOlympiadOrder(array $data, int $userId)
     {
 
     }

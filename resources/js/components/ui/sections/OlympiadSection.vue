@@ -1,7 +1,7 @@
 <script setup>
 const PROPS = defineProps(["olympiads"]);
 
-import OlympiadBlock from "../../blocks/olympiad/OlympiadBlock.vue";
+import OlympiadBlock from "../blocks/olympiad/OlympiadBlock.vue";
 </script>
 <template>
   <section

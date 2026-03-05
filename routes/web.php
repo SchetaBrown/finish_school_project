@@ -12,7 +12,7 @@ use App\Http\Controllers\Web\Olympiad\OlympiadResultController;
 use App\Http\Controllers\Web\Profile\ProfileController;
 use Illuminate\Support\Facades\Route;
 
-// Главная страница с редиректом
+// Главная страница с редиректом на маршрут олимпиад
 Route::get('/', function () {
     return redirect()->route('olympiad.index');
 });
@@ -38,7 +38,8 @@ Route::prefix('/olympiads')->name('olympiad.')->group(function () {
 // Регистрация
 Route::controller(RegisterController::class)->prefix('/register')->name('register.')->group(function () {
     Route::get('/', 'create')->name('create'); // Страница для регистрации
-    Route::post('/store', 'store')->name('store'); // Маршрут для регистрации
+    Route::post('/store-manager', 'storeManager')->name('storeManager'); // Маршрут для регистрации менеджера
+    Route::post('/store-participant', 'storeParticipant')->name('storeParticipant'); // Маршрут для регистрации участника
 });
 
 // Аутентификация, Авторизация
