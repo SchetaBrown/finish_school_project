@@ -25,13 +25,10 @@ const PROGRESS_BAR_WIDTH = computed(() => {
       >{{ player_count }}/{{ player_limit }}</span
     >
   </div>
-  <div class="w-full bg-gray-100 h-1.5 rounded-full mb-4">
+  <div class="w-full bg-gray-100 rounded-full mb-4">
     <div
-      :class="
-        status === 'Завершено'
-          ? 'bg-gray-400 h-1.5 rounded-full'
-          : 'bg-indigo-600 h-1.5 rounded-full'
-      "
+      class="h-1.5 rounded-full"
+      :class="status === 'Завершено' ? 'bg-gray-400' : 'bg-indigo-600'"
       :style="PROGRESS_BAR_WIDTH"
     ></div>
   </div>

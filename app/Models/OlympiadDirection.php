@@ -12,6 +12,13 @@ class OlympiadDirection extends Model
         'slug',
     ];
 
+    // Скрытые поля
+    protected $hidden = [
+        'id',
+        'created_at',
+        'updated_at',
+    ];
+
     // Связи
     public function olympiads()
     {

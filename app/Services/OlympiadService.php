@@ -6,5 +6,8 @@ use App\Services\Interfaces\OlympiadServiceInterface;
 
 class OlympiadService implements OlympiadServiceInterface
 {
+    public function createOlympiadOrder()
+    {
 
+    }
 }

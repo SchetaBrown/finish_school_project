@@ -2,33 +2,29 @@
 
 namespace App\Http\Controllers\Web\Olympiad;
 
+use App\Action\Olympiad\GetOlympiadsIndexDataAction;
 use App\Http\Controllers\Controller;
 use App\Models\Olympiad;
-use App\Repositories\Interfaces\OlympiadRepositoryInterface;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class OlympiadController extends Controller
 {
-    private OlympiadRepositoryInterface $olympiadRepository;
-
-    public function __construct(OlympiadRepositoryInterface $olympiadRepository)
-    {
-        $this->olympiadRepository = $olympiadRepository;
-    }
-
-    public function index(Request $request)
+    public function index(GetOlympiadsIndexDataAction $action, Request $request)
     {
         return Inertia::render(
             'Index',
-            ['data' => $this->olympiadRepository->getAllOlympiads($request, 10)],
+            $action->execute(request: $request)
         );
     }
 
-    public function show($slug)
+    public function show(string $slug)
     {
-        return Inertia::render('olympiad/Show', [
-            'olympiad' => $this->olympiadRepository->getOlympiadBySlug($slug),
-        ]);
+        return Inertia::render(
+            'olympiad/Show',
+            [
+                'olympiad' => Olympiad::whereSlug($slug)->first(),
+            ]
+        );
     }
 }

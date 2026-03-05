@@ -1,7 +1,12 @@
 <script setup>
 const PROPS = defineProps(["slug", "status"]);
 
-const OLYMPIAD_IS_FINISHED = PROPS.status.toLowerCase() === "завершено";
+const STATUS = PROPS.status;
+
+const OLYMPIAD_IS_FINISHED =
+  typeof STATUS === "string"
+    ? PROPS.status.toLowerCase() === "завершено"
+    : STATUS;
 </script>
 <template>
   <div class="flex items-center justify-end">

@@ -1,3 +1,5 @@
+
+
 <template>
   <Link :href="route('olympiad.index')" class="flex items-center gap-1.25">
     <div class="flex items-center justify-center size-10 rounded-lg bg-indigo-600">

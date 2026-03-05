@@ -14,12 +14,12 @@ return new class extends Migration {
             $table->id();
 
             $table->string('title');
+            $table->string('slug')->unique();
             $table->text('description');
             $table->date('start_date');
             $table->date('end_date');
             $table->integer('player_count');
             $table->integer('player_limit');
-            $table->string('slug');
 
             $table
                 ->foreignId('olympiad_status_id')
@@ -32,7 +32,7 @@ return new class extends Migration {
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
 
-            $table->index(['slug']);
+            $table->index(['slug', 'title']);
 
             $table->timestamps();
         });

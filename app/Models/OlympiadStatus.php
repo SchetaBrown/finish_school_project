@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class OlympiadStatus extends Model
 {
@@ -13,9 +13,21 @@ class OlympiadStatus extends Model
         'slug',
     ];
 
+    // Скрытые поля
+    protected $hidden = [
+        'id',
+        'created_at',
+        'updated_at',
+    ];
+
     // Связи
     public function olympiads()
     {
         return $this->hasMany(Olympiad::class);
+    }
+
+    public function scopeWithoutDraft(Builder $query, bool $condition)
+    {
+        return $condition ? $query : $query->where('title', '!=', 'черновик');
     }
 }
