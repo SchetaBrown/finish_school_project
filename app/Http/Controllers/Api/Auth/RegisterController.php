@@ -7,9 +7,10 @@ use App\Models\EducationDirection;
 
 class RegisterController extends Controller
 {
-    public function getEducationSchoolById($id)
+    public function getEducationSchoolByTitle($title)
     {
-        $directions = EducationDirection::with(['schools'])->where('education_school_id', $id)->get();
+        $directions = EducationDirection::with(['schools'])->where('education_schools.title', $title)->get();
+
         return response()->json($directions);
     }
 }

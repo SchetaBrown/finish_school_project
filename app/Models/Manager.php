@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 
 class Manager extends Model
 {
     // Поля
     protected $fillable = [
-        'phone_number',
+        'phone',
         'user_id',
         'education_school_id',
     ];
@@ -22,5 +23,23 @@ class Manager extends Model
     public function school()
     {
         return $this->belongsTo(EducationSchool::class);
+    }
+
+    // Мутаторы/аксессоры
+
+    protected function phone(): Attribute
+    {
+        return Attribute::make(
+            get: fn(string $value) => $this->formatPhoneForDisplay($value),
+            set: fn(string $value) => preg_replace('/[^0-9]/', '', $value)
+        );
+    }
+
+    private function formatPhoneForDisplay(string $phone): string
+    {
+        return '+7 (' . substr($phone, 1, 3) . ') '
+            . substr($phone, 4, 3) . '-'
+            . substr($phone, 7, 2) . '-'
+            . substr($phone, 9, 2);
     }
 }

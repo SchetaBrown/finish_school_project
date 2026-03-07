@@ -2,9 +2,7 @@
 
 namespace App\Http\Requests\Auth;
 
-use Illuminate\Foundation\Http\FormRequest;
-
-class StoreParticipantRequest extends FormRequest
+class StoreParticipantRequest extends BaseUserRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -13,12 +11,10 @@ class StoreParticipantRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'surname' => ['required', 'string'],
-            'name' => ['required', 'string'],
-            'patronymic' => ['required', 'string'],
-            'email' => ['required', 'string', 'unique:users,email'],
-            'password' => ['required', 'string', 'min:8'],
-        ];
+        return array_merge($this->baseRules(), [
+            'birth_date' => ['required', 'date'],
+            'cours_number' => ['required', 'integer', 'min:1', 'max:6'],
+            'education_direction_title' => ['required', 'exists:education_directions,id']
+        ]);
     }
 }

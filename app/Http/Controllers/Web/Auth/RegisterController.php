@@ -2,24 +2,34 @@
 
 namespace App\Http\Controllers\Web\Auth;
 
+use App\Action\User\StoreUserAction;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Auth\StoreManagerRequest;
-use App\Http\Requests\Auth\StoreParticipantRequest;
+use App\Http\Resources\Education\EducationSchoolResource;
+use App\Models\EducationSchool;
+use App\Services\Interfaces\UserServiceInterface;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
 {
+    public function __construct()
+    {
+
+    }
+
     public function create()
     {
-        return inertia('auth/Register');
+        $schools = EducationSchoolResource::collection(EducationSchool::get());
+
+        return inertia('auth/Register', compact('schools'));
     }
 
-    public function storeManagar(StoreManagerRequest $request)
+    public function store(Request $request, UserServiceInterface $userService, StoreUserAction $action)
     {
+        $user = $userService->storeUser($request->input('role'), $action);
 
-    }
+        Auth::login($user);
 
-    public function storeParticipant(StoreParticipantRequest $request)
-    {
-
+        return redirect()->route('olympiad.index')->with('success', 'Регистрация успешна');
     }
 }

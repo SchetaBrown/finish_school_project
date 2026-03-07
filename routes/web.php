@@ -38,8 +38,7 @@ Route::prefix('/olympiads')->name('olympiad.')->group(function () {
 // Регистрация
 Route::controller(RegisterController::class)->prefix('/register')->name('register.')->group(function () {
     Route::get('/', 'create')->name('create'); // Страница для регистрации
-    Route::post('/store-manager', 'storeManager')->name('storeManager'); // Маршрут для регистрации менеджера
-    Route::post('/store-participant', 'storeParticipant')->name('storeParticipant'); // Маршрут для регистрации участника
+    Route::post('/store', 'store')->name('store'); // Маршрут для регистрации
 });
 
 // Аутентификация, Авторизация

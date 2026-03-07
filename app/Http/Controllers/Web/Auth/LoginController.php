@@ -16,7 +16,7 @@ class LoginController extends Controller
     public function store(LoginRequest $request)
     {
         if (Auth::attempt($request->validated())) {
-            return redirect()->route('index');
+            return redirect()->route('olympiad.index');
         } else {
             return redirect()->back()->with('success', 'Произошла ошибка');
         }

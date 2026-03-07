@@ -1,148 +1,142 @@
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, watch } from "vue";
 import { usePage } from "@inertiajs/inertia-vue3";
 import ProximaPhone from "proxima-vue/field/phone";
+import InputError from "@other/InputError.vue";
+import BaseLabel from "@other/BaseLabel.vue";
 
 const PAGE = usePage();
-const PROPS = defineProps(["label", "name", "placeholder", "type", "icon"]);
-const emit = defineEmits(["change-value"]);
+const PROPS = defineProps(["label", "name", "placeholder", "type", "icon", 'error']);
+const emit = defineEmits(["change-value", "clear-error"]); // Добавляем clear-error
 
 const value = ref("");
-const fieldError = computed(() => PAGE.props.errors?.[PROPS.name]);
 
-// Класс для состояния ошибки
+// Флаг для отслеживания, было ли изменение после ошибки
+const wasModified = ref(false);
+
+// Состояние ошибки с учетом модификации
+const hasError = computed(() => {
+    // Если поле было изменено после ошибки - не показываем ошибку
+    if (wasModified.value) return false;
+    return !!PROPS.error;
+});
+
+// Классы для обертки
 const fieldState = computed(() => ({
-  "has-error": fieldError.value,
+    "has-error": hasError.value,
 }));
+
+// Следим за изменением значения
+watch(value, (newValue) => {
+    // Отмечаем, что поле было изменено
+    wasModified.value = true;
+
+    // Эмитим изменение
+    emit('change-value', newValue);
+
+    // Если была ошибка - эмитим запрос на очистку
+    if (PROPS.error) {
+        emit('clear-error', PROPS.name);
+    }
+});
+
+// Сбрасываем флаг при появлении новой ошибки
+watch(() => PROPS.error, (newError) => {
+    if (newError) {
+        wasModified.value = false; // Новая ошибка - сбрасываем флаг
+    }
+});
+
+// Обработчик ввода напрямую (на случай, если ProximaPhone не обновляет v-model мгновенно)
+const handleInput = (event) => {
+    wasModified.value = true;
+    // Обработка значения если нужно
+};
 </script>
 
 <template>
-  <div class="flex flex-col gap-1">
-    <label
-      v-if="label"
-      :for="name"
-      class="text-[#364153] font-medium text-[14px]"
-    >
-      {{ label }}
-    </label>
+    <div class="flex flex-col gap-1">
+        <BaseLabel :label="label" :name="name" />
 
-    <!-- Оборачиваем ProximaPhone в div с кастомными переменными -->
-    <div class="custom-phone-wrapper" :class="fieldState">
-      <ProximaPhone
-        v-model="value"
-        :name="name"
-        :format="'+7 (9**) ***-**-**'"
-        :placeholder="placeholder ?? '+7 (___) ___-__-__'"
-        @change-value="
-          (val) => emit('change-value', { name: PROPS.name, value: val })
-        "
-      />
+        <div class="phone-wrapper" :class="fieldState">
+            <ProximaPhone v-model="value" :name="name" :format="'+7 (9**) ***-**-**'"
+                :placeholder="placeholder ?? '+7 (___) ___-__-__'" @change-value="
+                    (val) => {
+                        wasModified.value = true;
+                        emit('change-value', { name: PROPS.name, value: val });
+                        if (PROPS.error) emit('clear-error', PROPS.name);
+                    }
+                " @input="handleInput" />
+        </div>
+
+        <!-- Показываем ошибку только если поле не было изменено -->
+        <InputError :error="hasError ? PROPS.error : null" />
     </div>
-
-    <!-- Блок с ошибкой -->
-    <transition
-      enter-active-class="transition duration-200 ease-out"
-      enter-from-class="transform -translate-y-2 opacity-0"
-      enter-to-class="transform translate-y-0 opacity-100"
-      leave-active-class="transition duration-150 ease-in"
-      leave-from-class="transform translate-y-0 opacity-100"
-      leave-to-class="transform -translate-y-2 opacity-0"
-    >
-      <div
-        v-if="fieldError"
-        class="flex items-center gap-1.5 mt-1 text-sm text-red-600"
-      >
-        <svg
-          class="w-4 h-4 text-red-500 shrink-0"
-          fill="currentColor"
-          viewBox="0 0 20 20"
-        >
-          <path
-            fill-rule="evenodd"
-            d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
-            clip-rule="evenodd"
-          />
-        </svg>
-        <span>{{ fieldError }}</span>
-      </div>
-    </transition>
-  </div>
 </template>
 
 <style scoped>
-.custom-phone-wrapper {
-  /* Базовые переменные - твои стили из Tailwind */
+.phone-wrapper {
+    --field-padding-y: 0.625rem;
+    --field-padding-x-start: 1rem;
+    --field-padding-x-end: 1rem;
+    --field-background: #f9fafb;
 
-  /* Padding - соответствует py-2.5 px-4 */
-  --field-padding-y: 0.625rem;
-  --field-padding-x-start: 1rem;
-  --field-padding-x-end: 1rem;
+    --field-border-width: 1px;
+    --field-border-style: solid;
+    --field-border-color: #e5e7eb;
+    --field-border-radius: 0.5rem;
 
-  /* Background - bg-gray-50 */
-  --field-background: #f9fafb;
+    --field-color: #111827;
+    --field-font-family: inherit;
+    --field-font-weight: 400;
+    --field-font-size: 1rem;
+    --field-line-height: 1.5;
 
-  /* Border - border border-gray-200 rounded-lg */
-  --field-border-width: 1px;
-  --field-border-style: solid;
-  --field-border-color: #e5e7eb;
-  --field-border-radius: 0.5rem;
+    --field-placeholder-color: #9ca3af;
+    --field-placeholder-font-family: inherit;
+    --field-placeholder-font-size: 1rem;
+    --field-placeholder-font-weight: 400;
+    --field-placeholder-opacity: 1;
 
-  /* Text - text-gray-900 */
-  --field-color: #111827;
-  --field-font-family: inherit;
-  --field-font-weight: 400;
-  --field-font-size: 1rem;
-  --field-line-height: 1.5;
+    --field-focus-border-color: none;
+    --field-focus-ring: none;
+    --field-focus-background: none;
 
-  /* Placeholder */
-  --field-placeholder-color: #9ca3af;
-  --field-placeholder-font-family: inherit;
-  --field-placeholder-font-size: 1rem;
-  --field-placeholder-font-weight: 400;
-  --field-placeholder-opacity: 1;
+    --field-transition: all 0.2s;
 
-  /* Focus styles */
-  --field-focus-border-color: #6366f1;
-  --field-focus-ring: 0 0 0 2px rgba(99, 102, 241, 0.2);
-  --field-focus-background: #f9fafb;
+    --field-size: 3.125rem;
 
-  /* Transition */
-  --field-transition: all 0.2s;
+    --field-mask-color: #9ca3af;
 
-  /* Size - min-h-12.5 */
-  --field-size: 3.125rem;
+    --field-focus-background: none;
+    --field-focus-border-color: none;
+    --field-focus-placeholder-color: none;
 
-  /* Mask/Placeholder цвет */
-  --field-mask-color: #9ca3af;
+    --field-hover-border-color: 0;
+    --field-action-hover-color: 0;
+
+    --field-action-color: #787a7d;
+    --field-box-shadow-soft-color: none;
 }
 
-/* Состояние ошибки */
-.custom-phone-wrapper.has-error {
-  --field-border-color: #fca5a5;
-  --field-background: #fef2f2;
-  --field-mask-color: #ef4444;
-  --field-invalid-color: #dc2626;
-  --field-invalid-mask-color: #fecaca;
-  --field-focus-border-color: #ef4444;
-  --field-focus-ring: 0 0 0 2px rgba(239, 68, 68, 0.2);
-}
-
-/* Дополнительные стили если нужно */
-.custom-phone-wrapper :deep(input) {
-  /* Если нужно что-то переопределить */
-  outline: none !important;
-}
-
-.custom-phone-wrapper :deep(input:focus) {
-  box-shadow: var(--field-focus-ring) !important;
-}
-
-/* Стилизация иконки если есть */
-.custom-phone-wrapper :deep(.proxima-icon) {
-  color: #9ca3af;
+/* Стили для ошибки */
+.phone-wrapper.has-error {
+    --field-border-color: #fca5a5;
+    --field-background: #fef2f2;
+    --field-mask-color: #ef4444;
+    --field-invalid-color: #dc2626;
+    --field-invalid-mask-color: #fecaca;
+    --field-focus-border-color: #ef4444;
+    --field-focus-ring: 0 0 0 2px rgba(239, 68, 68, 0.2);
 }
 
 .has-error :deep(.proxima-icon) {
-  color: #ef4444;
+    color: #ef4444;
+}
+
+/* Стили для обычного состояния */
+.phone-wrapper:not(.has-error) {
+    --field-border-color: #e5e7eb;
+    --field-background: #f9fafb;
 }
 </style>

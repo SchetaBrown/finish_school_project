@@ -34,11 +34,9 @@ export const REGISTER_INPUT_VALUES = [
 
 export const LOGIN_INPUT_VALUES = [...BASE_INPUT_VALUES];
 
-export const PHONE_INPUT_VALUE = [
-    {
-        label: "Телефон",
-        name: "phone",
-        type: "tel",
-        placeholder: "+7 (___) ___-__-__",
-    },
-];
+export const PHONE_INPUT_VALUE = {
+    label: "Телефон",
+    name: "phone",
+    type: "tel",
+    placeholder: "+7 (___) ___-__-__",
+};

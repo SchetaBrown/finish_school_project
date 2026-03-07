@@ -2,9 +2,7 @@
 
 namespace App\Http\Requests\Auth;
 
-use Illuminate\Foundation\Http\FormRequest;
-
-class StoreManagerRequest extends FormRequest
+class StoreManagerRequest extends BaseUserRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -13,12 +11,8 @@ class StoreManagerRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'surname' => ['required', 'string'],
-            'name' => ['required', 'string'],
-            'patronymic' => ['required', 'string'],
-            'email' => ['required', 'string', 'unique:users,email'],
-            'password' => ['required', 'string', 'min:8'],
-        ];
+        return array_merge($this->baseRules(), [
+            'phone' => ['required', 'string', 'regex:/^\+7 \(9\d{2}\) \d{3}-\d{2}-\d{2}$/', 'unique:managers,phone']
+        ]);
     }
 }

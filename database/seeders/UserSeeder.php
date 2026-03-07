@@ -12,17 +12,18 @@ class UserSeeder extends Seeder
             'surname' => 'Иванов',
             'name' => 'Иван',
             'patronymic' => 'Иванович',
-            'email' => 'ivan@example.com',
+            'email' => 'ivan@gmail.com',
             'password' => '123123123',
         ],
         [
             'surname' => 'Петров',
             'name' => 'Петр',
             'patronymic' => 'Петрович',
-            'email' => 'petr@example.com',
+            'email' => 'petr@gmail.com',
             'password' => '123123123',
         ],
     ];
+
     public function run(): void
     {
         foreach ($this->users as $user) {
