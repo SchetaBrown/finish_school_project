@@ -1,22 +1,26 @@
 <script setup>
-const PROPS = defineProps(['schools']);
-import { useForm } from "@inertiajs/inertia-vue3";
+const PROPS = defineProps(['schools', 'directions']);
 import { AUTH_BASE_FORM_FIELDS } from "@constants/fields.js";
-import BaseInput from "@inputs/BaseInput.vue";
+import { REGISTER_INPUT_VALUES } from "@constants/auth.js";
+import { useBaseForm } from '../../../../../composables/useBaseForm.js'
+import { onUnmounted, reactive, ref } from "vue";
 import InputBlock from '@blocks/InputBlock.vue'
 import BaseButton from "@buttons/BaseButton.vue";
 import ParticipantRegisterSection from "@sections/auth/ParticipantRegisterSection.vue";
 import AuthLink from "@links/AuthLink.vue";
-import { REGISTER_INPUT_VALUES } from "@constants/auth.js";
-import { useBaseForm } from '../../../../../composables/useBaseForm.js'
-import { onUnmounted } from "vue";
+import OpenModalButton from "@buttons/OpenModalButton.vue";
+import ChooseModal from '@modals/ChooseModal.vue'
+
 const form = useBaseForm({
     ...AUTH_BASE_FORM_FIELDS,
-    education_school_id: "",
     education_direction_id: "",
     cours_number: "",
     role: 'participant'
 });
+
+let showModal = ref(false);
+
+console.log(PROPS.directions)
 
 function submit() {
     form.submit('post', route('register.store'));
@@ -34,7 +38,19 @@ onUnmounted(() => {
                 @change-value="(data) => {
                     form.updateFormFieldValue(data.name, data.value)
                 }" />
+            <OpenModalButton :name="'education_school_title'" :label="'Учебное заведение'"
+                :baseTitle="'Выберите учебное заведение'" :selectTitle="form.getForm().education_school_title"
+                @clear-error="form.clearErrors('education_school_title')"
+                :error="form.getErrorByName('education_school_title')" @update-value="(choose) => {
+                    showModal = choose;
+                }" />
         </div>
+
+        <ChooseModal :show="showModal" @close="showModal = false" :title="'Учебные заведения'" :options="schools"
+            :name="'education_school_title'" :selectTitle="'title'" @select="data => {
+                form.updateFormFieldValue(data.name, data.value)
+            }" />
+
         <div class="w-full bg-[#F3F4F6] h-px rounded-full my-5"></div>
         <ParticipantRegisterSection />
         <BaseButton :text="'Зарегистрироваться'" :icon="'fas fa-user-plus'" />

@@ -10,14 +10,12 @@ const errorState = ref({
 
 watch(() => PROPS.error, (newError) => {
     if (newError && newError !== undefined) {
-        // Новая ошибка
         errorState.value = {
             show: true,
             message: newError,
             key: errorState.value.key + 1
         };
     } else {
-        // Ошибка исчезла
         errorState.value.show = false;
     }
 }, { immediate: true });

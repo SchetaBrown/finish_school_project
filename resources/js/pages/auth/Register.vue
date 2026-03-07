@@ -8,6 +8,6 @@ import RegisterForm from "@forms/auth/RegisterForm.vue";
     <AppBaseLayout>
         <BaseTitle :title="'Регистрация'" :subtitle="'Выберите роль и заполните необходимые поля'"
             class="text-center" />
-        <RegisterForm class="mx-auto" :schools="schools"></RegisterForm>
+        <RegisterForm class="mx-auto" :schools="schools" :directions="directions"></RegisterForm>
     </AppBaseLayout>
 </template>

@@ -21,6 +21,7 @@
         "@inertiajs/vue3": "^2.3.17",
         "@vitejs/plugin-vue": "^6.0.4",
         "font-awesome": "^4.7.0",
+        "pinia": "^3.0.4",
         "proxima-vue": "^0.4.6",
         "vue": "^3.5.28",
         "ziggy-js": "^2.6.0"

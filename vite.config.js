@@ -34,7 +34,7 @@ export default defineConfig({
             "@layouts": "/resources/js/layouts", // Шаблоны
             "@stores": "/resources/js/stores", // Хранилища pinia
             "@constants": "/resources/js/constants", // Константы
-            "@composables": "/resources/js/composables", // Константы
+            "@composables": "/resources/js/composables", // Composable
         },
     },
 });

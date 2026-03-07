@@ -1,5 +1,5 @@
 <script setup>
-const PROPS = defineProps(['schools']);
+const PROPS = defineProps(['schools', 'directions']);
 import ChangeRoleSection from "@sections/ChangeRoleSection.vue";
 import ManagarRegisterForm from "./register/ManagerRegisterForm.vue";
 import ParticipantRegisterForm from "./register/ParticipantRegisterForm.vue";
@@ -12,12 +12,14 @@ function getActiveTab(id) {
         identificator.value = id;
     }
 }
+
+console.log()
 </script>
 <template>
     <div class="bg-white border border-gray-200 rounded-xl p-8 max-w-196">
         <ChangeRoleSection @change-role="getActiveTab" />
 
-        <ParticipantRegisterForm v-if="identificator === 'participant'" />
+        <ParticipantRegisterForm :schools="schools" :directions="directions" v-if="identificator === 'participant'" />
         <ManagarRegisterForm :schools="schools" v-else />
     </div>
 </template>

@@ -1,10 +1,10 @@
 import { useForm, usePage } from "@inertiajs/inertia-vue3";
-import { ref, watch } from "vue";
+import { reactive, ref, watch } from "vue";
 
 export function useBaseForm(fields) {
     const FORM = useForm({ ...fields });
 
-    const localErrors = ref({});
+    const localErrors = reactive({});
 
     watch(
         () => FORM.errors,
@@ -45,15 +45,7 @@ export function useBaseForm(fields) {
             return this;
         },
 
-        submit(
-            method = "post",
-            route,
-            callback = {
-                onError: (error) => {
-                    console.log(error);
-                },
-            },
-        ) {
+        submit(method = "post", route, callback = {}) {
             FORM[method](route, callback);
         },
 

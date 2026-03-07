@@ -22,7 +22,7 @@ const form = useBaseForm({
 let showModal = ref(false);
 
 function submit() {
-    form.submit('post', route('register.store'))
+    form.toLowerCase().submit('post', route('register.store'))
 }
 
 onUnmounted(() => {
@@ -38,9 +38,11 @@ onUnmounted(() => {
                     form.updateFormFieldValue(data.name, data.value)
                 }" />
             <OpenModalButton :name="'education_school_title'" :label="'Учебное заведение'"
-                :baseTitle="'Выберите учебное заведение'" :selectTitle="'title'" @update-value="(choose) => {
+                :baseTitle="'Выберите учебное заведение'" :selectTitle="form.getForm().education_school_title"
+                @clear-error="form.clearErrors('education_school_title')"
+                :error="form.getErrorByName('education_school_title')" @update-value="(choose) => {
                     showModal = choose;
-                }"></OpenModalButton>
+                }" />
 
         </div>
         <div class="w-full bg-[#F3F4F6] h-px rounded-full my-5"></div>

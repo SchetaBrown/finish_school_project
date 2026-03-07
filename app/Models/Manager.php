@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Manager extends Model
 {
@@ -26,6 +27,13 @@ class Manager extends Model
     }
 
     // Мутаторы/аксессоры
+    protected function surname()
+    {
+        return Attribute::make(
+            get: fn(string $value) => mb_ucfirst($value),
+            set: fn(string $value) => Str::lower($value)
+        );
+    }
 
     protected function phone(): Attribute
     {
