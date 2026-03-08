@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web\Olympiad;
 
 use App\Action\Olympiad\GetOlympiadsIndexDataAction;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Olympiad\OlympiadResource;
 use App\Models\Olympiad;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -23,7 +24,7 @@ class OlympiadController extends Controller
         return Inertia::render(
             'olympiad/Show',
             [
-                'olympiad' => Olympiad::whereSlug($slug)->first(),
+                'olympiad' => new OlympiadResource(Olympiad::withDefaultRelations()->whereSlug($slug)->first()),
             ]
         );
     }

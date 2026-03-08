@@ -135,17 +135,16 @@ const handleSearch = (event) => {
 
                     <!-- Список результатов -->
                     <div v-else class="space-y-2">
-                        <div v-for="option in filteredOptions" :key="option.id || option.title"
-                            class="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors group">
+                        <button @click="selectOption(option)" v-for="option in filteredOptions"
+                            :key="option.id || option.title"
+                            class="flex text-left p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors w-full">
                             <div class="flex-1">
                                 <h3 class="font-medium text-gray-900">{{ option.title }}</h3>
                                 <p v-if="option.subtitle" class="text-sm text-gray-500 mt-1">
                                     {{ option.subtitle }}
                                 </p>
                             </div>
-
-                            <AddButton @click="selectOption(option)" />
-                        </div>
+                        </button>
 
                         <div class="text-sm text-gray-500 mt-2 text-center">
                             Найдено: {{ filteredOptions.length }}

@@ -1,6 +1,12 @@
 <script setup>
-defineProps(["title"]);
+import { computed } from 'vue';
+
+const PROPS = defineProps(["title", 'font-size']);
+
+const FONT_SIZE = computed(() => {
+    return `text-[${PROPS['font-size']}]`
+});
 </script>
 <template>
-  <h3 class="text-gray-900 text-[18px]">{{ title }}</h3>
+    <h3 class="font-semibold text-gray-900 mb-2 line-clamp-1 text-[18px]" :class="FONT_SIZE">{{ title }}</h3>
 </template>

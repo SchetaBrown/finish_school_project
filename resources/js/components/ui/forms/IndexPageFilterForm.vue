@@ -1,19 +1,16 @@
 <script setup>
-import BaseInput from "@inputs/BaseInput.vue";
-import InputBlock from '@blocks/InputBlock.vue'
-import BaseSelect from "@selects/BaseSelect.vue";
-import { useForm } from "@inertiajs/inertia-vue3";
 const PROPS = defineProps(["directions", "statuses"]);
+import { useBaseForm } from '../../../composables/useBaseForm.js'
+import InputBlock from '@blocks/InputBlock.vue'
+import SelectBlock from '@blocks/SelectBlock.vue'
+import DivideLine from '@other/DivideLine.vue';
+import SubmitButton from '@buttons/BaseButton.vue'
 
-const SEARCH_FORM = useForm({
+const form = useBaseForm({
     title: "",
     direction: "",
     status: "",
 });
-
-function submit() {
-
-}
 
 const SELECTS = [
     {
@@ -27,23 +24,24 @@ const SELECTS = [
         options: PROPS.statuses,
     },
 ];
-
-function updateSearchFormField(data) {
-    const VALUE = data.value;
-    const NAME = data.name;
-
-    SEARCH_FORM[NAME] = VALUE;
-}
 </script>
 <template>
     <div class="bg-white rounded-xl border border-gray-200 p-5 mb-8 min-h-fit">
-        <form @submit.prevent="submit" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            <InputBlock :label="'Поиск'" :name="'title'"
-                :icon="'fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm'"
-                :placeholder="'Введите название олимпиады...'" v-model="SEARCH_FORM.title">
-            </InputBlock>
-            <BaseSelect v-for="select in SELECTS" :label="select.label" :name="select.name" :options="select.options"
-                :key="select.title" />
+        <form @submit.prevent="form.submit('get', route('olympiad.index'))">
+            <div class="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <InputBlock :label="'Поиск'" :name="'title'"
+                    :icon="'fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm'"
+                    :placeholder="'Введите название олимпиады...'" v-model="form.title">
+                </InputBlock>
+                <SelectBlock v-for="select in SELECTS" :label="select.label" :name="select.name"
+                    :options="select.options" :key="select.title" @select="(data) => {
+                        form.updateFormFieldValue(data.name, data.value)
+                    }" />
+            </div>
+            <DivideLine class="my-4" />
+            <div class="flex justify-end gap-6">
+                <SubmitButton :text="'Применить фильтры'" class="max-w-fit" />
+            </div>
         </form>
     </div>
 </template>

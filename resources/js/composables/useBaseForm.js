@@ -1,5 +1,5 @@
-import { useForm, usePage } from "@inertiajs/inertia-vue3";
-import { reactive, ref, watch } from "vue";
+import { useForm } from "@inertiajs/inertia-vue3";
+import { reactive, watch } from "vue";
 
 export function useBaseForm(fields) {
     const FORM = useForm({ ...fields });
@@ -19,12 +19,8 @@ export function useBaseForm(fields) {
             return FORM;
         },
 
-        getAllErrors() {
-            return localErrors.value;
-        },
-
-        getErrorByName(name) {
-            return localErrors.value[name];
+        getAllErrors(name) {
+            return name ? localErrors.value[name] : localErrors.value;
         },
 
         updateFormFieldValue(name, value) {
@@ -34,24 +30,25 @@ export function useBaseForm(fields) {
 
         toLowerCase() {
             FORM.transform((data) => {
-                const transformed = {};
+                const TRANSOFMED = {};
+
                 Object.entries(data).forEach(([key, value]) => {
-                    transformed[key] =
+                    TRANSOFMED[key] =
                         typeof value === "string" ? value.toLowerCase() : value;
                 });
-                return transformed;
+
+                return TRANSOFMED;
             });
 
             return this;
         },
 
-        submit(method = "post", route, callback = {}) {
-            FORM[method](route, callback);
+        submit(method = "post", route, options = {}) {
+            FORM[method](route, options);
         },
 
         clearErrors(name) {
-            FORM.clearErrors(name);
-            FORM.clearErrors("password");
+            name ? FORM.clearErrors(name) : FORM.clearErrors();
         },
     };
 }
