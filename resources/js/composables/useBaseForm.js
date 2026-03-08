@@ -1,4 +1,4 @@
-import { useForm } from "@inertiajs/inertia-vue3";
+import { useForm } from "@inertiajs/vue3";
 import { reactive, watch } from "vue";
 
 export function useBaseForm(fields) {
@@ -49,6 +49,7 @@ export function useBaseForm(fields) {
 
         clearErrors(name) {
             name ? FORM.clearErrors(name) : FORM.clearErrors();
+            return;
         },
     };
 }

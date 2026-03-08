@@ -12,3 +12,14 @@
 button {
     cursor: pointer;
 }
+
+@layer base {
+    * {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    .font-inter {
+        font-display: swap;
+    }
+}

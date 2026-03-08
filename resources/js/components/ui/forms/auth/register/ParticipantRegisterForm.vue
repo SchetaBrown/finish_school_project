@@ -30,7 +30,7 @@ onUnmounted(() => {
 </script>
 <template>
     <form @submit.prevent="submit">
-        <div class="grid grid-cols-2 gap-5">
+        <div class="grid grid-cols-2 gap-5 max-lg:grid-cols-1">
             <InputBlock :name="input.name" :type="input.type" :placeholder="input.placeholder" :label="input.label"
                 :error="form.getAllErrors(input.name)" v-for="input in REGISTER_INPUT_VALUES" :key="input.label"
                 @change-value="(data) => {

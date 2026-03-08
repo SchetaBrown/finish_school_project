@@ -17,13 +17,14 @@ class LoginController extends Controller
     {
         if (Auth::attempt($request->validated())) {
             return redirect()->route('olympiad.index');
-        } else {
-            return redirect()->back()->with('success', 'Произошла ошибка');
         }
+
+        return redirect()->back()->with('success', 'Произошла ошибка');
     }
 
     public function destroy()
     {
-
+        Auth::logout();
+        return redirect()->route('olympiad.index');
     }
 }

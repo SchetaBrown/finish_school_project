@@ -15,5 +15,9 @@ const NEWS = computed(() => {
             <h2 class="font-semibold text-lg">Новости</h2>
         </div>
         <NoData v-if="!NEWS" />
+        <div class="" v-else>
+
+            УРААА НОВОСТИ
+        </div>
     </Container>
 </template>

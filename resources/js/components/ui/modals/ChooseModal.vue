@@ -1,15 +1,12 @@
 <script setup>
-import AddButton from '@buttons/AddButton.vue';
 import CloseButton from '@buttons/CloseButton.vue';
 import BlockTitle from '@other/titles/BlockTitle.vue';
 import BaseInput from '@inputs/BaseInput.vue';
-import InputError from "@other/InputError.vue";
 import NoData from '@other/NoData.vue';
 
 const PROPS = defineProps(['title', 'show', 'options', 'baseTitle', 'selectTitle', 'name']);
 
 import { ref, computed, watch, onMounted, onUnmounted } from 'vue';
-import { usePage } from '@inertiajs/inertia-vue3';
 
 const emit = defineEmits(['close', 'select']);
 
@@ -64,9 +61,6 @@ const handleEscape = (e) => {
     }
 };
 
-const PAGE = usePage();
-const ERRORS = computed(() => PAGE.props.value.errors[PROPS.name]);
-
 onMounted(() => {
     document.addEventListener('keydown', handleEscape);
 });
@@ -104,36 +98,22 @@ const handleSearch = (event) => {
     <Teleport to="body">
         <div :class="modalClasses" @click="handleOverlayClick">
             <div :class="contentClasses">
-                <!-- Заголовок -->
                 <div class="flex items-center justify-between p-6 border-b border-gray-200">
                     <BlockTitle :title="title" />
                     <CloseButton @click="closeModal" />
                 </div>
 
-                <!-- Поиск -->
                 <div class="p-6 border-b border-gray-200">
-                    <div class="relative">
-                        <BaseInput @change-value="handleSearch" :placeholder="'Поиск...'" :name="'search'" />
-                        <!-- Иконка поиска (опционально) -->
-                        <svg class="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400"
-                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                        </svg>
-                    </div>
+                    <BaseInput @change-value="handleSearch" :placeholder="'Поиск...'" :name="'search'" />
                 </div>
 
-                <!-- Список -->
                 <div class="flex-1 overflow-y-auto p-6">
-                    <!-- Состояние загрузки -->
                     <div v-if="isLoading" class="flex justify-center items-center py-8">
                         <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div>
                     </div>
 
-                    <!-- Нет результатов -->
                     <NoData v-else-if="filteredOptions.length === 0" message="Ничего не найдено" />
 
-                    <!-- Список результатов -->
                     <div v-else class="space-y-2">
                         <button @click="selectOption(option)" v-for="option in filteredOptions"
                             :key="option.id || option.title"
@@ -152,7 +132,6 @@ const handleSearch = (event) => {
                     </div>
                 </div>
 
-                <!-- Футер -->
                 <div class="p-6 border-t border-gray-200 flex justify-end">
                     <button @click="closeModal" class="px-4 py-2 text-gray-700 hover:text-gray-900 transition-colors">
                         Закрыть
@@ -160,6 +139,5 @@ const handleSearch = (event) => {
                 </div>
             </div>
         </div>
-        <InputError :error="ERRORS" />
     </Teleport>
 </template>

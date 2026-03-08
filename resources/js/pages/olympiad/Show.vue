@@ -6,17 +6,57 @@ import BlockTitle from '@titles/BlockTitle.vue'
 import Container from '@other/Container.vue'
 import OlympiadDetailBlock from "@blocks/olympiad/OlympiadDetailBlock.vue";
 import OlympiadNewBlock from "@blocks/olympiad/OlympiadNewBlock.vue";
+import OlympiadRegisterBlock from "@blocks/olympiad/OlympiadRegisterBlock.vue";
+import Status from '@other/Status.vue'
 
 const PROPS = defineProps(["olympiad"]);
 
-const DATA = PROPS.olympiad.data;
+const DATA = computed(() => {
+    return PROPS.olympiad.data
+});
 
 const OLYMPIAD_TYPES = computed(() => {
-    const TYPES = DATA.types;
+    const TYPES = DATA.value.types;
 
     if (typeof TYPES === 'object') {
         return TYPES.length !== 0 ? TYPES : 'Не указано';
     }
+});
+
+const TITLE = computed(() => {
+    return DATA.value.title;
+});
+
+const DESCRIPTION = computed(() => {
+    return DATA.value.description;
+});
+
+const END_DATE = computed(() => {
+    return DATA.value.end_date;
+});
+
+const START_DATE = computed(() => {
+    return DATA.value.start_date;
+});
+
+const STATUS = computed(() => {
+    return DATA.value.status;
+});
+
+const DIRECTION = computed(() => {
+    return DATA.value.status;
+});
+
+const PLAYER_COUNT = computed(() => {
+    return DATA.value.player_count;
+});
+
+const PLAYER_LIMIT = computed(() => {
+    return DATA.value.player_limit;
+});
+
+const PROGRESS_BAR_WIDTH = computed(() => {
+    return `width:${((PLAYER_COUNT.value / PLAYER_LIMIT.value) * 100).toFixed(0)}%`;
 });
 
 const OLYMPIAD_DETAILS = computed(() => {
@@ -24,12 +64,12 @@ const OLYMPIAD_DETAILS = computed(() => {
         {
             icon: 'fa-code',
             subtitle: 'Направление',
-            title: DATA.direction,
+            title: DIRECTION,
         },
         {
             icon: 'fa-calendar-alt',
             subtitle: 'Дата начала',
-            title: DATA.start_date,
+            title: START_DATE,
         },
         {
             icon: 'fa-user',
@@ -39,7 +79,7 @@ const OLYMPIAD_DETAILS = computed(() => {
         {
             icon: 'fa-calendar-alt',
             subtitle: 'Дата окончания',
-            title: DATA.end_date,
+            title: END_DATE,
         },
     ];
 });
@@ -47,33 +87,20 @@ const OLYMPIAD_DETAILS = computed(() => {
 <template>
     <AppBaseLayout>
         <div class="flex items-center justify-between">
-            <PageTitle :title="olympiad.data.title" />
+            <PageTitle :title="TITLE" />
+            <Status :status="STATUS" />
         </div>
         <section class="grid grid-cols-2 gap-5 max-lg:grid-cols-1">
             <Container>
                 <BlockTitle :title="'Описание'" />
                 <p class="mt-3 text-[#4A5565] text-justify">
-                    {{ olympiad.data.description }}
+                    {{ DESCRIPTION }}
                 </p>
             </Container>
-            <Container>
-                <BlockTitle :title="'Детали олимпиады'" />
-                <div class="grid grid-cols-2 justify-between gap-4">
-                    <OlympiadDetailBlock v-for="detail in OLYMPIAD_DETAILS" :key="detail.subtitle" :title="detail.title"
-                        :subtitle="detail.subtitle" :icon="detail.icon" />
-                </div>
-            </Container>
+            <OlympiadDetailBlock :details="OLYMPIAD_DETAILS" :labelTitle="'Детали олимпиады'" />
             <OlympiadNewBlock />
-            <Container>
-                <BlockTitle :title="'Регистрация'" />
-                <div class="mt-3 w-full">
-                    <div class="flex flex-col gap-2">
-                        <div class="flex justify-between">
-                            <span class="text-sm text-[#6A7282]">Участники:</span>
-                        </div>
-                    </div>
-                </div>
-            </Container>
+            <OlympiadRegisterBlock :title="'Регистрация'" :count="PLAYER_COUNT" :limit="PLAYER_LIMIT"
+                :progressBarWidth="PROGRESS_BAR_WIDTH" :end-date="END_DATE" :slug="DATA.slug" :status="STATUS"></OlympiadRegisterBlock>
         </section>
     </AppBaseLayout>
 </template>

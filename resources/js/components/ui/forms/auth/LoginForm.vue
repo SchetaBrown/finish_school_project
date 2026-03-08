@@ -3,18 +3,27 @@ import { LOGIN_INPUT_VALUES } from "@constants/auth.js";
 import InputBlock from '@blocks/InputBlock.vue'
 import BaseButton from "@buttons/BaseButton.vue";
 import AuthLink from "@links/AuthLink.vue";
-import { useBaseForm } from "../../../../composables/useBaseForm";
+import { useBaseForm } from "@composables/useBaseForm";
+import { useUserStore } from "@stores/user-store.js";
 
 const form = useBaseForm({
     email: "",
     password: "",
 });
 
+const userStore = useUserStore();
+
+function login() {
+    form.submit('post', route('login.store'), {
+        onSuccess: () => {
+            userStore.updateAuthStatus(true)
+        }
+    })
+}
 </script>
 <template>
     <div class="flex justify-center w-auto">
-        <form @submit.prevent="form.submit('post', route('login.store'))"
-            class="bg-white border border-gray-200 rounded-xl p-8 max-w-md w-full">
+        <form @submit.prevent="login" class="bg-white border border-gray-200 rounded-xl p-8 max-w-md w-full">
             <div class="grid gap-5">
                 <InputBlock :name="input.name" :type="input.type" :placeholder="input.placeholder" :label="input.label"
                     :error="form.getAllErrors(input.name)" v-for="input in LOGIN_INPUT_VALUES" :key="input.label"
@@ -23,7 +32,7 @@ const form = useBaseForm({
                     }" />
             </div>
 
-            <BaseButton :text="'Войти'" :icon="'fas fa-user-plus'" :disabled="form.processing" />
+            <BaseButton :text="'Войти'" :icon="'fas fa-user-plus'" :disabled="form.processing" class="mt-6" />
             <AuthLink :href="'register.create'" :text-sm="'Нет аккаунта?'" :link-text="'Зарегистрироваться'" />
         </form>
     </div>

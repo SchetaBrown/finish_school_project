@@ -1,11 +1,9 @@
 <script setup>
 import { ref, computed, watch } from "vue";
-import { usePage } from "@inertiajs/inertia-vue3";
 import ProximaPhone from "proxima-vue/field/phone";
 import InputError from "@other/InputError.vue";
 import BaseLabel from "@other/BaseLabel.vue";
 
-const PAGE = usePage();
 const PROPS = defineProps(["label", "name", "placeholder", "type", "icon", 'error']);
 const emit = defineEmits(["change-value", "clear-error"]); // Добавляем clear-error
 

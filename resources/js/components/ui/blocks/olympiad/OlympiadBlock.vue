@@ -3,17 +3,31 @@ const PROPS = defineProps(["olympiad"]);
 import OlympiadProgress from "./components/OlympiadProgress.vue";
 import BlockTitle from "@titles/BlockTitle.vue";
 import OlympiadDescription from "./components/OlympiadDescription.vue";
-import OlympiadStatus from "./components/OlympiadStatus.vue";
 import OlympiadLink from "./components/OlympiadLink.vue";
 import Container from '@other/Container.vue'
+import Status from '@other/Status.vue'
+import { computed } from "vue";
+
+const OLYMPIAD_IS_FINISHED =
+    typeof PROPS.status === "string"
+        ? PROPS.status.toLowerCase() === "завершено"
+        : PROPS.status;
 </script>
 <template>
+    <Link :href="OLYMPIAD_IS_FINISHED
+        ? route('olympiad.result.index', { slug: olympiad.slug })
+        : route('olympiad.show', { slug: olympiad.slug })
+        " class="text-sm font-medium" :class="OLYMPIAD_IS_FINISHED
+            ? 'text-gray-500 hover:text-gray-700'
+            : 'text-indigo-600 hover:text-indigo-700'
+            ">
     <Container class="p-5 hover:shadow-lg transition">
-        <OlympiadStatus :status="olympiad.status" />
+        <Status :status="olympiad.status" :fontSize="12" />
         <BlockTitle :title="olympiad.title" />
         <OlympiadDescription :description="olympiad.description" />
         <OlympiadProgress :direction="olympiad.direction" :player_count="olympiad.player_count"
             :player_limit="olympiad.player_limit" :status="olympiad.status" />
-        <OlympiadLink :slug="olympiad.slug" :status="olympiad.status" />
+        <!-- <OlympiadLink :slug="olympiad.slug" :status="olympiad.status" /> -->
     </Container>
+    </Link>
 </template>
