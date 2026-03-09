@@ -11,7 +11,7 @@ class OlympiadOrderController extends Controller
     public function create(string $slug)
     {
         return inertia('olympiad/Create', [
-            'olympiad' => new OlympiadResource(Olympiad::withDefaultRelations()->where('slug', $slug)->first()),
+            'olympiad' => new OlympiadResource(Olympiad::withDefaultRelations()->whereSlug($slug)->first()),
         ]);
     }
 

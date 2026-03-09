@@ -8,7 +8,7 @@ const FONT_SIZE = computed(() => {
 });
 
 const FULL_TEXT = computed(() => {
-    return PROPS['full-text'] ? 'line-clamp-1' : '';
+    return PROPS['full-text'] ? 'line-clamp-1' : 'line-clamp-1';
 });
 </script>
 <template>

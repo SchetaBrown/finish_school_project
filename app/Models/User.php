@@ -78,7 +78,7 @@ class User extends Authenticatable
         return $this->hasMany(OlympiadNew::class);
     }
 
-    protected function surname()
+    protected function name()
     {
         return Attribute::make(
             get: fn($value) => mb_ucfirst($value),

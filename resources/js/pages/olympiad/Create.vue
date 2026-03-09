@@ -1,6 +1,6 @@
 <script setup>
 const PROPS = defineProps(['olympiad']);
-import { usePage } from '@inertiajs/inertia-vue3';
+import { usePage } from '@inertiajs/vue3';
 import { computed } from 'vue';
 import AppBaseLayout from '@layouts/AppBaseLayout.vue'
 import OlympiadCreateDocumentBlock from '@blocks/olympiad/OlympiadCreateDocumentBlock.vue'
@@ -10,8 +10,6 @@ import Container from '@other/Container.vue'
 import Status from '@other/Status.vue'
 import DivideLine from '@other/DivideLine.vue'
 import InfoInputBlock from '@blocks/InfoInputBlock.vue'
-
-const page = usePage();
 
 const OLYMPIAD_DATA = computed(() => {
     return PROPS.olympiad.data;
