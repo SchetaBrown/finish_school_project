@@ -23,14 +23,6 @@ const OLYMPIAD_TYPES = computed(() => {
     }
 });
 
-const TITLE = computed(() => {
-    return DATA.value.title;
-});
-
-const DESCRIPTION = computed(() => {
-    return DATA.value.description;
-});
-
 const END_DATE = computed(() => {
     return DATA.value.end_date;
 });
@@ -39,12 +31,8 @@ const START_DATE = computed(() => {
     return DATA.value.start_date;
 });
 
-const STATUS = computed(() => {
-    return DATA.value.status;
-});
-
 const DIRECTION = computed(() => {
-    return DATA.value.status;
+    return DATA.value.direction;
 });
 
 const PLAYER_COUNT = computed(() => {
@@ -87,20 +75,21 @@ const OLYMPIAD_DETAILS = computed(() => {
 <template>
     <AppBaseLayout>
         <div class="flex items-center justify-between">
-            <PageTitle :title="TITLE" />
-            <Status :status="STATUS" />
+            <PageTitle :title="DATA.title" />
+            <Status :status="DATA.status" />
         </div>
         <section class="grid grid-cols-2 gap-5 max-lg:grid-cols-1">
             <Container>
                 <BlockTitle :title="'Описание'" />
                 <p class="mt-3 text-[#4A5565] text-justify">
-                    {{ DESCRIPTION }}
+                    {{ DATA.description }}
                 </p>
             </Container>
             <OlympiadDetailBlock :details="OLYMPIAD_DETAILS" :labelTitle="'Детали олимпиады'" />
             <OlympiadNewBlock />
             <OlympiadRegisterBlock :title="'Регистрация'" :count="PLAYER_COUNT" :limit="PLAYER_LIMIT"
-                :progressBarWidth="PROGRESS_BAR_WIDTH" :end-date="END_DATE" :slug="DATA.slug" :status="STATUS"></OlympiadRegisterBlock>
+                :progressBarWidth="PROGRESS_BAR_WIDTH" :end-date="END_DATE" :slug="DATA.slug" :status="DATA.status">
+            </OlympiadRegisterBlock>
         </section>
     </AppBaseLayout>
 </template>

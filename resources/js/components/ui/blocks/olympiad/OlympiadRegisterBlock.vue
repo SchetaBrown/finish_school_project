@@ -7,8 +7,6 @@ import { computed } from 'vue';
 const IS_AVAILABLE_LINK = computed(() => {
     const STATUS = PROPS.status.toLowerCase().trim();
 
-    console.log(STATUS !== 'завершено' || STATUS !== 'регистрация закрыта')
-
     if (STATUS !== 'завершено' && STATUS !== 'регистрация закрыта') {
         return true;
     }
@@ -38,9 +36,11 @@ const IS_AVAILABLE_LINK = computed(() => {
                     <span class="font-medium text-gray-900">{{ endDate }}</span>
                 </div>
             </div>
-            <Link class="flex items-center justify-center text-white py-3.5 w-full font-medium rounded-lg bg-indigo-600" :href="route('olympiad.order.create', {
-                slug
-            })">
+            <Link v-if="IS_AVAILABLE_LINK"
+                class="flex items-center justify-center text-white py-3.5 w-full font-medium rounded-lg bg-indigo-600"
+                :href="route('olympiad.order.create', {
+                    slug
+                })">
             Перейти к регистрации</Link>
         </div>
     </Container>

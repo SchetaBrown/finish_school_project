@@ -6,6 +6,7 @@ import { ZiggyVue } from "ziggy-js";
 import { InertiaProgress } from "@inertiajs/progress";
 import { createPinia } from "pinia";
 import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
+import FlashMessage from "@other/FlashMessage.vue";
 
 const appName = import.meta.env.VITE_APP_NAME || "EventHub";
 InertiaProgress.init();
@@ -25,6 +26,7 @@ createInertiaApp({
             .use(pinia)
             .use(ZiggyVue)
             .component("Link", Link)
+            .component("Flash", FlashMessage)
             .mount(el);
     },
     progress: {

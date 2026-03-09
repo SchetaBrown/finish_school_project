@@ -23,10 +23,6 @@ let showModal = ref(false);
 function submit() {
     form.submit('post', route('register.store'));
 }
-
-onUnmounted(() => {
-    form.clearErrors()
-});
 </script>
 <template>
     <form @submit.prevent="submit">
@@ -34,7 +30,7 @@ onUnmounted(() => {
             <InputBlock :name="input.name" :type="input.type" :placeholder="input.placeholder" :label="input.label"
                 :error="form.getAllErrors(input.name)" v-for="input in REGISTER_INPUT_VALUES" :key="input.label"
                 @change-value="(data) => {
-                    form.updateFormFieldValue(data.name, data.value)
+                    form.updateFormFieldValue(data)
                 }" />
             <OpenModalButton :name="'education_school_title'" :label="'Учебное заведение'"
                 :baseTitle="'Выберите учебное заведение'" :selectTitle="form.getForm().education_school_title"
@@ -46,7 +42,7 @@ onUnmounted(() => {
 
         <ChooseModal :show="showModal" @close="showModal = false" :title="'Учебные заведения'" :options="schools"
             :name="'education_school_title'" :selectTitle="'title'" @select="data => {
-                form.updateFormFieldValue(data.name, data.value)
+                form.updateFormFieldValue(data)
             }" />
 
         <DivideLine />

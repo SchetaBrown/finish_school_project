@@ -3,7 +3,7 @@ const PROPS = defineProps(['schools']);
 import { AUTH_BASE_FORM_FIELDS } from "@constants/fields.js";
 import { REGISTER_INPUT_VALUES } from "@constants/auth.js";
 import { PHONE_INPUT_VALUE } from "@constants/auth.js";
-import { onUnmounted, ref } from "vue";
+import { ref } from "vue";
 import { useBaseForm } from "@composables/useBaseForm.js";
 import PhoneInput from "@inputs/PhoneInput.vue";
 import BaseButton from "@buttons/BaseButton.vue";
@@ -22,17 +22,20 @@ const form = useBaseForm({
 
 let showModal = ref(false);
 
-onUnmounted(() => {
-    form.clearErrors()
-});
+const submit = () => {
+    form.toLowerCase().submit('post', route('register.store'), {
+        preserveState: true,
+        preserveScroll: true,
+    })
+}
 </script>
 <template>
-    <form @submit.prevent="form.toLowerCase().submit('post', route('register.store'))">
+    <form @submit.prevent="submit">
         <div class="grid grid-cols-2 gap-5 max-lg:grid-cols-1">
             <InputBlock :name="input.name" :type="input.type" :placeholder="input.placeholder" :label="input.label"
                 :error="form.getAllErrors(input.name)" v-for="input in REGISTER_INPUT_VALUES" :key="input.label"
                 @change-value="data => {
-                    form.updateFormFieldValue(data.name, data.value)
+                    form.updateFormFieldValue(data)
                 }" />
             <OpenModalButton :name="'education_school_title'" :label="'Учебное заведение'"
                 :baseTitle="'Выберите учебное заведение'" :selectTitle="form.getForm().education_school_title"
@@ -45,7 +48,7 @@ onUnmounted(() => {
         <DivideLine />
         <ChooseModal :show="showModal" @close="showModal = false" :title="'Учебные заведения'" :options="schools"
             :name="'education_school_title'" :selectTitle="'title'" @select="data => {
-                form.updateFormFieldValue(data.name, data.value)
+                form.updateFormFieldValue(data)
             }" />
 
         <div class="my-4">
@@ -53,7 +56,7 @@ onUnmounted(() => {
             <PhoneInput class="mt-5 mb-1" :label="PHONE_INPUT_VALUE.label" :name="PHONE_INPUT_VALUE.name"
                 :error="form.getAllErrors(PHONE_INPUT_VALUE.name)" @change-value="
                     (data) => {
-                        form.updateFormFieldValue('phone', data)
+                        form.updateFormFieldValue({ name: 'phone', data })
                     }
                 " />
             <span class="text-[12px] text-[#99A1AF]">Телефон нужен для оперативной связи по организационным

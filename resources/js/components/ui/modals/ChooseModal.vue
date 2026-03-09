@@ -119,9 +119,9 @@ const handleSearch = (event) => {
                             :key="option.id || option.title"
                             class="flex text-left p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors w-full">
                             <div class="flex-1">
-                                <h3 class="font-medium text-gray-900">{{ option.title }}</h3>
-                                <p v-if="option.subtitle" class="text-sm text-gray-500 mt-1">
-                                    {{ option.subtitle }}
+                                <h3 class="font-medium text-gray-900">{{ option.full_name }}</h3>
+                                <p v-if="option.short_name" class="text-sm text-gray-500 mt-1">
+                                    {{ option.short_name }}
                                 </p>
                             </div>
                         </button>

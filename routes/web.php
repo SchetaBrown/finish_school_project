@@ -53,6 +53,7 @@ Route::middleware(['is_auth'])->group(function () {
     Route::prefix('/profile')->name('profile.')->group(function () {
         Route::controller(ProfileController::class)->group(function () {
             Route::get('/', 'index')->name('index'); // Главная страница профиля
+            Route::post('/destroy', 'destroy')->name('destroy'); // Выход из учетной записи пользователя
         });
     });
 

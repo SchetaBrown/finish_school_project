@@ -7,7 +7,6 @@ export const useUserStore = defineStore(
     () => {
         // Свойства
         const _authStatus = ref(false);
-        const _user = ref(null);
         const page = usePage();
 
         // Геттеры
@@ -20,24 +19,23 @@ export const useUserStore = defineStore(
             _authStatus.value = status;
         }
 
+        // Принудительная синхронизация с сервером
         function syncWithServer() {
-            const userData =
-                page.props.user_data ||
-                page.props.auth?.user ||
-                page.props.user;
+            const isAuthFromServer = page.props.isAuthenticated;
 
-            if (userData) {
-                _user.value = userData;
-                _authStatus.value = true;
+            // Если сервер вернул конкретное значение (true/false)
+            if (isAuthFromServer !== undefined && isAuthFromServer !== null) {
+                // Обновляем только если значение отличается
+                if (_authStatus.value !== isAuthFromServer) {
+                    _authStatus.value = isAuthFromServer;
+                }
             } else {
-                _user.value = null;
-                _authStatus.value = false;
-                localStorage.removeItem("user");
             }
         }
 
+        // Следим за всеми изменениями пропсов
         watch(
-            () => page.props.auth,
+            () => page.props,
             () => {
                 syncWithServer();
             },
@@ -45,16 +43,16 @@ export const useUserStore = defineStore(
         );
 
         return {
-            _user,
             _authStatus,
-
             isAuthenticated,
-
             updateAuthStatus,
             syncWithServer,
         };
     },
     {
-        persist: true,
+        persist: {
+            paths: ["_authStatus"],
+            storage: localStorage,
+        },
     },
 );

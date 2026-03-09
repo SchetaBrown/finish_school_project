@@ -17,7 +17,7 @@ function login() {
     form.submit('post', route('login.store'), {
         onSuccess: () => {
             userStore.updateAuthStatus(true)
-        }
+        },
     })
 }
 </script>
@@ -28,7 +28,7 @@ function login() {
                 <InputBlock :name="input.name" :type="input.type" :placeholder="input.placeholder" :label="input.label"
                     :error="form.getAllErrors(input.name)" v-for="input in LOGIN_INPUT_VALUES" :key="input.label"
                     @change-value="data => {
-                        form.updateFormFieldValue(data.name, data.value)
+                        form.updateFormFieldValue(data)
                     }" />
             </div>
 

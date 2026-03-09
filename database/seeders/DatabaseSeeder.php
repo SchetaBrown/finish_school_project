@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             OlympiadDirectionSeeder::class,
             OlympiadSeeder::class,
             EducationSchoolSeeder::class,
+            ParticipantSeeder::class,
         ]);
     }
 }

@@ -7,10 +7,10 @@ let selectValue = ref('');
 
 const PROPS = defineProps(['label', 'options', 'name']);
 
-const emit = defineEmits(['select']);
+const emit = defineEmits(['select-value']);
 
 watch(selectValue, (newValue) => {
-    emit('select', {
+    emit('select-value', {
         name: PROPS.name,
         value: newValue
     })
@@ -19,7 +19,7 @@ watch(selectValue, (newValue) => {
 <template>
     <div class="flex flex-col gap-1">
         <Label :name="name" :label="label" />
-        <Select :label="label" :name="name" :options="options" @select="(value) => {
+        <Select :label="label" :name="name" :options="options" @select-value="(value) => {
             selectValue = value;
         }" />
     </div>

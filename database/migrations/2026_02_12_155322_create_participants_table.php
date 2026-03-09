@@ -28,11 +28,6 @@ return new class extends Migration {
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
             $table
-                ->foreignId('education_direction_id')
-                ->constrained()
-                ->cascadeOnUpdate()
-                ->cascadeOnDelete();
-            $table
                 ->foreignId('attached_manager_id')
                 ->nullable()
                 ->references('id')

@@ -1,19 +1,21 @@
 <script setup>
-import { ref, watch } from "vue";
+import { ref } from "vue";
 
 const PROPS = defineProps(["label", "options", "name"]);
+const emit = defineEmits(["select-value"]);
 
-const emit = defineEmits(["select"]);
-let value = ref("");
+let selectValue = ref('');
 
-watch(value, (newValue) => {
-    emit('select', newValue)
-});
+const handleChange = (event) => {
+    selectValue.value = event.target.value;
+    emit('select-value', selectValue.value);
+};
 </script>
+
 <template>
-    <select :name="name" v-model="value"
+    <select :name="name" @change="handleChange"
         class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition flex flex-1">
-        <option value="" disabled selected>
+        <option :value="null" disabled selected>
             Выберите {{ label.toLowerCase() }}
         </option>
         <option :value="option.id" v-for="option in options" :key="option.id">

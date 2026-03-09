@@ -4,6 +4,7 @@ namespace App\Http\Resources\Education;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use PHPUnit\Framework\MockObject\Stub\ReturnReference;
 
 class EducationSchoolResource extends JsonResource
 {
@@ -16,8 +17,8 @@ class EducationSchoolResource extends JsonResource
     private function baseArray()
     {
         return [
-            'title' => $this->full_name,
-            'subtitle' => $this->short_name,
+            'full_name' => $this->full_name,
+            'short_name' => $this->short_name,
             'city' => $this->whenLoaded('city', $this->city->title),
             'directions' => $this->whenLoaded('educationDirections', $this->educationDirections),
         ];
@@ -27,6 +28,12 @@ class EducationSchoolResource extends JsonResource
     {
         if ($request->routeIs('register.*')) {
             return $this->baseArray();
+        }
+
+        if ($request->routeIs('olympiad.order.create')) {
+            return [
+                $this->short_name
+            ];
         }
 
         return array_merge($this->baseArray(), [

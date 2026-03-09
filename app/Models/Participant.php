@@ -21,7 +21,7 @@ class Participant extends Model
     // Связи
     public function user()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class);
     }
 
     public function attachedManager()

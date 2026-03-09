@@ -1,9 +1,16 @@
 import { useForm } from "@inertiajs/vue3";
-import { reactive, watch } from "vue";
+import { onMounted, onUnmounted, reactive, watch } from "vue";
 
-export function useBaseForm(fields) {
-    const FORM = useForm({ ...fields });
+export function useBaseForm(fields, options = {}) {
+    const {
+        clearOnUnmount = true,
+        persistKey,
+        persistFields = [],
+        useRemember = null,
+    } = options;
 
+    const storageKey = persistKey ? `form_${persistKey}` : null;
+    const FORM = useForm(useRemember ?? storageKey, { ...fields });
     const localErrors = reactive({});
 
     watch(
@@ -14,6 +21,12 @@ export function useBaseForm(fields) {
         { deep: true, immediate: true },
     );
 
+    onUnmounted(() => {
+        if (clearOnUnmount) {
+            FORM.clearErrors();
+        }
+    });
+
     return {
         getForm() {
             return FORM;
@@ -23,8 +36,12 @@ export function useBaseForm(fields) {
             return name ? localErrors.value[name] : localErrors.value;
         },
 
-        updateFormFieldValue(name, value) {
-            FORM[name] = value;
+        hasError() {
+            return FORM.hasError;
+        },
+
+        updateFormFieldValue(data) {
+            FORM[data.name] = data.value;
             return this;
         },
 
@@ -47,9 +64,18 @@ export function useBaseForm(fields) {
             FORM[method](route, options);
         },
 
+        oldValue(name) {
+            if (persistKey) {
+                return JSON.parse(localStorage.getItem(persistKey))[name];
+            }
+        },
+
         clearErrors(name) {
             name ? FORM.clearErrors(name) : FORM.clearErrors();
-            return;
         },
+
+        reset(name) {
+            FORM.reset(name)
+        }
     };
 }

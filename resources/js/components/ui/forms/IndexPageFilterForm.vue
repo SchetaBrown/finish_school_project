@@ -24,18 +24,24 @@ const SELECTS = [
         options: PROPS.statuses,
     },
 ];
+
+function submit() {
+    form.submit('get', route('olympiad.index'))
+}
 </script>
 <template>
     <div class="bg-white rounded-xl border border-gray-200 p-5 mb-8 min-h-fit">
-        <form @submit.prevent="form.submit('get', route('olympiad.index'))">
+        <form @submit.prevent="submit">
             <div class="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 <InputBlock :label="'Поиск'" :name="'title'"
                     :icon="'fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm'"
-                    :placeholder="'Введите название олимпиады...'" v-model="form.title">
+                    :placeholder="'Введите название олимпиады...'" @change-value="data => {
+                        form.updateFormFieldValue(data)
+                    }">
                 </InputBlock>
                 <SelectBlock v-for="select in SELECTS" :label="select.label" :name="select.name"
-                    :options="select.options" :key="select.title" @select="(data) => {
-                        form.updateFormFieldValue(data.name, data.value)
+                    :options="select.options" :key="select.title" @select-value="(data) => {
+                        form.updateFormFieldValue(data)
                     }" />
             </div>
             <DivideLine class="my-4" />
