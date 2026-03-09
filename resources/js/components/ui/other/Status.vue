@@ -21,7 +21,7 @@ const FONT_SIZE = computed(() => {
 });
 </script>
 <template>
-    <div class="flex items-start justify-between mb-4 max-w-fit rounded-full" :class="STATUS_CLASSES">
+    <div class="flex items-start justify-between max-w-fit rounded-full h-fit" :class="STATUS_CLASSES">
         <span class="px-3 py-1 font-medium max-w-fit text-center" :class="FONT_SIZE">
             {{ status }}
         </span>

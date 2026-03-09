@@ -5,50 +5,39 @@ import InputError from "@other/InputError.vue";
 import BaseLabel from "@other/BaseLabel.vue";
 
 const PROPS = defineProps(["label", "name", "placeholder", "type", "icon", 'error']);
-const emit = defineEmits(["change-value", "clear-error"]); // Добавляем clear-error
+const emit = defineEmits(["change-value", "clear-error"]);
 
 const value = ref("");
 
-// Флаг для отслеживания, было ли изменение после ошибки
 const wasModified = ref(false);
 
-// Состояние ошибки с учетом модификации
 const hasError = computed(() => {
-    // Если поле было изменено после ошибки - не показываем ошибку
     if (wasModified.value) return false;
     return !!PROPS.error;
 });
 
-// Классы для обертки
 const fieldState = computed(() => ({
     "has-error": hasError.value,
 }));
 
-// Следим за изменением значения
 watch(value, (newValue) => {
-    // Отмечаем, что поле было изменено
     wasModified.value = true;
 
-    // Эмитим изменение
     emit('change-value', newValue);
 
-    // Если была ошибка - эмитим запрос на очистку
     if (PROPS.error) {
         emit('clear-error', PROPS.name);
     }
 });
 
-// Сбрасываем флаг при появлении новой ошибки
 watch(() => PROPS.error, (newError) => {
     if (newError) {
-        wasModified.value = false; // Новая ошибка - сбрасываем флаг
+        wasModified.value = false;
     }
 });
 
-// Обработчик ввода напрямую (на случай, если ProximaPhone не обновляет v-model мгновенно)
 const handleInput = (event) => {
     wasModified.value = true;
-    // Обработка значения если нужно
 };
 </script>
 
@@ -66,8 +55,6 @@ const handleInput = (event) => {
                     }
                 " @input="handleInput" />
         </div>
-
-        <!-- Показываем ошибку только если поле не было изменено -->
         <InputError :error="hasError ? PROPS.error : null" />
     </div>
 </template>

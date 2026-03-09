@@ -88,5 +88,5 @@ Route::middleware(['is_auth'])->group(function () {
 
 // Резервный маршрут
 Route::fallback(function () {
-    return inertia('Fallback');
+    return inertia('Fallback')->with('error', 'Произошла ошибка');
 });

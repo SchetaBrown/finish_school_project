@@ -13,6 +13,7 @@ import ChooseModal from '@modals/ChooseModal.vue'
 import OpenModalButton from "@buttons/OpenModalButton.vue";
 import InputBlock from "@blocks/InputBlock.vue";
 import DivideLine from "@other/DivideLine.vue";
+import { useUserStore } from '@stores/user-store.js'
 
 const form = useBaseForm({
     ...AUTH_BASE_FORM_FIELDS,
@@ -21,11 +22,15 @@ const form = useBaseForm({
 });
 
 let showModal = ref(false);
+const userStore = useUserStore();
 
 const submit = () => {
     form.toLowerCase().submit('post', route('register.store'), {
         preserveState: true,
         preserveScroll: true,
+        onSuccess: () => {
+            userStore.updateAuthStatus(true)
+        },
     })
 }
 </script>
@@ -47,7 +52,7 @@ const submit = () => {
         </div>
         <DivideLine />
         <ChooseModal :show="showModal" @close="showModal = false" :title="'Учебные заведения'" :options="schools"
-            :name="'education_school_title'" :selectTitle="'title'" @select="data => {
+            :name="'education_school_title'" :selectTitle="'full_name'" @select="data => {
                 form.updateFormFieldValue(data)
             }" />
 
@@ -56,7 +61,7 @@ const submit = () => {
             <PhoneInput class="mt-5 mb-1" :label="PHONE_INPUT_VALUE.label" :name="PHONE_INPUT_VALUE.name"
                 :error="form.getAllErrors(PHONE_INPUT_VALUE.name)" @change-value="
                     (data) => {
-                        form.updateFormFieldValue({ name: 'phone', data })
+                        form.updateFormFieldValue({ name: PHONE_INPUT_VALUE.name, value: data })
                     }
                 " />
             <span class="text-[12px] text-[#99A1AF]">Телефон нужен для оперативной связи по организационным

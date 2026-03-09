@@ -25,7 +25,7 @@ const OLYMPIAD_IS_FINISHED =
             : 'text-indigo-600 hover:text-indigo-700'
             ">
     <Container class="p-5 hover:shadow-lg transition">
-        <Status :status="olympiad.status" :fontSize="12" />
+        <Status class="mb-4" :status="olympiad.status" :fontSize="12" />
         <BlockTitle :title="olympiad.title" />
         <OlympiadDescription :description="olympiad.description" />
         <OlympiadProgress :direction="olympiad.direction" :player_count="olympiad.player_count"

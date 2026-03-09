@@ -42,6 +42,7 @@ export function useBaseForm(fields, options = {}) {
 
         updateFormFieldValue(data) {
             FORM[data.name] = data.value;
+            console.log(data.value)
             return this;
         },
 

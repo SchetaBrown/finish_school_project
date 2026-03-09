@@ -7,13 +7,13 @@ const PROPS = defineProps(["count"]);
       >Найдено олимпиад
       <span class="font-medium text-indigo-600">{{ count }}</span>
     </span>
-    <div class="flex items-center space-x-2">
+    <!-- <div class="flex items-center space-x-2">
       <span class="text-sm text-gray-500">Сортировать по:</span>
       <select
         name=""
         id=""
         class="text-sm border border-gray-200 rounded-lg px-3 py-1.5 bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
       ></select>
-    </div>
+    </div> -->
   </div>
 </template>

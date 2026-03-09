@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -75,5 +76,12 @@ class User extends Authenticatable
     public function news()
     {
         return $this->hasMany(OlympiadNew::class);
+    }
+
+    protected function surname()
+    {
+        return Attribute::make(
+            get: fn($value) => mb_ucfirst($value),
+        );
     }
 }

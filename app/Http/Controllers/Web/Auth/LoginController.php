@@ -19,12 +19,13 @@ class LoginController extends Controller
             return redirect()->route('olympiad.index');
         }
 
-        return redirect()->back()->with('success', 'Произошла ошибка');
+        return redirect()->back()->with('error', 'Произошла ошибка');
     }
 
     public function destroy()
     {
         Auth::logout();
+
         return redirect()->route('olympiad.index');
     }
 }
