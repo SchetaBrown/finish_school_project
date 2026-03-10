@@ -13,7 +13,6 @@ import ChooseModal from '@modals/ChooseModal.vue'
 import OpenModalButton from "@buttons/OpenModalButton.vue";
 import InputBlock from "@blocks/InputBlock.vue";
 import DivideLine from "@other/DivideLine.vue";
-import { useUserStore } from '@stores/user-store.js'
 
 const form = useBaseForm({
     ...AUTH_BASE_FORM_FIELDS,
@@ -22,15 +21,11 @@ const form = useBaseForm({
 });
 
 let showModal = ref(false);
-const userStore = useUserStore();
 
 const submit = () => {
     form.toLowerCase().submit('post', route('register.store'), {
         preserveState: true,
         preserveScroll: true,
-        onSuccess: () => {
-            userStore.updateAuthStatus(true)
-        },
     })
 }
 </script>

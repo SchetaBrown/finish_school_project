@@ -1,13 +1,8 @@
 <script setup>
-import { useUserStore } from "@stores/user-store.js";
-import { storeToRefs } from "pinia";
 import { usePage } from '@inertiajs/vue3';
 import Logotype from "./Logotype.vue";
 import UserProfileButton from "@buttons/UserProfileButton.vue";
 import { computed } from "vue";
-
-const userStore = useUserStore();
-const { _authStatus } = storeToRefs(userStore);
 
 const page = usePage();
 const userData = computed(() => {
@@ -19,7 +14,7 @@ const userData = computed(() => {
         <div class="flex items-center justify-between max-w-360 w-full mx-auto px-4 sm:px-6 lg:px-8">
             <Logotype></Logotype>
 
-            <div class="flex items-center" v-if="_authStatus && userData.length !== 0">
+            <div class="flex items-center" v-if="$page.props.auth.isAuthenticated && userData.length !== 0">
                 <UserProfileButton :userData="userData" />
             </div>
             <ul class="flex gap-2" v-else>

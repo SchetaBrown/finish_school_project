@@ -4,21 +4,14 @@ import InputBlock from '@blocks/InputBlock.vue'
 import BaseButton from "@buttons/BaseButton.vue";
 import AuthLink from "@links/AuthLink.vue";
 import { useBaseForm } from "@composables/useBaseForm";
-import { useUserStore } from "@stores/user-store.js";
 
 const form = useBaseForm({
     email: "",
     password: "",
 });
 
-const userStore = useUserStore();
-
 function login() {
-    form.submit('post', route('login.store'), {
-        onSuccess: () => {
-            userStore.updateAuthStatus(true)
-        },
-    })
+    form.submit('post', route('login.store'))
 }
 </script>
 <template>
