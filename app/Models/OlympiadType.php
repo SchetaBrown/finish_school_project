@@ -9,7 +9,6 @@ class OlympiadType extends Model
     // Поля
     protected $fillable = [
         'title',
-        'slug',
     ];
 
     public function olympiads()

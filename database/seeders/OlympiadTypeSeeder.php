@@ -9,19 +9,13 @@ class OlympiadTypeSeeder extends Seeder
 {
     // private array $types = ['индивидуальный', 'командный'];
     private array $types = [
-        [
-            'title' => 'индивидуальный',
-            'slug' => 'individualniy',
-        ],
-        [
-            'title' => 'командный',
-            'slug' => 'komandniy',
-        ],
+        'командный',
+        'индивидуальный',
     ];
     public function run(): void
     {
         foreach ($this->types as $type) {
-            OlympiadType::create($type);
+            OlympiadType::create(['title' => $type]);
         }
     }
 }

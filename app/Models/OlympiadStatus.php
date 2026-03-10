@@ -10,7 +10,6 @@ class OlympiadStatus extends Model
     // Поля
     protected $fillable = [
         'title',
-        'slug',
     ];
 
     // Скрытые поля
