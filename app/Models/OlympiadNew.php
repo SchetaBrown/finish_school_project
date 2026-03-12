@@ -12,6 +12,7 @@ class OlympiadNew extends Model
         'description',
         'olympiad_id',
         'user_id',
+        'published_at',
     ];
 
     // Связи
@@ -20,7 +21,8 @@ class OlympiadNew extends Model
         return $this->belongsTo(Olympiad::class);
     }
 
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 }

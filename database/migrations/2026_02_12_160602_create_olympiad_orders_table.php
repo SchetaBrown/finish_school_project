@@ -10,7 +10,7 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('olympiad_applications', function (Blueprint $table) {
+        Schema::create('olympiad_orders', function (Blueprint $table) {
             $table->id();
 
             $table->float('score')->default(0);
@@ -18,6 +18,11 @@ return new class extends Migration {
 
             $table
                 ->foreignId('participant_id')
+                ->constrained()
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+            $table
+                ->foreignId('manager_id')
                 ->constrained()
                 ->onDelete('cascade')
                 ->onUpdate('cascade');

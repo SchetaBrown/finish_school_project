@@ -3,6 +3,7 @@
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\AuthMiddleware;
 use App\Http\Middleware\HandleInertiaRequests;
+use App\Http\Middleware\ShareRecaptchaKeyMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -22,7 +23,8 @@ return Application::configure(basePath: dirname(__DIR__))
 
 
         $middleware->web([
-            HandleInertiaRequests::class
+            HandleInertiaRequests::class,
+            ShareRecaptchaKeyMiddleware::class
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

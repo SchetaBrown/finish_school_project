@@ -6,13 +6,6 @@ use App\Http\Controllers\Controller;
 
 class AdminOlympiadController extends Controller
 {
-    
-
-    public function __construct()
-    {
-
-    }
-
     public function index()
     {
 

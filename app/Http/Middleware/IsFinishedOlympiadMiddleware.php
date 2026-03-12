@@ -15,8 +15,6 @@ class IsFinishedOlympiadMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        
-
         return $next($request);
     }
 }

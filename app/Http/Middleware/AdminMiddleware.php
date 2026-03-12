@@ -16,7 +16,17 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $user = Auth::user();
+        $is_admin = false;
+        Auth::user()->roles()->each(function ($role) use ($is_admin) {
+            if ($role->title === 'администратор') {
+                $is_admin = true;
+                return false;
+            }
+        });
+
+        if (!$is_admin) {
+            return redirect()->back()->with('error', 'Повысьте уровень доступа.');
+        }
 
         return $next($request);
     }

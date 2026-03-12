@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\OlympiadApplication;
+use App\Models\OlympiadOrder;
 use App\Models\OlympiadDirection;
 use App\Models\OlympiadNew;
 use App\Models\OlympiadStatus;
@@ -46,12 +46,17 @@ class Olympiad extends Model
 
     public function applications()
     {
-        return $this->hasMany(OlympiadApplication::class);
+        return $this->hasMany(OlympiadOrder::class);
     }
 
-    public function news()
+    public function olympiadNews()
     {
         return $this->hasMany(OlympiadNew::class);
+    }
+
+    public function olympiadDocuments()
+    {
+        return $this->hasMany(OlympiadDocument::class);
     }
 
     // Мутаторы и аксессоры
@@ -137,7 +142,8 @@ class Olympiad extends Model
         return $query->with([
             'olympiadStatus',
             'olympiadDirection',
-            'types'
+            'types',
+            'olympiadNews',
         ]);
     }
 }

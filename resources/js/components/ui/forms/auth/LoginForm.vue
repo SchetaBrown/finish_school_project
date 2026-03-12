@@ -4,6 +4,7 @@ import InputBlock from '@blocks/InputBlock.vue'
 import BaseButton from "@buttons/BaseButton.vue";
 import AuthLink from "@links/AuthLink.vue";
 import { useBaseForm } from "@composables/useBaseForm";
+import YandexCaptcha from "@other/YandexCaptcha.vue";
 
 const form = useBaseForm({
     email: "",
@@ -11,7 +12,10 @@ const form = useBaseForm({
 });
 
 function login() {
-    form.submit('post', route('login.store'))
+    form.submit('post', route('login.store'), {
+        preserveState: true,
+        preserveScroll: true,
+    })
 }
 </script>
 <template>
@@ -24,9 +28,11 @@ function login() {
                         form.updateFormFieldValue(data)
                     }" />
             </div>
-
+            <YandexCaptcha class="mt-5"></YandexCaptcha>
             <BaseButton :text="'Войти'" :icon="'fas fa-user-plus'" :disabled="form.processing" class="mt-6" />
             <AuthLink :href="'register.create'" :text-sm="'Нет аккаунта?'" :link-text="'Зарегистрироваться'" />
         </form>
     </div>
 </template>
+
+<style scoped></style>

@@ -5,7 +5,8 @@ import Container from '@other/Container.vue'
 import NoData from '@other/NoData.vue'
 
 const NEWS = computed(() => {
-    return PROPS?.news ?? null;
+    const news = PROPS?.news;
+    return news && news.length !== 0 ? news : null;
 });
 </script>
 <template>
@@ -16,7 +17,6 @@ const NEWS = computed(() => {
         </div>
         <NoData v-if="!NEWS" />
         <div class="" v-else>
-
             УРААА НОВОСТИ
         </div>
     </Container>

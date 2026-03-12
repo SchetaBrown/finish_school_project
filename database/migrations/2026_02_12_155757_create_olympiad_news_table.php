@@ -27,6 +27,7 @@ return new class extends Migration {
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
 
+            $table->dateTime('published_at');
             $table->timestamps();
         });
     }

@@ -21,7 +21,10 @@ const form = useBaseForm({
 let showModal = ref(false);
 
 function submit() {
-    form.submit('post', route('register.store'));
+    form.submit('post', route('register.store'), {
+        preserveState: true,
+        preserveScroll: true,
+    });
 }
 </script>
 <template>

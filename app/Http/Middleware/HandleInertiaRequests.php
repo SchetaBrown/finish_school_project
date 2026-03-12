@@ -37,6 +37,7 @@ class HandleInertiaRequests extends Middleware
     public function share(Request $request): array
     {
         $authCheck = Auth::check();
+
         return array_merge(parent::share($request), [
             'csrf_token' => csrf_token(),
             'auth' => [

@@ -13,11 +13,6 @@ use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
 {
-    public function __construct()
-    {
-
-    }
-
     public function create()
     {
         $schools = EducationSchoolResource::collection(EducationSchool::get());

@@ -1,12 +1,45 @@
 <script setup>
 import { usePage } from '@inertiajs/vue3';
-import { computed } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 
+const isClosing = ref(false);
 const page = usePage();
+const flash = computed(() => {
+    const messageObj = page.props.flash;
+    const availableFlashMessage = {
+        error: {
+            div: '',
+            span: '',
+        },
+        success: {
+            div: '',
+            span: '',
+        },
+        info: {
+            div: '',
+            span: '',
+        },
+        warning: {
+            div: '',
+            span: '',
+        },
+    };
 
-const FLASH_MESSAGE_CLASS = computed(() => {
+    for (let value in availableFlashMessage) {
+        if (messageObj[value] !== null) {
+            return availableFlashMessage[value];
+        }
+    }
 });
+
+function clearMessage() {
+    setTimeout(() => {
+
+    }, 2000);
+}
 </script>
 <template>
-
+    {{ flash }}
+    <div v-if="isClosing">
+    </div>
 </template>

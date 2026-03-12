@@ -1,7 +1,7 @@
 <?php
 
+use App\Http\Controllers\Web\Admin\AdminIndexController;
 use App\Http\Controllers\Web\Admin\Education\AdminEducationSchoolController;
-use App\Http\Controllers\Web\Admin\Olympiad\AdminDirectionController;
 use App\Http\Controllers\Web\Admin\Olympiad\AdminOlympiadController;
 use App\Http\Controllers\Web\Admin\User\AdminUserController;
 use App\Http\Controllers\Web\Auth\LoginController;
@@ -59,13 +59,7 @@ Route::middleware(['is_auth'])->group(function () {
 
     // Для администраторов
     Route::middleware(['is_admin'])->prefix('/admin')->name('admin.')->group(function () {
-
-        // Управление направлениями
-        Route::controller(AdminDirectionController::class)->prefix('/directions')->name('direction.')->group(function () {
-            Route::get('/', 'index')->name('index'); // Все направления
-            Route::post('/store', 'store')->name('store'); // Создание нового направления
-            Route::patch('/{direction}/update', 'update')->name('update'); // Обновление данных о направлении
-        });
+        Route::get('/', [AdminIndexController::class, 'index'])->name('index'); // Главная страница админ-панели
 
         // Управление участниками
         Route::controller(AdminUserController::class)->prefix('/users')->name('user.')->group(function () {

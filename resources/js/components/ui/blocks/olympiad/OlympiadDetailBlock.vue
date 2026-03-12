@@ -6,7 +6,7 @@ const PROPS = defineProps(['details', 'labelTitle']);
 <template>
     <Container>
         <BlockTitle :title="labelTitle" />
-        <div class="grid grid-cols-2 justify-between gap-4">
+        <div class="grid grid-cols-2 justify-between gap-4 max-md:grid-cols-1">
             <div class="flex items-center" v-for="detail in details" :key="detail.subtitle">
                 <i :class="`fa ${detail.icon}`" class="size-5 text-[#8669D1]"></i>
                 <div class="flex flex-col ml-3">

@@ -4,12 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class OlympiadApplication extends Model
+class OlympiadOrder extends Model
 {
     // Поля
     protected $fillable = [
         'score',
         'participant_id',
+        'manager_id',
         'olympiad_id',
     ];
 

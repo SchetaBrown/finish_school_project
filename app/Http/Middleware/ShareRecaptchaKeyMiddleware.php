@@ -2,12 +2,12 @@
 
 namespace App\Http\Middleware;
 
-use Auth;
 use Closure;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 use Symfony\Component\HttpFoundation\Response;
 
-class AuthMiddleware
+class ShareRecaptchaKeyMiddleware
 {
     /**
      * Handle an incoming request.
@@ -16,8 +16,8 @@ class AuthMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!Auth::check()) {
-            return redirect()->route('login.create')->with('error', 'Войдите в систему');
+        if ($request->routeIs('login.*') || $request->routeIs('register.*')) {
+            Inertia::share('recaptcha_site_key', env('YANDEX_RECAPTCHA_CLIENT_KEY'));
         }
 
         return $next($request);

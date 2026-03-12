@@ -27,6 +27,9 @@ class OlympiadResource extends JsonResource
             'types' => $this->whenLoaded('types', function () {
                 return $this->types->pluck('title')->toArray();
             }),
+            'news' => $this->whenLoaded('olympiadNews', function () {
+                return OlympiadNewResource::collection($this->olympiadNews);
+            })
         ];
     }
 }

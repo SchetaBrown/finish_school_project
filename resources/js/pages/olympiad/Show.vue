@@ -74,7 +74,7 @@ const OLYMPIAD_DETAILS = computed(() => {
 </script>
 <template>
     <AppBaseLayout>
-        <div class="flex items-center justify-between">
+        <div class="flex items-center justify-between max-md:flex-wrap max-md:mb-5">
             <PageTitle :title="DATA.title" />
             <Status :status="DATA.status" />
         </div>
@@ -86,7 +86,7 @@ const OLYMPIAD_DETAILS = computed(() => {
                 </p>
             </Container>
             <OlympiadDetailBlock :details="OLYMPIAD_DETAILS" :labelTitle="'Детали олимпиады'" />
-            <OlympiadNewBlock />
+            <OlympiadNewBlock :news="DATA.news" />
             <OlympiadRegisterBlock :title="'Регистрация'" :count="PLAYER_COUNT" :limit="PLAYER_LIMIT"
                 :progressBarWidth="PROGRESS_BAR_WIDTH" :end-date="END_DATE" :slug="DATA.slug" :status="DATA.status">
             </OlympiadRegisterBlock>
