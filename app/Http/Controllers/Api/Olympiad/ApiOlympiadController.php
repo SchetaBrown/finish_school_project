@@ -12,7 +12,6 @@ class ApiOlympiadController extends Controller
 {
     public function index(GetOlympiadsIndexDataAction $action, Request $request)
     {
-
         $olympiads = OlympiadResource::collection(Olympiad::withDefaultRelations()->filter($request->all())->paginate(10)->withQueryString());
 
         return response()->json($olympiads);

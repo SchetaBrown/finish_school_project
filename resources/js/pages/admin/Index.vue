@@ -1,8 +1,8 @@
 <script setup>
-import AppBaseLayout from '@layouts/AppBaseLayout.vue'
+import AppAdminLayout from '@layouts/AppAdminLayout.vue'
 </script>
 <template>
-    <AppBaseLayout>
+    <AppAdminLayout>
         Здесь админ-панель
-    </AppBaseLayout>
+    </AppAdminLayout>
 </template>

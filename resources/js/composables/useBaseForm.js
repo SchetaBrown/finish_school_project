@@ -1,4 +1,4 @@
-import { useForm } from "@inertiajs/vue3";
+import { useForm, router  } from "@inertiajs/vue3";
 import { onMounted, onUnmounted, reactive, watch } from "vue";
 
 export function useBaseForm(fields, options = {}) {
@@ -21,12 +21,6 @@ export function useBaseForm(fields, options = {}) {
         { deep: true, immediate: true },
     );
 
-    onUnmounted(() => {
-        if (clearOnUnmount) {
-            FORM.clearErrors();
-        }
-    });
-
     return {
         getForm() {
             return FORM;
@@ -42,7 +36,6 @@ export function useBaseForm(fields, options = {}) {
 
         updateFormFieldValue(data) {
             FORM[data.name] = data.value;
-            console.log(data.value)
             return this;
         },
 
@@ -76,7 +69,7 @@ export function useBaseForm(fields, options = {}) {
         },
 
         reset(name) {
-            FORM.reset(name)
-        }
+            FORM.reset(name);
+        },
     };
 }

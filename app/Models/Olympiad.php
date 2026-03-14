@@ -107,7 +107,7 @@ class Olympiad extends Model
 
     public function scopeFilter(Builder $query, array $filters): Builder
     {
-        return $query
+        $query
             ->when($filters['title'] ?? null, function ($q, $title) {
                 $q->where('title', 'LIKE', "%{$title}%");
             })
@@ -135,6 +135,8 @@ class Olympiad extends Model
                         ->orWhere('id', $type)
                 );
             });
+
+        return $query;
     }
 
     public function scopeWithDefaultRelations(Builder $query): Builder

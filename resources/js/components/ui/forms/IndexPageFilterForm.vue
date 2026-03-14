@@ -1,6 +1,6 @@
 <script setup>
 const PROPS = defineProps(["directions", "statuses"]);
-import { useBaseForm } from '../../../composables/useBaseForm.js'
+import { useBaseForm } from '@composables/useBaseForm.js'
 import InputBlock from '@blocks/InputBlock.vue'
 import SelectBlock from '@blocks/SelectBlock.vue'
 import DivideLine from '@other/DivideLine.vue';
@@ -26,7 +26,9 @@ const SELECTS = [
 ];
 
 function submit() {
-    form.submit('get', route('olympiad.index'))
+    form.submit('get', route('olympiad.index'), {
+        preserveState: true
+    })
 }
 </script>
 <template>

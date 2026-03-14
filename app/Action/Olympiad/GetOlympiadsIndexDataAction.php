@@ -20,6 +20,6 @@ class GetOlympiadsIndexDataAction
         $statuses = OlympiadStatus::withoutDraft($isAdminRoute)->get();
         $directions = OlympiadDirection::get();
 
-        return compact(['olympiads', 'olympiad_count', 'statuses', 'directions']);
+        return compact(['olympiad_count', 'statuses', 'directions']);
     }
 }

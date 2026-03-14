@@ -28,7 +28,7 @@
     @inertiaHead
 </head>
 
-<body class="bg-(--light-gray-color)">
+<body class="bg-(--light-gray-color) min-h-screen">
     @inertia
 </body>
 
