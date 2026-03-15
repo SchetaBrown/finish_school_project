@@ -13,6 +13,7 @@ class UserSeeder extends Seeder
             'name' => 'Иван',
             'patronymic' => 'Иванович',
             'email' => 'ivan@gmail.com',
+            'phone' => '7999887766',
             'password' => '123123123',
         ],
         [
@@ -20,6 +21,7 @@ class UserSeeder extends Seeder
             'name' => 'Петр',
             'patronymic' => 'Петрович',
             'email' => 'petr@gmail.com',
+            'phone' => '7999887767',
             'password' => '123123123',
         ],
     ];

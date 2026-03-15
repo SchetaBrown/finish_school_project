@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Web\Auth;
 use App\Action\User\StoreUserAction;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Education\EducationSchoolResource;
-use App\Models\EducationDirection;
 use App\Models\EducationSchool;
 use App\Services\Interfaces\UserServiceInterface;
 use Illuminate\Http\Request;
@@ -15,10 +14,9 @@ class RegisterController extends Controller
 {
     public function create()
     {
-        $schools = EducationSchoolResource::collection(EducationSchool::get());
-        $directions = EducationDirection::with(['schools'])->get();
+        $schools = EducationSchoolResource::collection(EducationSchool::with(['directions'])->get());
 
-        return inertia('auth/Register', compact('schools', 'directions'));
+        return inertia('auth/Register', compact('schools'));
     }
 
     public function store(Request $request, UserServiceInterface $userService, StoreUserAction $action)

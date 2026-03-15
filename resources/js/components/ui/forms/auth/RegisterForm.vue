@@ -1,5 +1,5 @@
 <script setup>
-const PROPS = defineProps(['schools', 'directions']);
+const PROPS = defineProps(['schools']);
 import ChangeRoleSection from "@sections/ChangeRoleSection.vue";
 import ManagarRegisterForm from "./register/ManagerRegisterForm.vue";
 import ParticipantRegisterForm from "./register/ParticipantRegisterForm.vue";

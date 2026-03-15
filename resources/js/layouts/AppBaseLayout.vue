@@ -2,14 +2,17 @@
 import TheHeader from "@components/partials/TheHeader.vue";
 import TheFooter from "@components/partials/TheFooter.vue";
 import FlashMessage from "@other/FlashMessage.vue";
+import MainLayout from "./MainLayout.vue";
 </script>
 <template>
-    <FlashMessage></FlashMessage>
-    <div class="min-h-screen flex flex-col">
-        <TheHeader class="sticky top-0 z-50" />
-        <main class="flex-1 mx-auto max-w-360 w-full px-4 sm:px-6 lg:px-8">
-            <slot></slot>
-        </main>
-        <TheFooter />
-    </div>
+    <MainLayout>
+        <FlashMessage></FlashMessage>
+        <div class="min-h-screen flex flex-col">
+            <TheHeader class="sticky top-0 z-50" />
+            <main class="flex-1 mx-auto max-w-360 w-full px-4 sm:px-6 lg:px-8">
+                <slot></slot>
+            </main>
+            <TheFooter />
+        </div>
+    </MainLayout>
 </template>

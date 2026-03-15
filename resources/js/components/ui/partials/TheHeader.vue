@@ -1,21 +1,14 @@
 <script setup>
-import { usePage } from '@inertiajs/vue3';
 import Logotype from "./Logotype.vue";
 import UserProfileButton from "@buttons/UserProfileButton.vue";
-import { computed } from "vue";
-
-const page = usePage();
-const userData = computed(() => {
-    return page.props.auth.user ?? [];
-});
 </script>
 <template>
     <header class="flex items-center justify-center bg-white h-20 w-full border-b border-gray-200 mb-20">
         <div class="flex items-center justify-between max-w-360 w-full mx-auto px-4 sm:px-6 lg:px-8">
             <Logotype></Logotype>
 
-            <div class="flex items-center" v-if="$page.props.auth.isAuthenticated && userData.length !== 0">
-                <UserProfileButton :userData="userData" />
+            <div class="flex items-center" v-if="$page.props.auth.isAuthenticated">
+                <UserProfileButton />
             </div>
             <ul class="flex gap-2" v-else>
                 <li>

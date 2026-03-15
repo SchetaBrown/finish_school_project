@@ -6,7 +6,7 @@ const PROPS = defineProps(["title", "subtitle"]);
         <h1 class="text-2xl sm:text-3xl font-bold text-gray-900">
             {{ title ?? "Нет заголовка" }}
         </h1>
-        <p class="text-sm text-gray-500 mt-1">
+        <p v-if="subtitle" class="text-sm text-gray-500 mt-1">
             {{ subtitle ?? "Нет подзаголовка" }}
         </p>
     </div>

@@ -24,7 +24,7 @@ class AdminMiddleware
             }
         });
 
-        if ($is_admin) {
+        if (!$is_admin) {
             return redirect()->back()->with('error', 'Повысьте уровень доступа.');
         }
 

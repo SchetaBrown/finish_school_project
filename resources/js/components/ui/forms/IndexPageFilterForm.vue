@@ -7,9 +7,6 @@ import DivideLine from '@other/DivideLine.vue';
 import SubmitButton from '@buttons/BaseButton.vue'
 
 const form = useBaseForm({
-    title: "",
-    direction: "",
-    status: "",
 });
 
 const SELECTS = [

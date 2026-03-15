@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -17,6 +16,7 @@ class User extends Authenticatable
         'name',
         'patronymic',
         'email',
+        'phone',
         'password',
         'is_ban',
     ];
@@ -48,14 +48,14 @@ class User extends Authenticatable
         );
     }
 
-    public function participants()
+    public function participant()
     {
-        return $this->hasMany(Participant::class, 'user_id');
+        return $this->hasOne(Participant::class);
     }
 
-    public function managers()
+    public function manager()
     {
-        return $this->hasMany(Participant::class);
+        return $this->hasOne(Manager::class);
     }
 
     public function news()
@@ -74,5 +74,21 @@ class User extends Authenticatable
         return Attribute::make(
             get: fn($value) => mb_ucfirst($value),
         );
+    }
+
+    protected function phone(): Attribute
+    {
+        return Attribute::make(
+            get: fn(string $value) => $this->formatPhoneForDisplay($value),
+            set: fn(string $value) => preg_replace('/[^0-9]/', '', $value)
+        );
+    }
+
+    private function formatPhoneForDisplay(string $phone): string
+    {
+        return '+7 (' . substr($phone, 1, 3) . ') '
+            . substr($phone, 4, 3) . '-'
+            . substr($phone, 7, 2) . '-'
+            . substr($phone, 8, 2);
     }
 }

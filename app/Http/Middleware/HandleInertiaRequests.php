@@ -2,47 +2,34 @@
 
 namespace App\Http\Middleware;
 
+use App\Http\Resources\User\ManagerResource;
+use App\Http\Resources\User\ParticipantResource;
+use App\Http\Resources\User\UserResource;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Middleware;
 
 class HandleInertiaRequests extends Middleware
 {
-    /**
-     * The root template that's loaded on the first page visit.
-     *
-     * @see https://inertiajs.com/server-side-setup#root-template
-     *
-     * @var string
-     */
     protected $rootView = 'app';
 
-    /**
-     * Determines the current asset version.
-     *
-     * @see https://inertiajs.com/asset-versioning
-     */
     public function version(Request $request): ?string
     {
         return parent::version($request);
     }
 
-    /**
-     * Define the props that are shared by default.
-     *
-     * @see https://inertiajs.com/shared-data
-     *
-     * @return array<string, mixed>
-     */
     public function share(Request $request): array
     {
         $authCheck = Auth::check();
+
+        $user = $this->getUserResource();
 
         return array_merge(parent::share($request), [
             'csrf_token' => csrf_token(),
             'auth' => [
                 'isAuthenticated' => $authCheck,
-                'user' => $authCheck ? auth()->user() : null
+                'user' => $user
             ],
             'flash' => [
                 'success' => fn() => $request->session()->get('success'),
@@ -52,5 +39,25 @@ class HandleInertiaRequests extends Middleware
             ],
             'other_data' => $request->all()
         ]);
+    }
+
+    private function getUserResource()
+    {
+        $user = User::with(['roles', 'manager.educationSchool', 'participant.educationSchool', 'participant.attachedManager', 'participant.olympiadOrders', 'manager.user', 'participant.user'])
+            ->find(auth()->id());
+
+        if (!$user) {
+            return null;
+        }
+
+        if ($user->roles->contains('title', 'руководитель') && $user->manager) {
+            return new ManagerResource($user->manager);
+        }
+
+        if ($user->roles->contains('title', 'участник') && $user->participant) {
+            return new ParticipantResource($user->participant);
+        }
+
+        return new UserResource($user);
     }
 }

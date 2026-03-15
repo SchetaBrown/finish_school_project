@@ -1,11 +1,12 @@
 <script setup>
-const PROPS = defineProps(["userData"]);
-import { computed, ref, onMounted, onBeforeUnmount } from "vue";
+import { computed, ref, onMounted, onBeforeUnmount, inject } from "vue";
 import { useBaseForm } from "@composables/useBaseForm.js";
 
 const form = useBaseForm();
 let isVisibleList = ref(false);
 const dropdownRef = ref(null);
+
+const userData = inject('userData');
 
 const logout = () => {
     form.submit("post", route("profile.destroy"));
@@ -42,10 +43,10 @@ onBeforeUnmount(() => {
             class="flex items-center space-x-3 pl-3 pr-2 py-2 rounded-lg hover:bg-gray-50 transition"
             :class="{ 'bg-gray-50': isVisibleList }">
             <div class="w-8 h-8 bg-indigo-100 rounded-lg flex items-center justify-center">
-                <span class="text-indigo-600 font-medium text-sm">{{ userData.name[0] }}{{ userData.surname[0] }}</span>
+                <span class="text-indigo-600 font-medium text-sm">{{ userData.initial }}</span>
             </div>
             <span class="font-medium text-gray-700">
-                {{ userData.name }} {{ userData.surname[0] }}.
+                {{ userData.fullName }}
             </span>
             <i class="fas fa-chevron-down text-xs text-gray-400 transition-transform"
                 :class="{ 'rotate-180': isVisibleList }"></i>
@@ -55,7 +56,7 @@ onBeforeUnmount(() => {
             class="absolute right-0 mt-2 w-64 bg-white rounded-xl shadow-lg border border-gray-200 py-2 z-50">
             <div class="px-4 py-3 border-b border-gray-100">
                 <p class="text-sm font-medium text-gray-900">
-                    {{ userData.name }} {{ userData.surname }}
+                    {{ userData.fullName }}
                 </p>
                 <p class="text-xs text-gray-400">{{ userData.email }}</p>
             </div>

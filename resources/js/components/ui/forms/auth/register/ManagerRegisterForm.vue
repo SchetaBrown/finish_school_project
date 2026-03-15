@@ -7,6 +7,7 @@ import { ref } from "vue";
 import { useBaseForm } from "@composables/useBaseForm.js";
 import PhoneInput from "@inputs/PhoneInput.vue";
 import BaseButton from "@buttons/BaseButton.vue";
+import YandexCaptcha from "@other/YandexCaptcha.vue";
 import AuthLink from "@links/AuthLink.vue";
 import BlockTitle from '@titles/BlockTitle.vue'
 import ChooseModal from '@modals/ChooseModal.vue'
@@ -62,6 +63,7 @@ const submit = () => {
             <span class="text-[12px] text-[#99A1AF]">Телефон нужен для оперативной связи по организационным
                 вопросам</span>
         </div>
+        <YandexCaptcha class="mb-6" />
         <BaseButton :text="'Зарегистрироваться'" :icon="'fas fa-user-plus'" />
         <AuthLink :href="'login.create'" :text-sm="'Есть аккаунт?'" :link-text="'Войти'" />
     </form>

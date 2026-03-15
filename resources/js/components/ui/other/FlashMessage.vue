@@ -1,27 +1,31 @@
 <script setup>
 import { usePage } from '@inertiajs/vue3';
-import { computed, onMounted, ref, watch } from 'vue';
+import { computed, onUnmounted, ref } from 'vue';
 
 const isClosing = ref(false);
 const page = usePage();
 const flash = computed(() => {
-    const messageObj = page.props.flash;
+    const messageObj = page?.props?.flash;
     const availableFlashMessage = {
         error: {
-            div: '',
-            span: '',
+            div: 'div-ошибки',
+            span: 'span-ошибки',
+            message: messageObj.error,
         },
         success: {
-            div: '',
-            span: '',
+            div: 'div-успеха',
+            span: 'span-успеха',
+            message: messageObj.success,
         },
         info: {
-            div: '',
-            span: '',
+            div: 'div-информации',
+            span: 'span-информации',
+            message: messageObj.info,
         },
         warning: {
-            div: '',
-            span: '',
+            div: 'div-предупреждения',
+            span: 'span-предупреждения',
+            message: messageObj.warning,
         },
     };
 
@@ -32,14 +36,22 @@ const flash = computed(() => {
     }
 });
 
-function clearMessage() {
+const closeMessage = () => {
+    isClosing.value = !isClosing.value
+}
+
+const clearMessage = () => {
     setTimeout(() => {
 
     }, 2000);
 }
+
+onUnmounted(() => {
+    closeMessage()
+});
 </script>
 <template>
-    {{ flash }}
-    <div v-if="isClosing">
+    <div>
+
     </div>
 </template>

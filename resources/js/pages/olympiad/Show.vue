@@ -4,9 +4,9 @@ import AppBaseLayout from "@layouts/AppBaseLayout.vue";
 import PageTitle from '@titles/PageTitle.vue'
 import BlockTitle from '@titles/BlockTitle.vue'
 import Container from '@other/Container.vue'
-import OlympiadDetailBlock from "@blocks/olympiad/OlympiadDetailBlock.vue";
-import OlympiadNewBlock from "@blocks/olympiad/OlympiadNewBlock.vue";
-import OlympiadRegisterBlock from "@blocks/olympiad/OlympiadRegisterBlock.vue";
+import OlympiadDetailBlock from "@blocks/olympiad/show/OlympiadDetailBlock.vue";
+import OlympiadNewBlock from "@blocks/olympiad/show/OlympiadNewBlock.vue";
+import OlympiadRegisterBlock from "@blocks/olympiad/show/OlympiadRegisterBlock.vue";
 import Status from '@other/Status.vue'
 
 const PROPS = defineProps(["olympiad"]);

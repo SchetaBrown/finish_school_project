@@ -34,7 +34,7 @@ class Participant extends Model
         return $this->belongsTo(EducationSchool::class);
     }
 
-    public function OlympiadOrders()
+    public function olympiadOrders()
     {
         return $this->hasMany(OlympiadOrder::class);
     }

@@ -18,6 +18,7 @@ return new class extends Migration {
             $table->string('patronymic');
             $table->string('email')->unique();
             $table->string('password');
+            $table->string('phone')->unique();
             $table->boolean('is_ban')->default(false);
 
             $table->timestamps();

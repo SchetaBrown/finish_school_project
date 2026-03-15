@@ -8,6 +8,6 @@ class AdminEducationSchoolController extends Controller
 {
     public function index()
     {
-
+        return Inertia::render('admin/user/Index');
     }
 }

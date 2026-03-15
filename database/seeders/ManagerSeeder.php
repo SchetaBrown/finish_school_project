@@ -2,16 +2,21 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Manager;
 use Illuminate\Database\Seeder;
 
 class ManagerSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
+    private array $managers = [
+        [
+            'user_id' => 1,
+            'education_school_id' => 1,
+        ]
+    ];
     public function run(): void
     {
-        //
+        foreach ($this->managers as $manager) {
+            Manager::create($manager);
+        }
     }
 }
