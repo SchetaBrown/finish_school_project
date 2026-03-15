@@ -26,7 +26,7 @@ const infoInputData = computed(() => {
                 },
                 {
                     subtitle: 'Дата рождения',
-                    title: '123',
+                    title: userData.birthDate,
                 },
             ],
         },

@@ -5,6 +5,8 @@ namespace App\Http\Middleware;
 use App\Http\Resources\User\ManagerResource;
 use App\Http\Resources\User\ParticipantResource;
 use App\Http\Resources\User\UserResource;
+use App\Models\Manager;
+use App\Models\Participant;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -43,21 +45,27 @@ class HandleInertiaRequests extends Middleware
 
     private function getUserResource()
     {
-        $user = User::with(['roles', 'manager.educationSchool', 'participant.educationSchool', 'participant.attachedManager', 'participant.olympiadOrders', 'manager.user', 'participant.user'])
-            ->find(auth()->id());
-
+        $user = User::with(['role'])->find(auth()->id());
         if (!$user) {
-            return null;
+            return;
         }
 
-        if ($user->roles->contains('title', 'руководитель') && $user->manager) {
-            return new ManagerResource($user->manager);
+        if ($user->role->title === 'участник') {
+            $participant = Participant::where('user_id', $user->id)
+                ->with(['educationSchool', 'attachedManager', 'olympiadOrders', 'user', 'user.role'])
+                ->first();
+
+            return new ParticipantResource($participant);
         }
 
-        if ($user->roles->contains('title', 'участник') && $user->participant) {
-            return new ParticipantResource($user->participant);
-        }
+        if ($user->role->title === 'руководитель') {
+            $manager = Manager::where('user_id', $user->id)
+                ->with(['educationSchool', 'user', 'user.role'])
+                ->first();
 
-        return new UserResource($user);
+            return new ManagerResource($manager);
+        } else {
+            return new UserResource($user);
+        }
     }
 }

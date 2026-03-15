@@ -5,27 +5,6 @@ import DivideLine from '@other/DivideLine.vue'
 
 const userData = inject('userData');
 
-const userInitial = computed(() => {
-    return `${userData?.user_info?.surname[0]}${userData?.user_info?.name[0]}`
-});
-
-const userFullName = computed(() => {
-    return `${userData?.user_info?.name} ${userData?.user_info?.surname}`;
-});
-
-const userRoles = computed(() => {
-    const roles = userData.roles;
-    if (typeof roles === 'object') {
-        const newRoles = roles.map((role) => {
-            return `${role[0].toUpperCase()}${role.slice(1)}`;
-        });
-
-        return newRoles.join(', ');
-    }
-
-    return roles;
-});
-
 const userInfo = computed(() => {
     return [
         {
@@ -36,10 +15,15 @@ const userInfo = computed(() => {
             icon: 'fa-phone',
             title: userData.phone,
         },
+        {
+            icon: 'fa-graduation-cap',
+            title: userData.school,
+        },
     ];
 });
 </script>
 <template>
+
     <aside class="lg:col-span-1">
         <Container class="sticky">
             <div class="text-center mb-6">
@@ -51,15 +35,17 @@ const userInfo = computed(() => {
                 <h2 class="text-xl font-semibold text-gray-900">
                     {{ userData.fullName }}
                 </h2>
-                <p class="text-sm text-gray-500">{{ userRoles }}</p>
+                <p class="text-sm text-gray-500" v-if="userData.role">{{ userData.role }}</p>
             </div>
             <DivideLine></DivideLine>
             <div class="flex flex-col gap-3 text-sm">
-                <div class="flex items-center space-x-3" v-for="info in userInfo" :key="info.title">
-                    <i v-if="info.icon" class="text-gray-400 w-4" :class="[
-                        `fas ${info.icon}`
-                    ]"></i>
-                    <span class="text-gray-600">{{ info.title }}</span>
+                <div v-for="info in userInfo" :key="info.title">
+                    <div class="flex items-center space-x-3" v-if="info.title">
+                        <i v-if="info.icon" class="text-gray-400 w-4" :class="[
+                            `fas ${info.icon}`
+                        ]"></i>
+                        <span class="text-gray-600">{{ info.title }}</span>
+                    </div>
                 </div>
             </div>
             <div class="w-full mt-6">

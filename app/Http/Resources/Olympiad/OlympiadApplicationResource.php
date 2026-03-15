@@ -5,7 +5,7 @@ namespace App\Http\Resources\Olympiad;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class OlympiadOrderResource extends JsonResource
+class OlympiadApplicationResource extends JsonResource
 {
     /**
      * Transform the resource into an array.

@@ -12,24 +12,24 @@ const userData = computed(() => {
 });
 
 const userInfo = computed(() => {
-    // Получаем данные пользователя
     const user = userData?.value;
 
-    // Если есть user_info - используем его
     if (user?.user_info) {
-        const info = user.user_info;
+        const info = user;
         return {
-            initial: `${info.surname?.[0] || ''}${info.name?.[0] || ''}`,
-            fullName: `${info.surname || ''} ${info.name || ''}`.trim(),
-            surname: info.surname || '',
-            name: info.name || '',
-            patronymic: info.patronymic || '',
-            email: info.email || '',
-            phone: info.phone || '',
+            initial: `${info.user_info.surname?.[0] || ''}${info.user_info.name?.[0] || ''}`,
+            fullName: `${info.user_info.surname || ''} ${info.user_info.name || ''}`.trim(),
+            surname: info.user_info.surname || '',
+            name: info.user_info.name || '',
+            patronymic: info.user_info.patronymic || '',
+            email: info.user_info.email || '',
+            phone: info.user_info.phone || '',
+            birthDate: info.birth_date || '',
+            school: info.school.short_name || '',
+            role: info.user_info.role || '',
         };
     }
 
-    // Если user_info нет, но есть данные в самом user
     if (user) {
         return {
             initial: `${user.surname?.[0] || ''}${user.name?.[0] || ''}`,
@@ -39,18 +39,9 @@ const userInfo = computed(() => {
             patronymic: user.patronymic || '',
             email: user.email || '',
             phone: user.phone || '',
+            role: user.role || '',
         };
     }
-
-    return {
-        initial: '',
-        fullName: '',
-        surname: '',
-        name: '',
-        patronymic: '',
-        email: '',
-        phone: '',
-    };
 });
 
 provide('userData', userInfo.value)

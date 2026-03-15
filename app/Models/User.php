@@ -18,6 +18,7 @@ class User extends Authenticatable
         'email',
         'phone',
         'password',
+        'role_id',
         'is_ban',
     ];
 
@@ -38,14 +39,9 @@ class User extends Authenticatable
     }
 
     // Связи
-    public function roles()
+    public function role()
     {
-        return $this->belongsToMany(
-            Role::class,
-            'user_roles',
-            'user_id',
-            'role_id'
-        );
+        return $this->belongsTo(Role::class);
     }
 
     public function participant()

@@ -4,7 +4,6 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
 class AdminMiddleware
@@ -16,15 +15,8 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $is_admin = false;
-        Auth::user()->roles->each(function ($role) use ($is_admin) {
-            if ($role->title === 'администратор') {
-                $is_admin = true;
-                return false;
-            }
-        });
 
-        if (!$is_admin) {
+        if (auth()->user()->role->title !== 'администратор') {
             return redirect()->back()->with('error', 'Повысьте уровень доступа.');
         }
 

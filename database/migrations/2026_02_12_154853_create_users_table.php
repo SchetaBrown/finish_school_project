@@ -21,6 +21,11 @@ return new class extends Migration {
             $table->string('phone')->unique();
             $table->boolean('is_ban')->default(false);
 
+            $table->
+                foreignId('role_id')
+                ->constrained()
+                ->onUpdate('cascade');
+
             $table->timestamps();
         });
 

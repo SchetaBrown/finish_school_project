@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 
 class Participant extends Model
@@ -37,5 +39,16 @@ class Participant extends Model
     public function olympiadOrders()
     {
         return $this->hasMany(OlympiadOrder::class);
+    }
+
+    // Мутаторы/аксессоры
+    protected function birthDate()
+    {
+        return Attribute::make(
+            get: function ($value) {
+                $carbon = new Carbon($value);
+                return $carbon->format('d.m.Y');
+            }
+        );
     }
 }

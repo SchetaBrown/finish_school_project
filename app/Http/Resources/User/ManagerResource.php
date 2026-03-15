@@ -8,16 +8,15 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class ManagerResource extends JsonResource
 {
-    /**
-     * Transform the resource into an array.
-     *
-     * @return array<string, mixed>
-     */
     public function toArray(Request $request): array
     {
         return [
-            'school' => $this->whenLoaded('educationSchool', new EducationSchoolResource($this->educationSchool)),
-            'user_info' => $this->whenLoaded('user', new UserResource($this->user)),
+            'school' => $this->whenLoaded('educationSchool', function () {
+                return new EducationSchoolResource($this->educationSchool);
+            }),
+            'user_info' => $this->whenLoaded('user', function () {
+                return new UserResource($this->user);
+            }),
         ];
     }
 }

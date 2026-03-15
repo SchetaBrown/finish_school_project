@@ -8,11 +8,6 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class ParticipantResource extends JsonResource
 {
-    /**
-     * Transform the resource into an array.
-     *
-     * @return array<string, mixed>
-     */
     public function toArray(Request $request): array
     {
         return [
@@ -21,8 +16,8 @@ class ParticipantResource extends JsonResource
             'is_hostel' => $this->when($this->is_hostel, fn() => $this->is_hostel),
             'arrival_date' => $this->when($this->arrival_date, fn() => $this->is_hostel),
             'departure_date' => $this->when($this->departure_date, fn() => $this->is_hostel),
-            'school' => $this->whenLoaded('educationSchool', new EducationSchoolResource($this->educationSchool)),
             'attached_manager' => $this->whenLoaded('attachedManager', new UserResource($this->user)),
+            'school' => $this->whenLoaded('educationSchool', new EducationSchoolResource($this->educationSchool)),
             'user_info' => $this->whenLoaded('user', new UserResource($this->user)),
         ];
     }

@@ -15,6 +15,7 @@ class UserSeeder extends Seeder
             'email' => 'ivan@gmail.com',
             'phone' => '7999887766',
             'password' => '123123123',
+            'role_id' => 1,
         ],
         [
             'surname' => 'Петров',
@@ -23,6 +24,7 @@ class UserSeeder extends Seeder
             'email' => 'petr@gmail.com',
             'phone' => '7999887767',
             'password' => '123123123',
+            'role_id' => 2,
         ],
     ];
 
