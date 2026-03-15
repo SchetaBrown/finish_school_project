@@ -25,8 +25,9 @@ const userInfo = computed(() => {
             email: info.user_info.email || '',
             phone: info.user_info.phone || '',
             birthDate: info.birth_date || '',
-            school: info.school.short_name || '',
+            school: info.school || '',
             role: info.user_info.role || '',
+            coursNumber: info.cours_number || '',
         };
     }
 
@@ -40,9 +41,12 @@ const userInfo = computed(() => {
             email: user.email || '',
             phone: user.phone || '',
             role: user.role || '',
+            isAccept: user.is_accept || '',
         };
     }
 });
+
+console.log(userData.value)
 
 provide('userData', userInfo.value)
 </script>

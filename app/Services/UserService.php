@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Action\User\StoreUserAction;
+use App\Action\User\StoreManagerOrParticipantAction;
 use App\Http\Requests\Auth\StoreManagerRequest;
 use App\Http\Requests\Auth\StoreParticipantRequest;
 use App\Models\Manager;
@@ -12,7 +12,7 @@ use App\Services\Interfaces\UserServiceInterface;
 
 class UserService implements UserServiceInterface
 {
-    public function storeUser(string $role, StoreUserAction $action): User
+    public function storeUser(string $role, StoreManagerOrParticipantAction $action): User
     {
         $config = match ($role) {
             'manager' => [
@@ -31,8 +31,13 @@ class UserService implements UserServiceInterface
 
         $model = app($config['model']);
 
-        $user = $action->execute($model, $validated);
+        $user = $action->execute($model, $role, $validated);
 
         return $user;
+    }
+
+    public function storeOrderForManager()
+    {
+
     }
 }

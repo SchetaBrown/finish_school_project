@@ -1,6 +1,6 @@
 <script setup>
 const PROPS = defineProps(['schools']);
-import { AUTH_BASE_FORM_FIELDS } from "@constants/fields.js";
+import { REGISTER_BASE_FORM_FIELDS } from "@constants/fields.js";
 import { REGISTER_INPUT_VALUES } from "@constants/auth.js";
 import { PHONE_INPUT_VALUE } from "@constants/auth.js";
 import { ref } from "vue";
@@ -16,8 +16,7 @@ import InputBlock from "@blocks/InputBlock.vue";
 import DivideLine from "@other/DivideLine.vue";
 
 const form = useBaseForm({
-    ...AUTH_BASE_FORM_FIELDS,
-    phone: "",
+    ...REGISTER_BASE_FORM_FIELDS,
     role: "manager",
 });
 
@@ -64,7 +63,7 @@ const submit = () => {
                 вопросам</span>
         </div>
         <YandexCaptcha class="mb-6" />
-        <BaseButton :text="'Зарегистрироваться'" :icon="'fas fa-user-plus'" />
+        <BaseButton :text="'Оставить заявку'" :icon="'fas fa-user-plus'" />
         <AuthLink :href="'login.create'" :text-sm="'Есть аккаунт?'" :link-text="'Войти'" />
     </form>
 </template>

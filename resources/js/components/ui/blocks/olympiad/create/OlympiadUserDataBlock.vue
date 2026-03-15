@@ -50,11 +50,11 @@ const infoInputData = computed(() => {
             data: [
                 {
                     subtitle: 'Учебное заведение',
-                    title: '123',
+                    title: userData.school[0],
                 },
                 {
                     subtitle: 'Курс',
-                    title: '456',
+                    title: userData.coursNumber,
                 },
                 {
                     subtitle: 'Специальность',

@@ -1,6 +1,6 @@
 <script setup>
 const PROPS = defineProps(['schools']);
-import { AUTH_BASE_FORM_FIELDS } from "@constants/fields.js";
+import { REGISTER_BASE_FORM_FIELDS } from "@constants/fields.js";
 import { REGISTER_INPUT_VALUES } from "@constants/auth.js";
 import { useBaseForm } from '@composables/useBaseForm.js'
 import { PHONE_INPUT_VALUE } from "@constants/auth.js";
@@ -18,7 +18,7 @@ import SelectBlock from '@blocks/SelectBlock.vue'
 
 
 const form = useBaseForm({
-    ...AUTH_BASE_FORM_FIELDS,
+    ...REGISTER_BASE_FORM_FIELDS,
     cours_number: "",
     role: 'participant'
 });
@@ -63,7 +63,9 @@ function submit() {
                             form.updateFormFieldValue({ name: PHONE_INPUT_VALUE.name, value: data })
                         }
                     " />
-                    <SelectBlock :label="'Специальность'" :name="'education_direction_title'" />
+                <SelectBlock :label="'Специальность'" :name="'education_direction_title'" @select-value="(data) => {
+                    form.updateFormFieldValue(data)
+                }" />
             </div>
         </div>
         <YandexCaptcha class="mb-6" />

@@ -17,7 +17,10 @@ const NEWS = computed(() => {
             <h2 class="font-semibold text-lg">Новости</h2>
         </div>
 
-        <NoData v-if="!NEWS" />
+        <div class="flex flex-col justify-center items-center" v-if="$page.props.auth.isAuthenticated !== true">
+            <p class="text-gray-500 text-sm">Для просмотра новостей войдите в систему</p>
+        </div>
+        <NoData v-else-if="!NEWS" />
         <div class="pb-4 border-b border-gray-100 last:border-0 last:pb-0" v-else v-for="olympiadNew in NEWS">
             <div class="flex items-center space-x-2 text-xs text-gray-400 mb-2">
                 <i class="far fa-calendar"></i>

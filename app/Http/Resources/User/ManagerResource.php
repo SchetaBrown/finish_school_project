@@ -11,6 +11,7 @@ class ManagerResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            'is_accept' => $this->is_accept,
             'school' => $this->whenLoaded('educationSchool', function () {
                 return new EducationSchoolResource($this->educationSchool);
             }),

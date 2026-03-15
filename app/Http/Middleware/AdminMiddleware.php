@@ -17,7 +17,7 @@ class AdminMiddleware
     {
 
         if (auth()->user()->role->title !== 'администратор') {
-            return redirect()->back()->with('error', 'Повысьте уровень доступа.');
+            return redirect()->back()->with('error', 'Повысьте уровень доступа.');  
         }
 
         return $next($request);

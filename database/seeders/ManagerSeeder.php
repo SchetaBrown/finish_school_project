@@ -9,6 +9,7 @@ class ManagerSeeder extends Seeder
 {
     private array $managers = [
         [
+            'is_accept' => true,
             'user_id' => 1,
             'education_school_id' => 1,
         ]

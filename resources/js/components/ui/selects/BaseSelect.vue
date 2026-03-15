@@ -1,4 +1,5 @@
 <script setup>
+import InputError from '@other/InputError.vue'
 import { ref } from "vue";
 
 const PROPS = defineProps(["label", "options", "name"]);

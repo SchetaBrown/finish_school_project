@@ -10,11 +10,12 @@
 
 /** @type {AuthBaseFields} */
 
-export const AUTH_BASE_FORM_FIELDS = {
+export const REGISTER_BASE_FORM_FIELDS = {
     surname: "",
     name: "",
     patronymic: "",
     email: "",
+    phone: "",
     password: "",
     education_school_title: "",
 };

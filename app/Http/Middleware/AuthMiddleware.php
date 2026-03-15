@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Manager;
 use Auth;
 use Closure;
 use Illuminate\Http\Request;
@@ -20,6 +21,12 @@ class AuthMiddleware
             return redirect()->route('login.create')->with('error', 'Войдите в систему');
         }
 
-        return $next($request);
+        $manager = Manager::where('user_id', Auth::id())->first();
+
+        if ($manager && $manager->is_accept) {
+            return $next($request);
+        }
+
+        return redirect()->route('olympiad.index')->with('info', 'Ваша заявка на рассмотрении');
     }
 }

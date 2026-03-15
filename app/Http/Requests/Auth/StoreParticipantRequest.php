@@ -11,6 +11,7 @@ class StoreParticipantRequest extends BaseUserRequest
      */
     public function rules(): array
     {
+        dd($this);
         return array_merge($this->baseRules(), [
             'birth_date' => ['required', 'date'],
             'cours_number' => ['required', 'integer', 'min:1', 'max:6'],

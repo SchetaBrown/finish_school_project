@@ -18,7 +18,6 @@ watch(value, (newValue) => {
     });
 });
 
-// Классы для инпута
 const inputClasses = computed(() => {
     const baseClasses = [
         'w-full px-4 py-2.5 bg-gray-50 border rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition min-h-12.5',
@@ -52,6 +51,6 @@ watch(() => PROPS.error, (newError) => {
                 :placeholder="placeholder ?? 'Введите значение...'" :class="inputClasses" @input="isDirty = true" />
         </div>
 
-        <InputError :error="!isDirty ? PROPS.error : null" />
+        <InputError :error="!isDirty ? PROPS.error : null" :name="name" />
     </div>
 </template>

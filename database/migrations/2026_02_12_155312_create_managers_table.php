@@ -13,6 +13,7 @@ return new class extends Migration {
         Schema::create('managers', function (Blueprint $table) {
             $table->id();
 
+            $table->boolean('is_accept')->default(false);
             $table
                 ->foreignId('user_id')
                 ->constrained()
