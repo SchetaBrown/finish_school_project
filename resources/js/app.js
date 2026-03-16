@@ -5,7 +5,7 @@ import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { YandexSmartCaptcha } from '@gladesinger/vue3-yandex-smartcaptcha'
 import { ZiggyVue } from "ziggy-js";
 import { InertiaProgress } from "@inertiajs/progress";
-import FlashMessage from "@other/FlashMessage.vue";
+import FlashMessage from "../js/components/ui/other/FlashMessage.vue";
 
 const appName = import.meta.env.VITE_APP_NAME || "EventHub";
 InertiaProgress.init();
@@ -22,7 +22,7 @@ createInertiaApp({
             .use(plugin)
             .use(ZiggyVue)
             .component("Link", Link)
-            .component("Flash", FlashMessage)
+            .component("FlashMessage", FlashMessage)
             .component('Captcha', YandexSmartCaptcha)
             .mount(el);
     },

@@ -1,64 +1,38 @@
 <script setup>
 const PROPS = defineProps(['schools']);
-import { REGISTER_BASE_FORM_FIELDS } from "@constants/fields.js";
 import { REGISTER_INPUT_VALUES } from "@constants/auth.js";
 import { PHONE_INPUT_VALUE } from "@constants/auth.js";
-import { ref } from "vue";
-import { useBaseForm } from "@composables/useBaseForm.js";
 import PhoneInput from "@inputs/PhoneInput.vue";
 import BaseButton from "@buttons/BaseButton.vue";
 import YandexCaptcha from "@other/YandexCaptcha.vue";
 import AuthLink from "@links/AuthLink.vue";
 import BlockTitle from '@titles/BlockTitle.vue'
-import ChooseModal from '@modals/ChooseModal.vue'
-import OpenModalButton from "@buttons/OpenModalButton.vue";
 import InputBlock from "@blocks/InputBlock.vue";
 import DivideLine from "@other/DivideLine.vue";
+import { useCustomForm } from "@composables/useCustomForm";
 
-const form = useBaseForm({
-    ...REGISTER_BASE_FORM_FIELDS,
-    role: "manager",
+const { updateValue, submit } = useCustomForm({
+    surname: "",
+    name: "",
+    patronymic: "",
+    email: "",
+    phone: "",
+    password: "",
+    education_school_title: "",
 });
-
-let showModal = ref(false);
-
-const submit = () => {
-    form.toLowerCase().submit('post', route('register.store'), {
-        preserveState: true,
-        preserveScroll: true,
-    })
-}
 </script>
 <template>
     <form @submit.prevent="submit">
         <div class="grid grid-cols-2 gap-5 max-lg:grid-cols-1">
             <InputBlock :name="input.name" :type="input.type" :placeholder="input.placeholder" :label="input.label"
-                :error="form.getAllErrors(input.name)" v-for="input in REGISTER_INPUT_VALUES" :key="input.label"
-                @change-value="data => {
-                    form.updateFormFieldValue(data)
-                }" />
-            <OpenModalButton :name="'education_school_title'" :label="'Учебное заведение'"
-                :baseTitle="'Выберите учебное заведение'" :selectTitle="form.getForm().education_school_title"
-                @clear-error="form.clearErrors('education_school_title')"
-                :error="form.getAllErrors('education_school_title')" @update-value="(choose) => {
-                    showModal = choose;
-                }" />
-
+                v-for="input in REGISTER_INPUT_VALUES" :key="input.label" @update-value="updateValue" />
         </div>
         <DivideLine />
-        <ChooseModal :show="showModal" @close="showModal = false" :title="'Учебные заведения'" :options="schools"
-            :name="'education_school_title'" :selectTitle="'full_name'" @select="data => {
-                form.updateFormFieldValue(data)
-            }" />
-
         <div class="my-4">
             <BlockTitle :title="'Контактные данные руководителя'" />
-            <PhoneInput class="mt-5 mb-1" :label="PHONE_INPUT_VALUE.label" :name="PHONE_INPUT_VALUE.name"
-                :error="form.getAllErrors(PHONE_INPUT_VALUE.name)" @change-value="
-                    (data) => {
-                        form.updateFormFieldValue({ name: PHONE_INPUT_VALUE.name, value: data })
-                    }
-                " />
+            <PhoneInput class="mt-5 mb-1" :label="PHONE_INPUT_VALUE.label" :name="PHONE_INPUT_VALUE.name" @update-value="
+                updateValue
+            " />
             <span class="text-[12px] text-[#99A1AF]">Телефон нужен для оперативной связи по организационным
                 вопросам</span>
         </div>

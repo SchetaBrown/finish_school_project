@@ -2,10 +2,9 @@
 import { ref, computed, watch } from "vue";
 import ProximaPhone from "proxima-vue/field/phone";
 import InputError from "@other/InputError.vue";
-import BaseLabel from "@other/BaseLabel.vue";
 
 const PROPS = defineProps(["label", "name", "placeholder", "type", "icon", 'error']);
-const emit = defineEmits(["change-value", "clear-error"]);
+const emit = defineEmits(["update-value", "clear-error"]);
 
 const value = ref("");
 
@@ -23,7 +22,10 @@ const fieldState = computed(() => ({
 watch(value, (newValue) => {
     wasModified.value = true;
 
-    emit('change-value', newValue);
+    emit('update-value', {
+        name: PROPS.name,
+        value: newValue,
+    });
 
     if (PROPS.error) {
         emit('clear-error', PROPS.name);
@@ -43,8 +45,9 @@ const handleInput = (event) => {
 
 <template>
     <div class="flex flex-col gap-1">
-        <BaseLabel :label="label" :name="name" />
-
+        <label v-if="label" :for="name" class="text-[#364153] font-medium text-[14px]">
+            {{ label }}
+        </label>
         <div class="phone-wrapper" :class="fieldState">
             <ProximaPhone v-model="value" :name="name" :format="'+7 (9**) ***-**-**'"
                 :placeholder="placeholder ?? '+7 (___) ___-__-__'" @change-value="

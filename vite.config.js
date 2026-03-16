@@ -27,11 +27,11 @@ export default defineConfig({
             "@buttons": "/resources/js/components/ui/buttons", // Кнопки
             "@titles": "/resources/js/components/ui/other/titles", // Заголовки
             "@blocks": "/resources/js/components/ui/blocks", // Блоки
+            "@tables": "/resources/js/components/ui/tables", // Таблицы
             "@links": "/resources/js/components/ui/links", // Ссылки
             "@modals": "/resources/js/components/ui/modals", // Модальные окна
             "@other": "/resources/js/components/ui/other", // Другое
             "@layouts": "/resources/js/layouts", // Шаблоны
-            "@stores": "/resources/js/stores", // Хранилища pinia
             "@constants": "/resources/js/constants", // Константы
             "@composables": "/resources/js/composables", // Composable
         },

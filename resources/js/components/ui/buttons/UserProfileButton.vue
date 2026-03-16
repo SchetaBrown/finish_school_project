@@ -1,16 +1,12 @@
 <script setup>
 import { computed, ref, onMounted, onBeforeUnmount, inject } from "vue";
-import { useBaseForm } from "@composables/useBaseForm.js";
+import { useCustomForm } from "@composables/useCustomForm.js";
 
-const form = useBaseForm();
+const { submit } = useCustomForm();
 let isVisibleList = ref(false);
 const dropdownRef = ref(null);
 
 const userData = inject('userData');
-
-const logout = () => {
-    form.submit("post", route("profile.destroy"));
-};
 
 const links = computed(() => {
     return [
@@ -71,7 +67,7 @@ onBeforeUnmount(() => {
 
             <div class="border-t border-gray-100"></div>
 
-            <form @submit.prevent="logout" class="w-full mt-2">
+            <form @submit.prevent="submit(route('profile.destroy'))" class="w-full mt-2">
                 <button
                     class="flex items-center space-x-3 px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition w-full">
                     <i class="fas fa-sign-out-alt w-4"></i>

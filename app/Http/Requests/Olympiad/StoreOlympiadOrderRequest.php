@@ -1,11 +1,19 @@
 <?php
 
-namespace App\Http\Requests\Education;
+namespace App\Http\Requests\Olympiad;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateEducationSchoolRequest extends FormRequest
+class StoreOlympiadOrderRequest extends FormRequest
 {
+    /**
+     * Determine if the user is authorized to make this request.
+     */
+    public function authorize(): bool
+    {
+        return false;
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -14,8 +22,7 @@ class CreateEducationSchoolRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'full_name' => ['required', 'string', 'min:6', 'unique:education_schools,full_name'],
-            'short_name' => ['required', 'string', 'min:6', 'unique:education_schools,short_name'],
+            //
         ];
     }
 }

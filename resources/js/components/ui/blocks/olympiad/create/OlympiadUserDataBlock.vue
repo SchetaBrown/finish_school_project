@@ -18,15 +18,15 @@ const infoInputData = computed(() => {
                 },
                 {
                     subtitle: 'Имя',
-                    title: userData.name,
+                    title: userData?.name,
                 },
                 {
                     subtitle: 'Отчество',
-                    title: userData.patronymic,
+                    title: userData?.patronymic,
                 },
                 {
                     subtitle: 'Дата рождения',
-                    title: userData.birthDate,
+                    title: userData?.birthDate,
                 },
             ],
         },
@@ -36,11 +36,11 @@ const infoInputData = computed(() => {
             data: [
                 {
                     subtitle: 'Email',
-                    title: userData.email,
+                    title: userData?.email,
                 },
                 {
                     subtitle: 'Телефон',
-                    title: userData.phone,
+                    title: userData?.phone,
                 },
             ],
         },
@@ -50,11 +50,11 @@ const infoInputData = computed(() => {
             data: [
                 {
                     subtitle: 'Учебное заведение',
-                    title: userData.school[0],
+                    title: userData?.school?.short_name,
                 },
                 {
                     subtitle: 'Курс',
-                    title: userData.coursNumber,
+                    title: userData?.coursNumber,
                 },
                 {
                     subtitle: 'Специальность',

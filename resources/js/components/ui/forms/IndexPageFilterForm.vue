@@ -1,52 +1,59 @@
 <script setup>
-const PROPS = defineProps(["directions", "statuses"]);
-import { useBaseForm } from '@composables/useBaseForm.js'
+const PROPS = defineProps(["count", "directions", "statuses"]);
+import { computed } from "vue";
+import PageTitle from "@titles/PageTitle.vue";
+import SubmitButton from '@buttons/BaseButton.vue'
 import InputBlock from '@blocks/InputBlock.vue'
 import SelectBlock from '@blocks/SelectBlock.vue'
 import DivideLine from '@other/DivideLine.vue';
-import SubmitButton from '@buttons/BaseButton.vue'
+import Container from '@other/Container.vue'
+import { useFilter } from '@composables/useFilter.js';
 
-const form = useBaseForm({
+const { form, submit, clear } = useFilter({
+    storageKey: 'olympiad_form',
+    routeName: 'olympiad.index',
+    clearOnUnmount: true,
+    only: ['olympiads', 'olympiad_count'],
 });
 
-const SELECTS = [
+const inputs = computed(() => [
     {
-        label: "Направление",
-        name: "direcion",
-        options: PROPS.directions,
+        label: 'Поиск',
+        name: 'title',
+        component: InputBlock,
+        icon: 'fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm',
     },
     {
-        label: "Статус",
-        name: "status",
-        options: PROPS.statuses,
+        label: 'Направление',
+        name: 'direction',
+        component: SelectBlock,
+        options: PROPS.directions
     },
-];
-
-function submit() {
-    form.submit('get', route('olympiad.index'), {
-        preserveState: true
-    })
-}
+    {
+        label: 'Статус',
+        name: 'status',
+        component: SelectBlock,
+        options: PROPS.statuses
+    },
+]);
 </script>
+
 <template>
-    <div class="bg-white rounded-xl border border-gray-200 p-5 mb-8 min-h-fit">
-        <form @submit.prevent="submit">
+    <Container class="mb-8">
+        <form @submit.prevent="submit" class="flex flex-col gap-2">
             <div class="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                <InputBlock :label="'Поиск'" :name="'title'"
-                    :icon="'fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm'"
-                    :placeholder="'Введите название олимпиады...'" @change-value="data => {
-                        form.updateFormFieldValue(data)
-                    }">
-                </InputBlock>
-                <SelectBlock v-for="select in SELECTS" :label="select.label" :name="select.name"
-                    :options="select.options" :key="select.title" @select-value="(data) => {
-                        form.updateFormFieldValue(data)
+                <component v-for="input in inputs" :key="input.name" :is="input.component" :label="input.label"
+                    :name="input.name" :icon="input.icon" :options="input.options" @update-value="(data) => {
+                        form[data.name] = data.value
                     }" />
             </div>
-            <DivideLine class="my-4" />
-            <div class="flex justify-end gap-6">
-                <SubmitButton :text="'Применить фильтры'" class="max-w-fit" />
+            <DivideLine />
+            <div class="flex w-full justify-end">
+                <button type="button" @click="clear" class="px-6 py-2.5 text-gray-600 hover:text-gray-900 transition">
+                    Сбросить
+                </button>
+                <SubmitButton class="max-w-fit px-6" :text="'Применить фильтры'" />
             </div>
         </form>
-    </div>
+    </Container>
 </template>

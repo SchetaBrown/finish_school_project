@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\Web\Auth;
 
-use App\Action\User\StoreManagerOrParticipantAction;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\StoreManagerRequest;
+use App\Http\Requests\Auth\StoreParticipantRequest;
 use App\Http\Resources\Education\EducationSchoolResource;
 use App\Models\EducationSchool;
-use App\Models\Manager;
-use App\Services\Interfaces\UserServiceInterface;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Role;
+use App\Models\User;
+use Illuminate\Auth\Events\Registered;
 
 class RegisterController extends Controller
 {
@@ -20,18 +20,40 @@ class RegisterController extends Controller
         return inertia('auth/Register', compact('schools'));
     }
 
-    public function store(Request $request, UserServiceInterface $userService, StoreManagerOrParticipantAction $action)
+    public function storeParticipant(StoreParticipantRequest $request)
     {
-        $user = $userService->storeUser($request->input('role'), $action);
+        $validated = $request->validated();
 
-        $manager = Manager::where('user_id', $user->id)->first();
+        $user = $this->storeUser($request->validated());
 
-        if (!$manager || !$manager->is_accept) {
-            return redirect()->route('olympiad.index')->with('info', 'Заявка оставлена');
+        new Registered($user);
+    }
+
+    public function storeManager(StoreManagerRequest $request)
+    {
+        $validated = $request->validated();
+
+        $user = $this->storeUser($request->validated());
+    }
+
+    private function storeUser(array $data)
+    {
+        $base_input_data = ['surname', 'name', 'patronymic', 'email', 'phone', 'password', 'role_id'];
+        $info_array = [];
+
+        $role = Role::where(
+            'title',
+            fn() =>
+            $data['role'] === 'participant' ? 'участник' : 'руководитель'
+        )->first();
+
+        foreach ($base_input_data as $key => $value) {
+            $info_array[$key] = $data[$key];
         }
 
-        Auth::login($user);
+        $user = User::make($info_array);
+        $user->role_id = $role->id;
 
-        return redirect()->route('olympiad.index')->with('success', 'Регистрация успешна');
+        return $user;
     }
 }

@@ -17,7 +17,7 @@ const userInfo = computed(() => {
         },
         {
             icon: 'fa-graduation-cap',
-            title: userData.school.short_name,
+            title: userData?.school?.short_name,
         },
     ];
 });

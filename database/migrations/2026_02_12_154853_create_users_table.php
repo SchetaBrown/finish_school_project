@@ -20,6 +20,7 @@ return new class extends Migration {
             $table->string('password');
             $table->string('phone')->unique();
             $table->boolean('is_ban')->default(false);
+            $table->timestamp('email_verified_at')->nullable();
 
             $table->
                 foreignId('role_id')

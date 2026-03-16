@@ -19,15 +19,16 @@ const userInfo = computed(() => {
         return {
             initial: `${info.user_info.surname?.[0] || ''}${info.user_info.name?.[0] || ''}`,
             fullName: `${info.user_info.surname || ''} ${info.user_info.name || ''}`.trim(),
-            surname: info.user_info.surname || '',
-            name: info.user_info.name || '',
-            patronymic: info.user_info.patronymic || '',
-            email: info.user_info.email || '',
-            phone: info.user_info.phone || '',
-            birthDate: info.birth_date || '',
-            school: info.school || '',
-            role: info.user_info.role || '',
-            coursNumber: info.cours_number || '',
+            surname: info.user_info.surname || 'Не указан',
+            name: info.user_info.name || 'Не указан',
+            patronymic: info.user_info.patronymic || 'Не указан',
+            email: info.user_info.email || 'Не указан',
+            phone: info.user_info.phone || 'Не указан',
+            birthDate: info.birth_date || 'Не указан',
+            school: info.school || 'Не указан',
+            role: info.user_info.role || 'Не указан',
+            coursNumber: info.cours_number || 'Не указан',
+            isAccept: info.is_accept || 'Не указан',
         };
     }
 
@@ -41,15 +42,15 @@ const userInfo = computed(() => {
             email: user.email || '',
             phone: user.phone || '',
             role: user.role || '',
-            isAccept: user.is_accept || '',
         };
     }
 });
 
-console.log(userData.value)
-
 provide('userData', userInfo.value)
 </script>
 <template>
+    <FlashMessage />
+    {{ $page.props.flash }}
+    <Link :href="route('admin.index')">админка</Link>
     <slot></slot>
 </template>
