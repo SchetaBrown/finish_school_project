@@ -27,9 +27,7 @@ export function useFlashMessage(options = {}) {
         }
     }, { deep: true, immediate: true })
 
-    // Показать сообщение
     const showMessage = (message) => {
-        // Очищаем предыдущий таймер
         if (timeoutId.value) {
             clearTimeout(timeoutId.value)
         }
@@ -37,7 +35,6 @@ export function useFlashMessage(options = {}) {
         flashMessage.value = message
         visible.value = true
 
-        // Автоматически скрываем через duration
         if (autoClose) {
             timeoutId.value = setTimeout(() => {
                 hideMessage()
@@ -45,7 +42,6 @@ export function useFlashMessage(options = {}) {
         }
     }
 
-    // Скрыть сообщение
     const hideMessage = () => {
         visible.value = false
         if (timeoutId.value) {
@@ -54,7 +50,6 @@ export function useFlashMessage(options = {}) {
         }
     }
 
-    // Иконки для разных типов
     const iconMap = {
         success: 'fas fa-check-circle',
         warning: 'fas fa-exclamation-triangle',

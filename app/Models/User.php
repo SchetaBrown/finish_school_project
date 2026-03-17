@@ -66,10 +66,17 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     // Мутаторы/аксессоры
-    protected function name()
+    protected function name(): Attribute
     {
         return Attribute::make(
-            get: fn($value) => mb_ucfirst($value),
+            get: fn(string $value) => mb_ucfirst($value),
+        );
+    }
+
+    protected function surname(): Attribute
+    {
+        return Attribute::make(
+            get: fn(string $value) => mb_ucfirst($value),
         );
     }
 

@@ -13,6 +13,7 @@ class Manager extends Model
         'is_accept',
         'user_id',
         'education_school_id',
+        'education_direction_id',
     ];
 
     // Связи

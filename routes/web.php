@@ -6,6 +6,9 @@ use App\Http\Controllers\Web\Admin\Olympiad\AdminOlympiadController;
 use App\Http\Controllers\Web\Admin\User\AdminUserController;
 use App\Http\Controllers\Web\Auth\LoginController;
 use App\Http\Controllers\Web\Auth\RegisterController;
+use App\Http\Controllers\Web\Auth\Verify\EmailVerificationNotificationController;
+use App\Http\Controllers\Web\Auth\Verify\EmailVerificationPromptController;
+use App\Http\Controllers\Web\Auth\Verify\VerifyEmailController;
 use App\Http\Controllers\Web\Olympiad\OlympiadController;
 use App\Http\Controllers\Web\Olympiad\OlympiadOrderController;
 use App\Http\Controllers\Web\Olympiad\OlympiadResultController;
@@ -23,7 +26,7 @@ Route::prefix('/olympiads')->name('olympiad.')->group(function () {
 
     Route::prefix('/{slug}')->group(function () {
         Route::get('/', [OlympiadController::class, 'show'])->name('show'); // Просмотр конкретной олимпиады
-        Route::middleware(['is_auth'])->controller(OlympiadOrderController::class)->prefix('/order')->name('order.')->group(function () {
+        Route::middleware(['is_auth', 'verified'])->controller(OlympiadOrderController::class)->prefix('/order')->name('order.')->group(function () {
             Route::get('/create', 'create')->name('create'); // Страница для записи на олимпиаду
             Route::post('/store', 'store')->name('store'); // Маршрут для записи на олимпиаду
         });
@@ -48,12 +51,17 @@ Route::controller(LoginController::class)->prefix('/login')->name('login.')->gro
     Route::post('/store', 'store')->name('store'); // Маршрут для входа в систему
 });
 
+// Верификация email
+Route::get('/email/verify/{id}/{hash}', VerifyEmailController::class)->middleware(['is_auth', 'signed'])->name('verification.verify');
+Route::get('/email/verify', EmailVerificationPromptController::class)->middleware(['is_auth'])->name('verification.notice');
+Route::post('/email/verification-notification', EmailVerificationNotificationController::class)->middleware(['is_auth'])->name('verification.send');
+
 // Защищенные маршруты
-Route::middleware(['is_auth'])->group(function () {
+Route::middleware(['is_auth', 'verified'])->group(function () {
     // Профиль
     Route::prefix('/profile')->name('profile.')->group(function () {
         Route::controller(ProfileController::class)->group(function () {
-            Route::get('/', 'index')->name('index'); // Главная страница профиля
+            Route::get('/', 'index')->name('index')->middleware(['verified']); // Главная страница профиля
             Route::post('/destroy', 'destroy')->name('destroy'); // Выход из учетной записи пользователя
         });
     });

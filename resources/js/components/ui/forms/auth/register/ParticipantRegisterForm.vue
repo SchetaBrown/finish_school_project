@@ -1,26 +1,27 @@
 <script setup>
-const PROPS = defineProps(['schools']);
-import { PHONE_INPUT_VALUE } from "@constants/auth.js";
+const props = defineProps(['schools']);
 import { computed } from "vue";
-import InputBlock from '@blocks/InputBlock.vue'
 import BaseButton from "@buttons/BaseButton.vue";
 import AuthLink from "@links/AuthLink.vue";
-import DivideLine from "@other/DivideLine.vue";
 import YandexCaptcha from '@other/YandexCaptcha.vue';
 import BlockTitle from '@titles/BlockTitle.vue';
 import PhoneInput from "@inputs/PhoneInput.vue";
+import InputBlock from '@blocks/InputBlock.vue'
 import SelectBlock from '@blocks/SelectBlock.vue'
 import { useCustomForm } from '@composables/useCustomForm.js'
 
-const { submit, updateValue } = useCustomForm({
+const { form, submit, updateValue } = useCustomForm({
     surname: "",
     name: "",
     patronymic: "",
     email: "",
-    phone: "",
     password: "",
+    birth_date: "",
+    phone: "",
     education_school_title: "",
+    education_direction_title: "",
     cours_number: "",
+    role: 'участник'
 });
 
 const inputs = computed(() => [
@@ -52,23 +53,55 @@ const inputs = computed(() => [
         placeholder: "••••••••",
     },
 ]);
+
+const participantInputs = computed(() => [
+    {
+        label: 'Телефон',
+        type: 'tel',
+        name: 'phone',
+        placeholder: '+7 (___) ___-__-__',
+        component: PhoneInput,
+    },
+    {
+        label: 'Учебное заведение',
+        type: 'tel',
+        name: 'education_school_title',
+        component: SelectBlock,
+        options: props.schools.data,
+        selectTitle: 'short_name',
+        optionTitle: 'short_name',
+    },
+    {
+        label: 'Дата рождения',
+        type: 'date',
+        name: 'birth_date',
+        component: InputBlock,
+    },
+    {
+        label: 'Курс обучения',
+        type: 'number',
+        name: 'cours_number',
+        component: InputBlock,
+    },
+]);
 </script>
 <template>
-    <form @submit.prevent="submit">
+    <form @submit.prevent="submit(route('register.storeParticipant'))">
         <div class="grid grid-cols-2 gap-5 max-lg:grid-cols-1">
             <InputBlock :name="input.name" :type="input.type" :placeholder="input.placeholder" :label="input.label"
-                v-for="input in inputs" :key="input.label" @update-value="updateValue" />
+                v-for="input in inputs" :key="input.label" @update-value="updateValue" :form="form" />
         </div>
         <DivideLine />
         <div class="my-4">
             <BlockTitle :title="'Дополнительная информация об участнике'" />
             <div class="grid grid-cols-2 gap-5 max-lg:grid-cols-1">
-                <PhoneInput :label="PHONE_INPUT_VALUE.label" :name="PHONE_INPUT_VALUE.name"
-                    @update-value="updateValue" />
-                <SelectBlock :label="'Специальность'" :name="'education_direction_title'" @update-value="updateValue" />
+                <component v-for="input in participantInputs" :key="input.label" :is="input.component"
+                    :label="input.label" :name="input.name" :placeholder="input.placeholder" :type="input.type" :options="input.options"
+                    @update-value="updateValue" :form="form" :selectTitle="input.selectTitle"
+                    :optionTitle="input.optionTitle" />
             </div>
         </div>
-        <YandexCaptcha class="mb-6" />
+        <!-- <YandexCaptcha class="mb-6" /> -->
         <BaseButton :text="'Зарегистрироваться'" :icon="'fas fa-user-plus'" />
         <AuthLink :href="'login.create'" :text-sm="'Есть аккаунт?'" :link-text="'Войти'" />
     </form>

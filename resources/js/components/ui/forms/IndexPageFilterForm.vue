@@ -1,7 +1,6 @@
 <script setup>
-const PROPS = defineProps(["count", "directions", "statuses"]);
+const props = defineProps(["directions", "statuses"]);
 import { computed } from "vue";
-import PageTitle from "@titles/PageTitle.vue";
 import SubmitButton from '@buttons/BaseButton.vue'
 import InputBlock from '@blocks/InputBlock.vue'
 import SelectBlock from '@blocks/SelectBlock.vue'
@@ -9,7 +8,7 @@ import DivideLine from '@other/DivideLine.vue';
 import Container from '@other/Container.vue'
 import { useFilter } from '@composables/useFilter.js';
 
-const { form, submit, clear } = useFilter({
+const { submit, clear, setField } = useFilter({
     storageKey: 'olympiad_form',
     routeName: 'olympiad.index',
     clearOnUnmount: true,
@@ -27,13 +26,13 @@ const inputs = computed(() => [
         label: 'Направление',
         name: 'direction',
         component: SelectBlock,
-        options: PROPS.directions
+        options: props.directions
     },
     {
         label: 'Статус',
         name: 'status',
         component: SelectBlock,
-        options: PROPS.statuses
+        options: props.statuses
     },
 ]);
 </script>
@@ -43,9 +42,7 @@ const inputs = computed(() => [
         <form @submit.prevent="submit" class="flex flex-col gap-2">
             <div class="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 <component v-for="input in inputs" :key="input.name" :is="input.component" :label="input.label"
-                    :name="input.name" :icon="input.icon" :options="input.options" @update-value="(data) => {
-                        form[data.name] = data.value
-                    }" />
+                    :name="input.name" :icon="input.icon" :options="input.options" @update-value="setField" />
             </div>
             <DivideLine />
             <div class="flex w-full justify-end">

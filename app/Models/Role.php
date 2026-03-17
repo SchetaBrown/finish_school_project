@@ -19,11 +19,10 @@ class Role extends Model
     }
 
     // Мутаторы/аксессоры
-    protected function title()
+    protected function title(): Attribute
     {
-        
         return Attribute::make(
-            get: fn($value) => mb_ucfirst($value)
+            get: fn(string $value) => mb_ucfirst($value)
         );
     }
 }

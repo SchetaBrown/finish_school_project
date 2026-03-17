@@ -1,18 +1,51 @@
 <script setup>
-import { ref } from 'vue';
+import { computed, ref, watch } from 'vue';
+import InputError from "@other/InputError.vue";
 
-const PROPS = defineProps(["label", "options", "name"]);
+const props = defineProps(["label", "options", "name", 'optionTitle', 'selectTitle', 'form']);
 const emit = defineEmits(["update-value"]);
 
 let selectValue = ref('');
 
+console.log(props.options)
+
 const handleChange = (e) => {
+    isDirty.value = false;
+
+    if (error.value) {
+        form.clearErrors(props.name);
+    }
+
     selectValue.value = e.target.value;
     emit('update-value', {
-        name: PROPS.name,
+        name: props.name,
         value: e.target.value
     });
 };
+
+const form = props?.form;
+const isDirty = ref(false);
+const error = computed(() => {
+    return form?.errors[props.name];
+});
+
+const inputClasses = computed(() => {
+    const baseClasses = [
+        'w-full px-4 py-2.5 bg-gray-50 border rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition min-h-12.5 max-h-12.5',
+        props.icon ? 'pl-10' : '',
+        props.type === 'button' ? 'cursor-pointer' : '',
+    ];
+
+    if (error.value) {
+        return [...baseClasses, 'border-red-300 bg-red-50 focus:ring-red-500 focus:border-red-500'].join(' ');
+    }
+
+    return [...baseClasses, 'border-gray-200'].join(' ');
+});
+
+watch(error, () => {
+    isDirty.value = true;
+});
 </script>
 <template>
     <div class="flex flex-col gap-1">
@@ -20,13 +53,16 @@ const handleChange = (e) => {
             {{ label }}
         </label>
         <select :name="name" @change="handleChange"
-            class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition flex flex-1">
+            class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition flex flex-1 max-h-12.5"
+            :class="inputClasses">
             <option :value="null" disabled selected v-if="label">
                 Выберите {{ label.toLowerCase() }}
             </option>
-            <option :value="option.id" v-for="option in options" :key="option.id">
-                {{ option.title }}
+            <option :value="option.id ?? option[selectTitle]" v-for="option in options"
+                :key="option.id ?? option[selectTitle]">
+                {{ option.title ?? option[selectTitle] }}
             </option>
         </select>
+        <InputError :error="error" :is-dirty="isDirty" />
     </div>
 </template>

@@ -15,9 +15,8 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-
-        if (auth()->user()->role->title !== 'администратор') {
-            return redirect()->back()->with('error', 'Повысьте уровень доступа.');  
+        if (auth()->user()->role->title !== 'Администратор') {
+            return redirect()->back()->with('error', 'Повысьте уровень доступа.');
         }
 
         return $next($request);

@@ -1,4 +1,5 @@
 <script setup>
+import { YandexSmartCaptcha } from '@gladesinger/vue3-yandex-smartcaptcha'
 import { usePage } from '@inertiajs/vue3';
 import { computed } from 'vue';
 
@@ -15,7 +16,7 @@ const siteKey = computed(() => {
 
 </script>
 <template>
-    <Captcha @onSuccess="submit" :siteKey="siteKey"></Captcha>
+    <YandexSmartCaptcha @onSuccess="submit" :siteKey="siteKey"></YandexSmartCaptcha>
 </template>
 <style scoped>
 .smart-captcha {

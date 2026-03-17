@@ -3,6 +3,8 @@
 namespace App\Http\Middleware;
 
 use App\Models\Manager;
+use App\Models\Participant;
+use App\Models\User;
 use Auth;
 use Closure;
 use Illuminate\Http\Request;
@@ -21,12 +23,25 @@ class AuthMiddleware
             return redirect()->route('login.create')->with('error', 'Войдите в систему');
         }
 
-        $manager = Manager::where('user_id', Auth::id())->first();
 
-        if ($manager && $manager->is_accept) {
-            return $next($request);
+        $user = User::with(['role'])->first();
+
+
+        if ($user->role->title === 'участник') {
+            $participant = Participant::where('user_id', Auth::id())->first();
+
+            if (!$participant) {
+                return redirect()->route('login.create');
+            }
+
+        } else if ($user->role->title === 'руководитель') {
+            $manager = Manager::where('user_id', Auth::id())->first();
+
+            if (!$manager || !$manager->is_accept) {
+                return redirect()->route('olympiad.index')->with('info', 'Ваша заявка на рассмотрении');
+            }
         }
 
-        return redirect()->route('olympiad.index')->with('info', 'Ваша заявка на рассмотрении');
+        return $next($request);
     }
 }

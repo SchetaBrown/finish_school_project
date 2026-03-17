@@ -49,8 +49,5 @@ const userInfo = computed(() => {
 provide('userData', userInfo.value)
 </script>
 <template>
-    <FlashMessage />
-    {{ $page.props.flash }}
-    <Link :href="route('admin.index')">админка</Link>
     <slot></slot>
 </template>

@@ -2,11 +2,12 @@ import { useForm } from "@inertiajs/vue3";
 import { onUnmounted } from "vue";
 
 export function useCustomForm(fields = {}) {
-    const form = useForm({ ...fields });
 
     onUnmounted(() => {
         form.clearErrors();
     });
+
+    const form = useForm({ ...fields });
 
     const updateValue = (data) => {
         form[data.name] = data.value;

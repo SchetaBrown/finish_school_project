@@ -29,7 +29,7 @@ export default defineConfig({
             "@blocks": "/resources/js/components/ui/blocks", // Блоки
             "@tables": "/resources/js/components/ui/tables", // Таблицы
             "@links": "/resources/js/components/ui/links", // Ссылки
-            "@modals": "/resources/js/components/ui/modals", // Модальные окна
+            "@modals": "/resources/js/components/ui/modals/custom", // Модальные окна
             "@other": "/resources/js/components/ui/other", // Другое
             "@layouts": "/resources/js/layouts", // Шаблоны
             "@constants": "/resources/js/constants", // Константы

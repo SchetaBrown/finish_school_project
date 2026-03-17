@@ -93,8 +93,8 @@ export function useFilter(options = {}) {
         }
     };
 
-    const setField = (name, value) => {
-        form[name] = value;
+    const setField = (data) => {
+        form[data.name] = data.value;
         saveToStorage();
     };
 

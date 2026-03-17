@@ -14,6 +14,7 @@ return new class extends Migration {
             $table->id();
 
             $table->boolean('is_accept')->default(false);
+
             $table
                 ->foreignId('user_id')
                 ->constrained()
