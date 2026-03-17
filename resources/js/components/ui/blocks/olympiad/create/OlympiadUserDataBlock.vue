@@ -50,7 +50,7 @@ const infoInputData = computed(() => {
             data: [
                 {
                     subtitle: 'Учебное заведение',
-                    title: userData?.school?.short_name,
+                    title: userData?.school,
                 },
                 {
                     subtitle: 'Курс',

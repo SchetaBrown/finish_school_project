@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web\Olympiad;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Olympiad\OlympiadResource;
 use App\Models\Olympiad;
+use Illuminate\Support\Facades\Auth;
 
 class OlympiadOrderController extends Controller
 {
@@ -17,6 +18,6 @@ class OlympiadOrderController extends Controller
 
     public function store()
     {
-
+        $user = Auth::user();
     }
 }

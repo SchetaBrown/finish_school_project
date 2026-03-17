@@ -12,6 +12,7 @@ class OlympiadOrder extends Model
         'participant_id',
         'manager_id',
         'olympiad_id',
+        'olympiad_order_status_id',
     ];
 
     // Связи

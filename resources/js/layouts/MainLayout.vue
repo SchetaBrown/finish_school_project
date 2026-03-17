@@ -25,7 +25,7 @@ const userInfo = computed(() => {
             email: info.user_info.email || 'Не указан',
             phone: info.user_info.phone || 'Не указан',
             birthDate: info.birth_date || 'Не указан',
-            school: info.school || 'Не указан',
+            school: info.school[0] || 'Не указан',
             role: info.user_info.role || 'Не указан',
             coursNumber: info.cours_number || 'Не указан',
             isAccept: info.is_accept || 'Не указан',
@@ -45,6 +45,8 @@ const userInfo = computed(() => {
         };
     }
 });
+
+console.log(userInfo.value)
 
 provide('userData', userInfo.value)
 </script>

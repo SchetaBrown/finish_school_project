@@ -42,7 +42,7 @@ class Participant extends Model
     }
 
     // Мутаторы/аксессоры
-    protected function birthDate()
+    protected function birthDate() : Attribute
     {
         return Attribute::make(
             get: function ($value) {

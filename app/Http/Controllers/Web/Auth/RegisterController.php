@@ -46,7 +46,7 @@ class RegisterController extends Controller
 
         Auth::login($user);
 
-        return redirect()->intended(route('olympiad.index'));
+        return redirect()->route('verification.notice');
     }
 
     public function storeManager(StoreManagerRequest $request)

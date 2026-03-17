@@ -50,7 +50,7 @@ class HandleInertiaRequests extends Middleware
             return;
         }
 
-        if ($user->role->title === 'участник') {
+        if ($user->role->title === 'Участник') {
             $participant = Participant::where('user_id', $user->id)
                 ->with(['educationSchool', 'attachedManager', 'olympiadOrders', 'user', 'user.role'])
                 ->first();
@@ -58,7 +58,7 @@ class HandleInertiaRequests extends Middleware
             return new ParticipantResource($participant);
         }
 
-        if ($user->role->title === 'руководитель') {
+        if ($user->role->title === 'Руководитель') {
             $manager = Manager::where('user_id', $user->id)
                 ->with(['educationSchool', 'user', 'user.role'])
                 ->first();
