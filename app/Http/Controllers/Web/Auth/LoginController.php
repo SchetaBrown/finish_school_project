@@ -32,15 +32,15 @@ class LoginController extends Controller
                         return redirect()->back()->with('info', 'Ваша заявка в рассмотрении');
                     }
                 }
+
+                return redirect()->intended(route('profile.index'));
             } else {
                 Auth::login($validated);
 
-                return redirect()->route('profile.index');
+                return redirect()->route('olympiad.index');
             }
         } catch (Exception $e) {
-            dd($e->getMessage());
             return redirect()->back()->with('error', 'Неверный email или пароль');
         }
-
     }
 }

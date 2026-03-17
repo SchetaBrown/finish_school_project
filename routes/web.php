@@ -73,6 +73,7 @@ Route::middleware(['is_auth', 'verified'])->group(function () {
         // Управление участниками
         Route::controller(AdminUserController::class)->prefix('/users')->name('user.')->group(function () {
             Route::get('/', 'index')->name('index');
+            Route::get('/{id}/edit', 'edit')->name('edit');
         });
 
         // Управление учебными заведениями

@@ -1,39 +1,22 @@
 <script setup>
+const props = defineProps(['roles']);
+import BaseButton from '@buttons/BaseButton.vue'
 import { useFilter } from '@composables/useFilter.js';
-import { computed } from 'vue';
 
-const { form, submit, clear } = useFilter({
+const { submit, setField, clear } = useFilter({
     storageKey: 'admin_user_form',
-    routeName: 'olympiad.index',
+    routeName: 'admin.user.index',
     clearOnUnmount: true,
     only: ['users', 'users_count'],
-    onSuccess: (data) => {
-        console.log(data)
-    },
 });
-
-const inputs = computed(() => [
-    { name: 'title', label: 'название' },
-    { name: 'name', label: 'Имя' },
-    { name: 'patronymic', label: 'Отчество' },
-]);
 </script>
 
 <template>
-    <form @submit.prevent="submit" class="flex gap-2">
-        <div v-for="input in inputs" :key="input.name">
-            <input type="text" :name="input.name" :placeholder="input.label"
-                class="bg-white border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-300"
-                v-model="form[input.name]">
-        </div>
-
-        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">
-            Отправить
-        </button>
-
-        <button type="button" @click="clear"
-            class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition">
-            Очистить
-        </button>
-    </form>
+    <section class="bg-white rounded-xl border border-gray-200 p-4 mb-6">
+        <form @submit.prevent="submit" class="flex flex-col sm:flex-row gap-4">
+            <InputBlock name="search" placeholder="Поиск пользователей..." class="w-full" @update-value="setField" />
+            <SelectBlock :options="roles" @update-value="setField" name="role" />
+            <BaseButton text="Поиск" class="max-w-fit px-8" />
+        </form>
+    </section>
 </template>

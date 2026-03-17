@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -63,6 +64,20 @@ class User extends Authenticatable implements MustVerifyEmail
     public function olympiadDocuments()
     {
         return $this->hasMany(OlympiadDocument::class);
+    }
+
+    // Скоупы
+    public function scopeSearch(Builder $query, array $search)
+    {
+        $query->when($search['search'] ?? null, function ($q) use ($search) {
+            $q
+                ->where('email', 'LIKE', "%{$search['search']}%")
+                ->orWhere('surname', 'LIKE', "%{$search['search']}%")
+                ->orWhere('name', 'LIKE', "%{$search['search']}%")
+                ->orWhere('patronymic', 'LIKE', "%{$search['search']}%");
+        });
+
+        return $query;
     }
 
     // Мутаторы/аксессоры

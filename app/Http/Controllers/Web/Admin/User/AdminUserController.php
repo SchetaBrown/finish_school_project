@@ -11,6 +11,11 @@ class AdminUserController extends Controller
 {
     public function index(GetUsersDataForAdminPageAction $action, Request $request)
     {
-        return Inertia::render('admin/user/Index', $action->execute());
+        return Inertia::render('admin/user/Index', $action->execute($request->all()));
+    }
+
+    public function edit($id)
+    {
+        dd($id);
     }
 }

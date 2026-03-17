@@ -26,6 +26,15 @@ class UserSeeder extends Seeder
             'password' => '123123123',
             'role_id' => 2,
         ],
+        [
+            'surname' => 'Adminov',
+            'name' => 'Admin',
+            'patronymic' => 'Adminovich',
+            'email' => 'admin@gmail.com',
+            'phone' => '79998889988',
+            'password' => 'admin',
+            'role_id' => 5,
+        ],
     ];
 
     public function run(): void
