@@ -77,6 +77,11 @@ class User extends Authenticatable implements MustVerifyEmail
                 ->orWhere('patronymic', 'LIKE', "%{$search['search']}%");
         });
 
+        $query->when($search['role'] ?? null, function ($q) use ($search) {
+            $q
+                ->where('role_id', $search['role']);
+        });
+
         return $query;
     }
 

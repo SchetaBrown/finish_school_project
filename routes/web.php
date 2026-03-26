@@ -41,6 +41,7 @@ Route::prefix('/olympiads')->name('olympiad.')->group(function () {
 // Регистрация
 Route::controller(RegisterController::class)->prefix('/register')->name('register.')->group(function () {
     Route::get('/', 'create')->name('create'); // Страница для регистрации
+    Route::post('/store', 'store')->name('store');
     Route::post('/store-participant', 'storeParticipant')->name('storeParticipant'); // Маршрут для регистрации участника
     Route::post('/store-manager', 'storeManager')->name('storeManager'); // Маршрут для регистрации участника
 });
@@ -52,9 +53,11 @@ Route::controller(LoginController::class)->prefix('/login')->name('login.')->gro
 });
 
 // Верификация email
-Route::get('/email/verify/{id}/{hash}', VerifyEmailController::class)->middleware(['is_auth', 'signed'])->name('verification.verify');
-Route::get('/email/verify', EmailVerificationPromptController::class)->middleware(['is_auth'])->name('verification.notice');
-Route::post('/email/verification-notification', EmailVerificationNotificationController::class)->middleware(['is_auth'])->name('verification.send');
+Route::prefix('/email')->name('verification.')->middleware(['is_auth'])->group(function () {
+    Route::get('/verify/{id}/{hash}', VerifyEmailController::class)->middleware(['signed'])->name('verify');
+    Route::get('/verify', EmailVerificationPromptController::class)->name('notice');
+    Route::post('/verification-notification', EmailVerificationNotificationController::class)->name('send');
+});
 
 // Защищенные маршруты
 Route::middleware(['is_auth', 'verified'])->group(function () {
@@ -67,7 +70,7 @@ Route::middleware(['is_auth', 'verified'])->group(function () {
     });
 
     // Для администраторов
-    Route::middleware(['is_admin'])->prefix('/admin')->name('admin.')->group(function () {
+    Route::middleware(['is_admin'])->prefix('/admin-panel')->name('admin.')->group(function () {
         Route::get('/', [AdminIndexController::class, 'index'])->name('index'); // Главная страница админ-панели
 
         // Управление участниками

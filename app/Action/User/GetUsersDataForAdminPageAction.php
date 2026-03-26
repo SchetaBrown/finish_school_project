@@ -13,7 +13,7 @@ class GetUsersDataForAdminPageAction
     public function execute($search, ?int $perPage = 15)
     {
         $users = User::with(['role'])->search($search)->orderBy('role_id', 'desc')->paginate($perPage);
-        $users_count = $users->count();
+        $users_count = User::get()->count();
 
         $participants = Participant::paginate($perPage);
 

@@ -86,7 +86,7 @@ const participantInputs = computed(() => [
 ]);
 </script>
 <template>
-    <form @submit.prevent="submit(route('register.storeParticipant'))">
+    <form @submit.prevent="submit(route('register.store'))">
         <div class="grid grid-cols-2 gap-5 max-lg:grid-cols-1">
             <InputBlock :name="input.name" :type="input.type" :placeholder="input.placeholder" :label="input.label"
                 v-for="input in inputs" :key="input.label" @update-value="updateValue" :form="form" />

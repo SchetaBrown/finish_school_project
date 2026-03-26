@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Models\Manager;
 use App\Models\User;
-use Exception;
 use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
@@ -20,27 +19,23 @@ class LoginController extends Controller
     {
         $validated = $request->validated();
 
-        try {
-            if (Auth::attempt($validated)) {
-                $user = User::with(['role'])->find(Auth::id());
-
-                if ($user->role->title === 'Руководитель') {
-                    $manager = Manager::where('user_id', $user->id)->first();
-
-                    if (!$manager || $manager->is_accept === false) {
-                        Auth::logout();
-                        return redirect()->back()->with('info', 'Ваша заявка в рассмотрении');
-                    }
-                }
-
-                return redirect()->intended(route('profile.index'));
-            } else {
-                Auth::login($validated);
-
-                return redirect()->route('olympiad.index');
-            }
-        } catch (Exception $e) {
-            return redirect()->back()->with('error', 'Неверный email или пароль');
+        if (!Auth::attempt($validated)) {
+            return redirect()->back()
+                ->with('error', 'Неверный email или пароль');
         }
+
+        $user = User::with('role')->find(Auth::id());
+
+        if ($user->role->title === 'Руководитель') {
+            $manager = Manager::where('user_id', $user->id)->first();
+
+            if (!$manager || $manager->is_accept === false) {
+                Auth::logout();
+                return redirect()->back()
+                    ->with('info', 'Ваша заявка в рассмотрении');
+            }
+        }
+
+        return redirect()->intended(route('profile.index'));
     }
 }

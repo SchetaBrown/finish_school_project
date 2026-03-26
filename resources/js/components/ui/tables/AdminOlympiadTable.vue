@@ -1,6 +1,7 @@
 <script setup>
 import { computed } from 'vue';
 import Status from '@other/Status.vue'
+import TableHead from '@other/TableHead.vue'
 
 const props = defineProps(['olympiads', 'olympiads_count']);
 const ths = computed(() => ['Название', 'Статус', 'Направление']);
@@ -9,12 +10,7 @@ const ths = computed(() => ['Название', 'Статус', 'Направл�
     <div class="bg-white rounded-xl border border-gray-200 overflow-hidden">
         <div class="overflow-x-auto">
             <table class="w-full text-sm text-left">
-                <thead class="bg-gray-50 border-b border-gray-200">
-                    <tr>
-                        <th class="px-6 py-4 text-xs font-medium text-gray-400 uppercase tracking-wider"
-                            v-for="th in ths" :key="th">{{ th }}</th>
-                    </tr>
-                </thead>
+                <TableHead :ths="ths" />
                 <tbody class="divide-y divide-gray-100">
                     <tr class="hover:bg-gray-50 transition" v-for="olympiad in olympiads" :key="olympiad.title">
                         <td class="px-6 py-4">{{ olympiad.title }}</td>

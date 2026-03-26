@@ -11,7 +11,9 @@ use App\Models\Manager;
 use App\Models\Participant;
 use App\Models\Role;
 use App\Models\User;
+use Exception;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
@@ -24,59 +26,58 @@ class RegisterController extends Controller
         return inertia('auth/Register', compact('schools'));
     }
 
-    public function store()
+    public function store(Request $request)
     {
+        $role = $request->role;
 
-    }
+        $config = match ($role) {
+            'участник' => [
+                'request' => StoreParticipantRequest::class,
+                'model' => Participant::class,
+            ],
+            'руководитель' => [
+                'request' => StoreManagerRequest::class,
+                'model' => Manager::class,
+            ],
+        };
 
-    public function storeParticipant(StoreParticipantRequest $request)
-    {
-        $validated = $request->validated();
+        $validated = app($config['request'])->validated();
 
-        $user = $this->storeUser($validated, $request->role);
+        $user = $this->storeUser($validated, $role);
 
-        $participant_fields = array_diff_key($validated, $this->base_input_data, ['education_school_title']);
-        $school = EducationSchool::where('full_name', $request->education_school_title)->orWhere('short_name', $request->education_school_title)->first();
-        $participant = Participant::make($participant_fields);
-        $participant->user_id = $user->id;
-        $participant->education_school_id = $school->id;
-        $participant->save();
+        $new_user_fields = array_diff_key($validated, $this->base_input_data, ['education_school_title']);
+        $school = EducationSchool::where('full_name', $request->education_school_title)->first();
+        $new_user = $config['model']::make($new_user_fields);
+        $new_user->user_id = $user->id;
+        $new_user->education_school_id = $school->id;
+        $new_user->save();
 
-        event(new Registered($user));
-
-        Auth::login($user);
-
-        return redirect()->route('verification.notice');
-    }
-
-    public function storeManager(StoreManagerRequest $request)
-    {
-        $validated = $request->validated();
-        $user = $this->storeUser($validated, $request->role);
-
-        $manager_fields = array_diff_key($validated, $this->base_input_data, ['education_school_title']);
-        $school = EducationSchool::where('full_name', $request->education_school_title)->orWhere('short_name', $request->education_school_title)->first();
-        $manager = Manager::make($manager_fields);
-        $manager->user_id = $user->id;
-        $manager->education_school_id = $school->id;
-        $manager->save();
-
-        return redirect()->route('olympiad.index')->with('success', 'Ваше заявление оставлено на рассмотрение администратором');
+        if ($role === 'участник') {
+            Auth::login($user);
+            event(new Registered($user));
+            return redirect()->route('verification.notice');
+        } else {
+            return redirect()->route('olympiad.index')->with('success', 'Ваше заявление оставлено на рассмотрение администратором');
+        }
     }
 
     private function storeUser(array $data, string $requestRole)
     {
         $info_array = [];
 
-        foreach ($this->base_input_data as $key => $value) {
+        foreach ($this->base_input_data as $value) {
             $info_array[$value] = $data[$value];
         }
 
-        $currentRole = Role::where('title', $requestRole)->first();
-        $user = User::make($info_array);
-        $user->role_id = $currentRole->id;
-        $user->save();
+        try {
+            $currentRole = Role::where('title', $requestRole)->first();
+            $user = User::make($info_array);
+            $user->role_id = $currentRole->id;
+            $user->save();
 
-        return $user;
+            return $user;
+        } catch (Exception $e) {
+            return back()->with('warning', 'Произошла ошибка, попробуйте позже');
+        }
     }
 }
