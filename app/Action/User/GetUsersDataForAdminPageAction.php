@@ -2,6 +2,7 @@
 
 namespace App\Action\User;
 
+use App\Http\Resources\User\RoleResource;
 use App\Http\Resources\User\UserResource;
 use App\Models\Manager;
 use App\Models\Participant;
@@ -28,7 +29,7 @@ class GetUsersDataForAdminPageAction
             ->paginate($perPage);
         $employees_count = $employees->count();
 
-        $roles = Role::get();
+        $roles = RoleResource::collection(Role::get());
 
         return [
             'users' => UserResource::collection($users),

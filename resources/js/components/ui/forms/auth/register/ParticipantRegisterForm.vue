@@ -8,6 +8,7 @@ import BlockTitle from '@titles/BlockTitle.vue';
 import PhoneInput from "@inputs/PhoneInput.vue";
 import InputBlock from '@blocks/InputBlock.vue'
 import SelectBlock from '@blocks/SelectBlock.vue'
+import BaseList from '@lists/BaseList.vue'
 import { useCustomForm } from '@composables/useCustomForm.js'
 
 const { form, submit, updateValue } = useCustomForm({
@@ -18,8 +19,8 @@ const { form, submit, updateValue } = useCustomForm({
     password: "",
     birth_date: "",
     phone: "",
-    education_school_title: "",
-    education_direction_title: "",
+    education_school_id: "",
+    education_direction_id: "",
     cours_number: "",
     role: 'участник'
 });
@@ -64,12 +65,9 @@ const participantInputs = computed(() => [
     },
     {
         label: 'Учебное заведение',
-        type: 'tel',
-        name: 'education_school_title',
-        component: SelectBlock,
+        name: 'education_school_id',
+        component: BaseList,
         options: props.schools.data,
-        selectTitle: 'short_name',
-        optionTitle: 'short_name',
     },
     {
         label: 'Дата рождения',
@@ -96,8 +94,8 @@ const participantInputs = computed(() => [
             <BlockTitle :title="'Дополнительная информация об участнике'" />
             <div class="grid grid-cols-2 gap-5 max-lg:grid-cols-1">
                 <component v-for="input in participantInputs" :key="input.label" :is="input.component"
-                    :label="input.label" :name="input.name" :placeholder="input.placeholder" :type="input.type" :options="input.options"
-                    @update-value="updateValue" :form="form" :selectTitle="input.selectTitle"
+                    :label="input.label" :name="input.name" :placeholder="input.placeholder" :type="input.type"
+                    :options="input.options" @update-value="updateValue" :form="form" :selectTitle="input.selectTitle"
                     :optionTitle="input.optionTitle" />
             </div>
         </div>

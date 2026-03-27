@@ -12,7 +12,7 @@ const { submit, clear, setField } = useFilter({
     storageKey: 'olympiad_form',
     routeName: 'olympiad.index',
     clearOnUnmount: true,
-    only: ['olympiads', 'olympiad_count'],
+    only: ['olympiads'],
 });
 
 const inputs = computed(() => [

@@ -46,8 +46,6 @@ const userInfo = computed(() => {
     }
 });
 
-console.log(userInfo.value)
-
 provide('userData', userInfo.value)
 </script>
 <template>

@@ -15,7 +15,7 @@ const { form, updateValue, submit } = useCustomForm({
     email: "",
     phone: "",
     password: "",
-    education_school_title: "",
+    education_school_id: "",
     role: 'руководитель'
 });
 

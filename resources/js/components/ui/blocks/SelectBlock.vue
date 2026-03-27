@@ -7,8 +7,6 @@ const emit = defineEmits(["update-value"]);
 
 let selectValue = ref('');
 
-console.log(props.options)
-
 const handleChange = (e) => {
     isDirty.value = false;
 

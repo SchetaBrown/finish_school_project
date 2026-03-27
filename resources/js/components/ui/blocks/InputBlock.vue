@@ -1,6 +1,7 @@
 <script setup>
 import { ref, watch, computed } from "vue";
 import InputError from "@other/InputError.vue";
+import Label from '@other/Label.vue'
 
 const props = defineProps(['label', "placeholder", "type", "icon", 'name', 'form']);
 const emit = defineEmits(["update-value"]);
@@ -47,9 +48,7 @@ const inputClasses = computed(() => {
 
 <template>
     <div class="flex flex-col gap-1">
-        <label v-if="label" :for="name" class="text-[#364153] font-medium text-[14px]">
-            {{ label }}
-        </label>
+        <Label :label="label" :name="name" />
         <div class="flex flex-col gap-1">
             <div class="relative">
                 <i v-if="icon" :class="icon"></i>

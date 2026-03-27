@@ -2,6 +2,7 @@
 const props = defineProps(['roles']);
 import BaseButton from '@buttons/BaseButton.vue'
 import { useFilter } from '@composables/useFilter.js';
+import BaseList from '@lists/BaseList.vue'
 
 const { submit, setField, clear } = useFilter({
     storageKey: 'admin_user_form',
@@ -15,8 +16,8 @@ const { submit, setField, clear } = useFilter({
     <section class="bg-white rounded-xl border border-gray-200 p-4 mb-6">
         <form @submit.prevent="submit" class="flex flex-col sm:flex-row gap-4">
             <InputBlock name="search" placeholder="Поиск пользователей..." class="w-full" @update-value="setField" />
-            <SelectBlock :options="roles" @update-value="setField" name="role" />
-            <BaseButton text="Поиск" class="max-w-fit px-8" />
+            <BaseList name="role" :options="roles.data" @update-value="setField" />
+            <BaseButton base-title="Выберите роль" text="Поиск" class="max-w-fit px-8" />
         </form>
     </section>
 </template>

@@ -16,10 +16,9 @@ class GetOlympiadsIndexDataAction
         ?bool $isAdminRoute = false,
     ): array {
         $olympiads = OlympiadResource::collection(Olympiad::withDefaultRelations()->filter($request->all())->paginate($perPage)->withQueryString());
-        $olympiad_count = $olympiads->count();
         $statuses = OlympiadStatus::withoutDraft($isAdminRoute)->get();
         $directions = OlympiadDirection::get();
 
-        return compact(['olympiads', 'olympiad_count', 'statuses', 'directions']);
+        return compact(['olympiads', 'statuses', 'directions']);
     }
 }

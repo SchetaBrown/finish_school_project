@@ -45,11 +45,10 @@ class RegisterController extends Controller
 
         $user = $this->storeUser($validated, $role);
 
-        $new_user_fields = array_diff_key($validated, $this->base_input_data, ['education_school_title']);
-        $school = EducationSchool::where('full_name', $request->education_school_title)->first();
+        $new_user_fields = array_diff_key($validated, $this->base_input_data);
         $new_user = $config['model']::make($new_user_fields);
         $new_user->user_id = $user->id;
-        $new_user->education_school_id = $school->id;
+        $new_user->education_school_id;
         $new_user->save();
 
         if ($role === 'участник') {
@@ -64,6 +63,8 @@ class RegisterController extends Controller
     private function storeUser(array $data, string $requestRole)
     {
         $info_array = [];
+
+        dd($data);
 
         foreach ($this->base_input_data as $value) {
             $info_array[$value] = $data[$value];

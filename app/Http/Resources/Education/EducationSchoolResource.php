@@ -4,7 +4,6 @@ namespace App\Http\Resources\Education;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use PHPUnit\Framework\MockObject\Stub\ReturnReference;
 
 class EducationSchoolResource extends JsonResource
 {
@@ -27,12 +26,9 @@ class EducationSchoolResource extends JsonResource
     public function toArray(Request $request): array
     {
         if ($request->routeIs('register.*')) {
-            return $this->baseArray();
-        }
-
-        if ($request->routeIs('olympiad.order.create')) {
             return [
-                $this->short_name
+                'id' => $this->id,
+                'title' => $this->short_name
             ];
         }
 

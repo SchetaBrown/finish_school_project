@@ -30,6 +30,7 @@ export default defineConfig({
             "@tables": "/resources/js/components/ui/tables", // Таблицы
             "@links": "/resources/js/components/ui/links", // Ссылки
             "@modals": "/resources/js/components/ui/modals/custom", // Модальные окна
+            "@lists": "/resources/js/components/ui/lists", // Списки
             "@other": "/resources/js/components/ui/other", // Другое
             "@layouts": "/resources/js/layouts", // Шаблоны
             "@constants": "/resources/js/constants", // Константы
