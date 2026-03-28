@@ -18,7 +18,7 @@ class GetUsersDataForAdminPageAction
 
         $participants = Participant::paginate($perPage);
 
-        $participants_count = $participants->count();
+        $participants_count = Participant::get()->count();
 
         $managers = Manager::paginate($perPage);
         $managers_count = $managers->count();

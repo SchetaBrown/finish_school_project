@@ -3,7 +3,8 @@ import AppBaseLayout from "@layouts/AppBaseLayout.vue";
 import OlympiadSection from "@sections/OlympiadSection.vue";
 import FilterSection from "@forms/IndexPageFilterForm.vue";
 import PageTitle from '@titles/PageTitle.vue'
-import BaseList from "@lists/BaseList.vue";
+import Pagination from "@other/Pagination.vue";
+
 
 const PROPS = defineProps([
     'olympiads',
@@ -20,5 +21,6 @@ const OLYMPIAD_STATUSES = PROPS.statuses;
         <FilterSection :directions="OLYMPIAD_DIRECTIONS" :statuses="OLYMPIAD_STATUSES">
         </FilterSection>
         <OlympiadSection :olympiads="olympiads.data"></OlympiadSection>
+        <Pagination :links="olympiads.links" />
     </AppBaseLayout>
 </template>

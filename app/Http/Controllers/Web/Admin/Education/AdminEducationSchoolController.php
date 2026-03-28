@@ -9,6 +9,6 @@ class AdminEducationSchoolController extends Controller
 {
     public function index()
     {
-        return Inertia::render('admin/education/Index');
+        return Inertia::render('admin/education/school/Index');
     }
 }

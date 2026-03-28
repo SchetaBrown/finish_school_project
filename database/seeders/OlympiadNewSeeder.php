@@ -11,6 +11,7 @@ class OlympiadNewSeeder extends Seeder
         [
             'title' => 'Олимпиада отменена',
             'description' => 'В связи с отсутсвием...',
+            'slug' => '',
             'user_id' => 1,
             'olympiad_id' => 1,
             'published_at' => '2025-11-23 12:31:55',

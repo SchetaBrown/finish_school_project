@@ -4,7 +4,7 @@ import TableContainer from '@other/TableContainer.vue';
 import RoleBadge from '@other/RoleBadge.vue';
 
 const props = defineProps(['users']);
-const ths = computed(() => ['Пользователь', 'Роль', 'Аккаунт доступен', 'Email', 'Действия']);
+const ths = computed(() => ['Пользователь', 'Роль', 'Email', 'Действия']);
 </script>
 <template>
     <TableContainer :ths="ths">
@@ -13,7 +13,6 @@ const ths = computed(() => ['Пользователь', 'Роль', 'Аккау�
             <td class="px-6 py-4">
                 <RoleBadge :role="user.role" />
             </td>
-            <td class="px-6 py-4">{{ user.is_ban ? 'Нет' : 'Да' }}</td>
             <td class="px-6 py-4">{{ user.email }}</td>
             <td class="px-6 py-4">
                 <Link :href="route('admin.user.edit', { id: user.id })" class="text-indigo-600 mr-3">

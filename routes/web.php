@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Web\Admin\AdminIndexController;
+use App\Http\Controllers\Web\Admin\Education\AdminEducationController;
 use App\Http\Controllers\Web\Admin\Education\AdminEducationSchoolController;
 use App\Http\Controllers\Web\Admin\Olympiad\AdminOlympiadController;
 use App\Http\Controllers\Web\Admin\User\AdminUserController;
@@ -79,10 +80,15 @@ Route::middleware(['is_auth', 'verified'])->group(function () {
             Route::get('/{id}/edit', 'edit')->name('edit');
         });
 
-        // Управление учебными заведениями
-        Route::controller(AdminEducationSchoolController::class)->prefix('/education-schools')->name('school.')->group(function () {
-            Route::get('/', 'index')->name('index'); // Просмотр всех учебных заведений
+        // Учебные справочники
+        Route::prefix('/educations')->name('education.')->group(function () {
+            Route::get('/', AdminEducationController::class)->name('index');
+            // Управление учебными заведениями
+            Route::controller(AdminEducationSchoolController::class)->prefix('/schools')->name('school.')->group(function () {
+                Route::get('/', 'index')->name('index'); // Просмотр всех учебных заведений
+            });
         });
+
 
         // Управление олимпиадами
         Route::controller(AdminOlympiadController::class)->prefix('/olympiads')->name('olympiad.')->group(function () {

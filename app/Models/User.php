@@ -11,6 +11,11 @@ use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
+    const ADMIN_ROLE = 'Администратор';
+    const OLYMPIAD_MANAGER_ROLE = 'Ответственный';
+    const MANAGER_ROLE = 'Руководитель';
+    const PARTICIPANT_ROLE = 'Участник';
+
     use HasFactory, Notifiable;
 
     protected $fillable = [
@@ -114,5 +119,21 @@ class User extends Authenticatable implements MustVerifyEmail
             . substr($phone, 4, 3) . '-'
             . substr($phone, 7, 2) . '-'
             . substr($phone, 8, 2);
+    }
+
+    // Другие методы
+    public function isAdmin()
+    {
+        return $this->role?->title === self::ADMIN_ROLE;
+    }
+
+    public function isParticipant()
+    {
+        return $this->role?->title === self::PARTICIPANT_ROLE;
+    }
+
+    public function isOlympiadManager()
+    {
+        return $this->role?->title === self::OLYMPIAD_MANAGER_ROLE;
     }
 }

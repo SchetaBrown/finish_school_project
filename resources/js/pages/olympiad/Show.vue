@@ -23,8 +23,16 @@ const OLYMPIAD_TYPES = computed(() => {
     }
 });
 
+const REGISTER_START_DATE = computed(() => {
+    return DATA.value.register_start_date;
+});
+
+const REGISTER_END_DATE = computed(() => {
+    return DATA.value.register_end_date;
+});
+
 const END_DATE = computed(() => {
-    return DATA.value.end_date;
+    return DATA.value.end_date
 });
 
 const START_DATE = computed(() => {
@@ -88,7 +96,8 @@ const OLYMPIAD_DETAILS = computed(() => {
             <OlympiadDetailBlock :details="OLYMPIAD_DETAILS" :labelTitle="'Детали олимпиады'" />
             <OlympiadNewBlock :news="DATA.news" />
             <OlympiadRegisterBlock :title="'Регистрация'" :count="PLAYER_COUNT" :limit="PLAYER_LIMIT"
-                :progressBarWidth="PROGRESS_BAR_WIDTH" :end-date="END_DATE" :slug="DATA.slug" :status="DATA.status">
+                :progressBarWidth="PROGRESS_BAR_WIDTH" :register-end-date="REGISTER_END_DATE"
+                :register-start-date="REGISTER_START_DATE" :slug="DATA.slug" :status="DATA.status">
             </OlympiadRegisterBlock>
         </section>
     </AppBaseLayout>

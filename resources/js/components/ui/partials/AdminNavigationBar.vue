@@ -26,8 +26,8 @@ const LINKS = computed(() => {
         {
             id: 3,
             icon: 'fa-university',
-            title: 'Учебные заведения',
-            href: 'admin.school.index',
+            title: 'Учебные справочники',
+            href: 'admin.education.index',
         },
     ];
 });

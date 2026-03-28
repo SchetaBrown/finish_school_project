@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class OlympiadNew extends Model
 {
@@ -24,5 +26,24 @@ class OlympiadNew extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    // Скоупы
+    protected function slug(): Attribute
+    {
+        $now = "-" . now()->timestamp . '-' . rand(1000, 9999);
+        return Attribute::make(
+            set: function ($value, $attributes) use ($now) {
+                if (!empty($value)) {
+                    return Str::slug($value) . $now;
+                }
+
+                if (!empty($attributes['title'])) {
+                    return Str::slug($attributes['title']) . $now;
+                }
+
+                return 'olympiad' . $now;
+            }
+        );
     }
 }

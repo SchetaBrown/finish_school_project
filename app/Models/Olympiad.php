@@ -89,7 +89,7 @@ class Olympiad extends Model
         return Attribute::make(
             get: function ($value) {
                 $carbon = new Carbon($value);
-                return $carbon->format('h:m:s d.m.Y');
+                return $carbon->format('h:m d.m.Y');
             }
         );
     }
@@ -98,7 +98,7 @@ class Olympiad extends Model
         return Attribute::make(
             get: function ($value) {
                 $carbon = new Carbon($value);
-                return $carbon->format('h:m:s d.m.Y');
+                return $carbon->format('h:m d.m.Y');
             }
         );
     }

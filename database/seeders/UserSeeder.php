@@ -31,7 +31,7 @@ class UserSeeder extends Seeder
                 'role_id' => 1,
             ],
             [
-                'surname' => 'Managarov',
+                'surname' => 'Managerov',
                 'name' => 'Manager',
                 'patronymic' => 'Managerovich',
                 'email' => 'manager@gmail.com',

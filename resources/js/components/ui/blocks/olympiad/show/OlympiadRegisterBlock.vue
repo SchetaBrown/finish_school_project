@@ -1,5 +1,5 @@
 <script setup>
-const PROPS = defineProps(['title', 'status', 'endDate', 'count', 'limit', 'progressBarWidth', 'slug']);
+const PROPS = defineProps(['title', 'status', 'registerStartDate', 'registerEndDate', 'count', 'limit', 'progressBarWidth', 'slug']);
 import Container from '@other/Container.vue'
 import BlockTitle from '@titles/BlockTitle.vue'
 import { computed } from 'vue';
@@ -32,8 +32,12 @@ const IS_AVAILABLE_LINK = computed(() => {
                     <span class="text-[#6A7282] text-sm">Статус:</span>
                 </div>
                 <div class="flex justify-between items-center">
-                    <span class="text-[#6A7282] text-sm">Регистрация до:</span>
-                    <span class="font-medium text-gray-900">{{ endDate }}</span>
+                    <span class="text-[#6A7282] text-sm">Начало регистрации:</span>
+                    <span class="font-medium text-gray-900">{{ registerStartDate }}</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-[#6A7282] text-sm">Окончание регистрации:</span>
+                    <span class="font-medium text-gray-900">{{ registerEndDate }}</span>
                 </div>
             </div>
             <Link v-if="IS_AVAILABLE_LINK"
