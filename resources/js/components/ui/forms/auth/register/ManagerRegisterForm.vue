@@ -3,6 +3,7 @@ const PROPS = defineProps(['schools']);
 import PhoneInput from "@inputs/PhoneInput.vue";
 import BaseButton from "@buttons/BaseButton.vue";
 import YandexCaptcha from "@other/YandexCaptcha.vue";
+import BaseList from '@lists/BaseList.vue';
 import AuthLink from "@links/AuthLink.vue";
 import BlockTitle from '@titles/BlockTitle.vue'
 import { useCustomForm } from "@composables/useCustomForm";
@@ -63,8 +64,8 @@ const phoneInput = computed(() => {
         <div class="grid grid-cols-2 gap-5 max-lg:grid-cols-1">
             <InputBlock :name="input.name" :type="input.type" :placeholder="input.placeholder" :label="input.label"
                 v-for="input in inputs" :key="input.label" @update-value="updateValue" :form="form" />
-            <SelectBlock :options="schools.data" name="education_school_title" select-title="short_name"
-                label="Учебное заведение" @update-value="updateValue" :form="form" />
+            <BaseList :options="schools.data" name="education_school_id" label="Учебное заведение"
+                @update-value="updateValue" />
         </div>
         <DivideLine />
         <div class="my-4">

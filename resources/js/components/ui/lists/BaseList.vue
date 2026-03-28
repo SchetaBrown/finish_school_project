@@ -5,6 +5,10 @@ import Label from '@other/Label.vue';
 const props = defineProps(['label', 'name', 'baseTitle', 'options']);
 const emit = defineEmits(['update-value']);
 
+// Создаём уникальный ID для каждого экземпляра компонента
+const dropdownId = ref(`dropdown-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`);
+const dropdownRef = ref(null); // Ссылка на DOM-элемент
+
 const isOpen = ref(false);
 const searchQuery = ref('');
 const selectedOption = ref(null);
@@ -49,9 +53,9 @@ const toggleDropdown = () => {
     }
 };
 
+// Используем реф вместо querySelector
 const handleClickOutside = (event) => {
-    const dropdown = document.querySelector('.dropdown-container');
-    if (dropdown && !dropdown.contains(event.target)) {
+    if (dropdownRef.value && !dropdownRef.value.contains(event.target)) {
         closeDropdown();
     }
 };
@@ -74,7 +78,8 @@ onUnmounted(() => {
 </script>
 
 <template>
-    <div class="dropdown-container relative flex flex-col gap-1">
+    <!-- Добавляем ref и уникальный класс/атрибут для идентификации -->
+    <div :ref="dropdownRef" :data-dropdown-id="dropdownId" class="relative flex flex-col gap-1">
         <Label :label="label" :name="name" />
 
         <button @click="toggleDropdown"
@@ -113,10 +118,6 @@ onUnmounted(() => {
 </template>
 
 <style scoped>
-.dropdown-container {
-    position: relative;
-}
-
 .absolute {
     animation: dropdownFadeIn 0.2s ease;
 }

@@ -27,10 +27,17 @@ return new class extends Migration {
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
             $table
+                ->foreignId('olympiad_manager_id')
+                ->references('id')
+                ->on('users')
+                ->cascadeOnUpdate()
+                ->cascadeOnDelete();
+            $table
                 ->foreignId('olympiad_direction_id')
                 ->constrained()
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
+
 
             $table->index(['slug', 'title']);
 

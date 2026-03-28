@@ -27,6 +27,15 @@ class UserSeeder extends Seeder
             'role_id' => 2,
         ],
         [
+            'surname' => 'Olympiadov',
+            'name' => 'Manager',
+            'patronymic' => 'Managerovich',
+            'email' => 'olympiadmanager@gmail.com',
+            'phone' => '7999887761',
+            'password' => '123123123',
+            'role_id' => 4,
+        ],
+        [
             'surname' => 'Adminov',
             'name' => 'Admin',
             'patronymic' => 'Adminovich',

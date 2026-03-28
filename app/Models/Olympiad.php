@@ -117,6 +117,7 @@ class Olympiad extends Model
                     fn($subQ) =>
                     $subQ->where('slug', $direction)
                         ->orWhere('title', $direction)
+                        ->orWhere('olympiad_direction_id', $direction)
                 );
             })
             ->when($filters['status'] ?? null, function ($q, $status) {
@@ -125,6 +126,7 @@ class Olympiad extends Model
                     fn($subQ) =>
                     $subQ->where('slug', $status)
                         ->orWhere('title', $status)
+                        ->orWhere('olympiad_status_id', $status)
                 );
             })
             ->when($filters['type'] ?? null, function ($q, $type) {

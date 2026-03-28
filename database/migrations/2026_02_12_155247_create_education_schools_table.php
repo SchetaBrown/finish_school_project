@@ -21,6 +21,7 @@ return new class extends Migration {
             $table->string('director_name');
             $table->string('director_patronymic');
             $table->string('email')->unique()->nullable();
+            $table->integer('max_player_count')->default(5);
 
             $table
                 ->foreignId('city_id')
