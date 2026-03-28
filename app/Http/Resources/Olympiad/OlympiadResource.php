@@ -17,6 +17,8 @@ class OlympiadResource extends JsonResource
         return [
             'title' => $this->title,
             'description' => $this->description,
+            'register_start_date' => $this->register_start_date,
+            'register_end_date' => $this->register_end_date,
             'start_date' => $this->start_date,
             'end_date' => $this->end_date,
             'player_count' => $this->player_count,

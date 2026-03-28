@@ -16,6 +16,8 @@ return new class extends Migration {
             $table->string('title');
             $table->string('slug')->unique();
             $table->text('description');
+            $table->dateTime('register_start_date');
+            $table->dateTime('register_end_date');
             $table->date('start_date');
             $table->date('end_date');
             $table->integer('player_count');

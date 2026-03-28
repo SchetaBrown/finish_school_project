@@ -19,6 +19,8 @@ class Olympiad extends Model
     protected $fillable = [
         'title',
         'description',
+        'register_start_date',
+        'register_end_date',
         'start_date',
         'end_date',
         'player_count',
@@ -26,6 +28,7 @@ class Olympiad extends Model
         'slug',
         'olympiad_status_id',
         'olympiad_direction_id',
+        'olympiad_manager_id',
     ];
 
     // Связи
@@ -77,6 +80,25 @@ class Olympiad extends Model
             get: function ($value) {
                 $carbon = new Carbon($value);
                 return $carbon->format('d.m.Y');
+            }
+        );
+    }
+
+    protected function registerStartDate(): Attribute
+    {
+        return Attribute::make(
+            get: function ($value) {
+                $carbon = new Carbon($value);
+                return $carbon->format('h:m:s d.m.Y');
+            }
+        );
+    }
+    protected function registerEndDate(): Attribute
+    {
+        return Attribute::make(
+            get: function ($value) {
+                $carbon = new Carbon($value);
+                return $carbon->format('h:m:s d.m.Y');
             }
         );
     }
