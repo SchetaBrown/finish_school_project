@@ -5,9 +5,7 @@ import BaseButton from "@buttons/BaseButton.vue";
 import AuthLink from "@links/AuthLink.vue";
 import YandexCaptcha from '@other/YandexCaptcha.vue';
 import BlockTitle from '@titles/BlockTitle.vue';
-import PhoneInput from "@inputs/PhoneInput.vue";
 import InputBlock from '@blocks/InputBlock.vue'
-import SelectBlock from '@blocks/SelectBlock.vue'
 import BaseList from '@lists/BaseList.vue'
 import { useCustomForm } from '@composables/useCustomForm.js'
 
@@ -61,7 +59,7 @@ const participantInputs = computed(() => [
         type: 'tel',
         name: 'phone',
         placeholder: '+7 (___) ___-__-__',
-        component: PhoneInput,
+        component: InputBlock,
     },
     {
         label: 'Учебное заведение',

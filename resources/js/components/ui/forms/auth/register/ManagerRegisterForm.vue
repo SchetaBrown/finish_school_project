@@ -1,6 +1,5 @@
 <script setup>
 const PROPS = defineProps(['schools']);
-import PhoneInput from "@inputs/PhoneInput.vue";
 import BaseButton from "@buttons/BaseButton.vue";
 import YandexCaptcha from "@other/YandexCaptcha.vue";
 import BaseList from '@lists/BaseList.vue';
@@ -64,15 +63,13 @@ const phoneInput = computed(() => {
         <div class="grid grid-cols-2 gap-5 max-lg:grid-cols-1">
             <InputBlock :name="input.name" :type="input.type" :placeholder="input.placeholder" :label="input.label"
                 v-for="input in inputs" :key="input.label" @update-value="updateValue" :form="form" />
-            <BaseList :options="schools.data" name="education_school_id" label="Учебное заведение"
+            <BaseList :options="schools.data" name="education_school_id" label="Учебное заведение" :form="form"
                 @update-value="updateValue" />
         </div>
         <DivideLine />
         <div class="my-4">
             <BlockTitle :title="'Контактные данные руководителя'" />
-            <PhoneInput class="mt-5 mb-1" :label="phoneInput.label" :name="phoneInput.name" @update-value="
-                updateValue
-            " />
+            <InputBlock name="phone" label="Телефон" type="tel" placeholder="+7 (___) ___-__-__" :form="form" />
             <span class="text-[12px] text-[#99A1AF]">Телефон нужен для оперативной связи по организационным
                 вопросам</span>
         </div>

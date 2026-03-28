@@ -76,7 +76,9 @@ Route::middleware(['is_auth', 'verified'])->group(function () {
 
         // Управление участниками
         Route::controller(AdminUserController::class)->prefix('/users')->name('user.')->group(function () {
-            Route::get('/', 'index')->name('index');
+            Route::get('/', 'index')->name('index'); // Просмотр всех пользователей
+            Route::get('/create', 'create')->name('create'); // Страница создания пользователя
+            Route::post('/store', 'store')->name('store'); // Маршрут для создания пользователя
             Route::get('/{id}/edit', 'edit')->name('edit');
         });
 

@@ -1,17 +1,25 @@
 <script setup>
-import { ref, computed, onMounted, onUnmounted } from 'vue';
+import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
 import Label from '@other/Label.vue';
+import InputError from "@other/InputError.vue"
 
-const props = defineProps(['label', 'name', 'baseTitle', 'options']);
+const props = defineProps(['label', 'name', 'baseTitle', 'options', 'form']);
 const emit = defineEmits(['update-value']);
 
 // Создаём уникальный ID для каждого экземпляра компонента
 const dropdownId = ref(`dropdown-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`);
 const dropdownRef = ref(null); // Ссылка на DOM-элемент
 
+const value = ref(null);
 const isOpen = ref(false);
+const isDirty = ref(false);
 const searchQuery = ref('');
 const selectedOption = ref(null);
+const form = props?.form;
+
+const error = computed(() => {
+    return form?.errors[props.name];
+});
 
 const filteredOptions = computed(() => {
     if (!searchQuery.value.trim()) {
@@ -31,6 +39,7 @@ const buttonText = computed(() => {
 });
 
 const selectOption = (option) => {
+    value.value = option;
     selectedOption.value = option;
 
     emit('update-value', {
@@ -75,6 +84,14 @@ onUnmounted(() => {
     document.removeEventListener('click', handleClickOutside);
     document.removeEventListener('keydown', handleEscape);
 });
+
+watch(value, () => {
+    isDirty.value = false;
+});
+
+watch(error, () => {
+    isDirty.value = true;
+});
 </script>
 
 <template>
@@ -114,6 +131,7 @@ onUnmounted(() => {
                 </button>
             </div>
         </div>
+        <InputError :error="error" :is-dirty="isDirty" />
     </div>
 </template>
 

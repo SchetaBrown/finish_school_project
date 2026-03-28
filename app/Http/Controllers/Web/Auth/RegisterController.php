@@ -41,11 +41,11 @@ class RegisterController extends Controller
             ],
         };
 
-        $validated = app($config['request'])->validated();
+        $resource_request = app($config['request']);
 
-        $user = $this->storeUser($validated, $role);
+        $user = $this->storeUser($resource_request->toBaseArray(), $role);
 
-        $new_user_fields = array_diff_key($validated, $this->base_input_data);
+        $new_user_fields = array_diff_key($resource_request->validated(), $resource_request->toBaseArray());
         $new_user = $config['model']::make($new_user_fields);
         $new_user->user_id = $user->id;
         $new_user->education_school_id;
@@ -60,19 +60,11 @@ class RegisterController extends Controller
         }
     }
 
-    private function storeUser(array $data, string $requestRole)
+    public function storeUser(array $data, string $requestRole)
     {
-        $info_array = [];
-
-        dd($data);
-
-        foreach ($this->base_input_data as $value) {
-            $info_array[$value] = $data[$value];
-        }
-
         try {
             $currentRole = Role::where('title', $requestRole)->first();
-            $user = User::make($info_array);
+            $user = User::make($data);
             $user->role_id = $currentRole->id;
             $user->save();
 
