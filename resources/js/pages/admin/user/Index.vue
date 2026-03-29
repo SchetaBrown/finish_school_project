@@ -46,5 +46,6 @@ const createUser = () => {
         </div>
         <AdminUserFilterForm :roles="roles" />
         <AdminUserTable :users="users.data" />
+        <Pagination :links="users.links" />
     </AppAdminLayout>
 </template>

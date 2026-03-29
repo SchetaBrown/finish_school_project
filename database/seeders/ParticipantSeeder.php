@@ -12,12 +12,14 @@ class ParticipantSeeder extends Seeder
             'birth_date' => '2007-07-07',
             'cours_number' => 4,
             'user_id' => 1,
+            'education_direction_id' => 1,
             'education_school_id' => 1,
         ],
         [
             'birth_date' => '2005-05-05',
             'cours_number' => 3,
             'user_id' => 2,
+            'education_direction_id' => 2,
             'education_school_id' => 1,
         ],
     ];

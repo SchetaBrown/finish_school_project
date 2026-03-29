@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             OlympiadDirectionSeeder::class,
             OlympiadSeeder::class,
             EducationSchoolSeeder::class,
+            EducationDirectionSeeder::class,
             ParticipantSeeder::class,
             ManagerSeeder::class,
             OlympiadNewSeeder::class

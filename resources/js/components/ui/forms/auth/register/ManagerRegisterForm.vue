@@ -48,28 +48,20 @@ const inputs = computed(() => [
         placeholder: "••••••••",
     },
 ]);
-
-const phoneInput = computed(() => {
-    return {
-        label: "Телефон",
-        name: "phone",
-        type: "tel",
-        placeholder: "+7 (___) ___-__-__",
-    }
-});
 </script>
 <template>
     <form @submit.prevent="submit(route('register.store'))">
         <div class="grid grid-cols-2 gap-5 max-lg:grid-cols-1">
             <InputBlock :name="input.name" :type="input.type" :placeholder="input.placeholder" :label="input.label"
-                v-for="input in inputs" :key="input.label" @update-value="updateValue" :form="form" />
-            <BaseList :options="schools.data" name="education_school_id" label="Учебное заведение" :form="form"
+                v-for="input in inputs" :key="input.label" @update-value="updateValue" :form="form" max="4" />
+            <BaseList :options="schools" name="education_school_id" label="Учебное заведение" :form="form"
                 @update-value="updateValue" />
         </div>
         <DivideLine />
         <div class="my-4">
             <BlockTitle :title="'Контактные данные руководителя'" />
-            <InputBlock name="phone" label="Телефон" type="tel" placeholder="+7 (___) ___-__-__" :form="form" />
+            <InputBlock name="phone" label="Телефон" type="tel" placeholder="+7 (___) ___-__-__" :form="form"
+                @update-value="updateValue" />
             <span class="text-[12px] text-[#99A1AF]">Телефон нужен для оперативной связи по организационным
                 вопросам</span>
         </div>

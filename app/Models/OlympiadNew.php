@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
@@ -11,7 +12,9 @@ class OlympiadNew extends Model
     // Поля
     protected $fillable = [
         'title',
+        'short_description',
         'description',
+        'slug',
         'olympiad_id',
         'user_id',
         'published_at',
@@ -43,6 +46,17 @@ class OlympiadNew extends Model
                 }
 
                 return 'olympiad' . $now;
+            }
+        );
+    }
+
+    // Аксессесоры
+    protected function publishedAt(): Attribute
+    {
+        return Attribute::make(
+            get: function ($value) {
+                $carbon = new Carbon($value);
+                return $carbon->format('d.m.Y');
             }
         );
     }

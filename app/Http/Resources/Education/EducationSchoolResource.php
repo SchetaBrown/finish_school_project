@@ -7,12 +7,6 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class EducationSchoolResource extends JsonResource
 {
-    /**
-     * Transform the resource into an array.
-     *
-     * @return array<string, mixed>
-     */
-
     private function baseArray()
     {
         return [
@@ -28,16 +22,15 @@ class EducationSchoolResource extends JsonResource
         if ($request->routeIs('register.*')) {
             return [
                 'id' => $this->id,
-                'title' => $this->short_name
+                'title' => $this->short_name,
+                'directions' => $this->whenLoaded('educationDirections', EducationDirectionResource::collection($this->educationDirections)),
             ];
         }
 
         return array_merge($this->baseArray(), [
             'inn' => $this->inn,
             'phone' => $this->phone,
-            'director_surname' => $this->director_surname,
-            'director_name' => $this->director_name,
-            'director_patronymic' => $this->director_patronymic,
+            'director' => "$this->director_surname $this->director_name $this->director_patronymic",
             'email' => $this->email,
         ]);
     }

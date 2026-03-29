@@ -9,7 +9,7 @@ class StoreOlympiadOrderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            
+            'olympiad_id' => ['required', 'exists:olympiads,id']
         ];
     }
 }

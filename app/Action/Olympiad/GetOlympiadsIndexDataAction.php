@@ -12,10 +12,9 @@ class GetOlympiadsIndexDataAction
 {
     public function execute(
         Request $request,
-        ?int $perPage = 10,
         ?bool $isAdminRoute = false,
     ): array {
-        $olympiads = Olympiad::withDefaultRelations()->filter($request->all())->paginate($perPage)->withQueryString();
+        $olympiads = Olympiad::withDefaultRelations()->filter($request->all())->paginate(config('constants.per_page'))->withQueryString();
         $statuses = OlympiadStatus::withoutDraft($isAdminRoute)->get();
         $directions = OlympiadDirection::get();
 

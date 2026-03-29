@@ -11,6 +11,7 @@ class Manager extends Model
     // Поля
     protected $fillable = [
         'is_accept',
+        'reject_message',
         'user_id',
         'education_school_id',
         'education_direction_id',

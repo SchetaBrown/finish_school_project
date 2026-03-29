@@ -56,7 +56,7 @@ class UserSeeder extends Seeder
                 'email' => 'admin@gmail.com',
                 'phone' => '79998889988',
                 'password' => 'admin',
-                'email_verified_at' => now(),
+                // 'email_verified_at' => now(),
                 'role_id' => 5,
             ],
         ];

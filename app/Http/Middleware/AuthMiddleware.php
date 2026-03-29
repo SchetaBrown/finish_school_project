@@ -23,19 +23,18 @@ class AuthMiddleware
             return redirect()->route('login.create')->with('error', 'Войдите в систему');
         }
 
-
         $user = User::with(['role'])->first();
-
+        $id = Auth::id();
 
         if ($user->role->title === 'участник') {
-            $participant = Participant::where('user_id', Auth::id())->first();
+            $participant = Participant::where('user_id', $id)->first();
 
             if (!$participant) {
                 return redirect()->route('login.create');
             }
 
         } else if ($user->role->title === 'руководитель') {
-            $manager = Manager::where('user_id', Auth::id())->first();
+            $manager = Manager::where('user_id', $id)->first();
 
             if (!$manager || !$manager->is_accept) {
                 return redirect()->route('olympiad.index')->with('info', 'Ваша заявка на рассмотрении');

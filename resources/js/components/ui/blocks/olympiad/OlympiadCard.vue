@@ -18,8 +18,8 @@ const OLYMPIAD_IS_FINISHED =
 </script>
 <template>
     <Link :href="OLYMPIAD_IS_FINISHED
-        ? route('olympiad.result.index', { slug: olympiad.slug })
-        : route('olympiad.show', { slug: olympiad.slug })
+        ? route('olympiad.result.index', { olympiad: olympiad.slug })
+        : route('olympiad.show', { olympiad: olympiad.slug })
         " class="text-sm font-medium" :class="OLYMPIAD_IS_FINISHED
             ? 'text-gray-500 hover:text-gray-700'
             : 'text-indigo-600 hover:text-indigo-700'
@@ -29,7 +29,7 @@ const OLYMPIAD_IS_FINISHED =
         <BlockTitle :title="olympiad.title" />
         <OlympiadDescription :description="olympiad.description" />
         <OlympiadProgress :direction="olympiad.direction" :player_count="olympiad.player_count"
-            :player_limit="olympiad.player_limit" :status="olympiad.status" />
+            :status="olympiad.status" />
     </Container>
     </Link>
 </template>

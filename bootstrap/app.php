@@ -20,7 +20,6 @@ return Application::configure(basePath: dirname(__DIR__))
             'is_admin' => AdminMiddleware::class,
         ]);
 
-
         $middleware->web([
             HandleInertiaRequests::class,
             ShareRecaptchaKeyMiddleware::class

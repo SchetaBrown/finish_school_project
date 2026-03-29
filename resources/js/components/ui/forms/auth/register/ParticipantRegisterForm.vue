@@ -1,6 +1,9 @@
 <script setup>
 const props = defineProps(['schools']);
-import { computed } from "vue";
+
+console.log(props.schools)
+
+import { computed, onUnmounted, ref, watch } from "vue";
 import BaseButton from "@buttons/BaseButton.vue";
 import AuthLink from "@links/AuthLink.vue";
 import YandexCaptcha from '@other/YandexCaptcha.vue';
@@ -9,7 +12,9 @@ import InputBlock from '@blocks/InputBlock.vue'
 import BaseList from '@lists/BaseList.vue'
 import { useCustomForm } from '@composables/useCustomForm.js'
 
-const { form, submit, updateValue } = useCustomForm({
+const educationDirections = ref([]);
+
+const { form, submit, updateValue, getForm } = useCustomForm({
     surname: "",
     name: "",
     patronymic: "",
@@ -65,7 +70,13 @@ const participantInputs = computed(() => [
         label: 'Учебное заведение',
         name: 'education_school_id',
         component: BaseList,
-        options: props.schools.data,
+        options: props.schools,
+    },
+    {
+        label: 'Специальность',
+        name: 'education_direction_id',
+        component: BaseList,
+        options: educationDirections.value,
     },
     {
         label: 'Дата рождения',
@@ -80,6 +91,14 @@ const participantInputs = computed(() => [
         component: InputBlock,
     },
 ]);
+
+watch(form, () => {
+
+});
+
+onUnmounted(() => {
+    educationDirections.value = [];
+});
 </script>
 <template>
     <form @submit.prevent="submit(route('register.store'))">
@@ -93,8 +112,18 @@ const participantInputs = computed(() => [
             <div class="grid grid-cols-2 gap-5 max-lg:grid-cols-1">
                 <component v-for="input in participantInputs" :key="input.label" :is="input.component"
                     :label="input.label" :name="input.name" :placeholder="input.placeholder" :type="input.type"
-                    :options="input.options" @update-value="updateValue" :form="form" :selectTitle="input.selectTitle"
-                    :optionTitle="input.optionTitle" />
+                    :options="input.options" @update-value="(data) => {
+                        updateValue(data)
+                        if (input.name === 'education_school_id') {
+                            console.log(data)
+
+                            schools.forEach(school => {
+                                if (school.id === data.value) {
+                                    educationDirections = school.directions;
+                                }
+                            });
+                        }
+                    }" :form="form" :selectTitle="input.selectTitle" :optionTitle="input.optionTitle" />
             </div>
         </div>
         <!-- <YandexCaptcha class="mb-6" /> -->

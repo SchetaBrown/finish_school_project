@@ -1,12 +1,11 @@
 <script setup>
-const PROPS = defineProps(['news']);
+const props = defineProps(['news', 'olympiadSlug']);
 import { computed } from 'vue';
 import Container from '@other/Container.vue'
 import NoData from '@other/NoData.vue'
-import DivideLine from '@other/DivideLine.vue'
 
 const NEWS = computed(() => {
-    const news = PROPS?.news;
+    const news = props?.news;
     return news && news.length !== 0 ? news : null;
 });
 </script>
@@ -21,14 +20,16 @@ const NEWS = computed(() => {
             <p class="text-gray-500 text-sm">Для просмотра новостей войдите в систему</p>
         </div>
         <NoData v-else-if="!NEWS" />
-        <div class="pb-4 border-b border-gray-100 last:border-0 last:pb-0" v-else v-for="olympiadNew in NEWS">
+        <div class="pb-4 border-b border-gray-100 mb-4 last:mb-0 last:border-0 last:pb-0" v-else
+            v-for="olympiadNew in NEWS">
+            <Link :href="route('olympiad.new.show', { olympiad: olympiadSlug, new: olympiadNew.slug })">
             <div class="flex items-center space-x-2 text-xs text-gray-400 mb-2">
                 <i class="far fa-calendar"></i>
                 <span>{{ olympiadNew.published_at }}</span>
             </div>
             <h3 class="font-medium text-gray-900 mb-1">{{ olympiadNew.title }}</h3>
             <p class="text-sm text-gray-600">{{ olympiadNew.description }}</p>
-            <DivideLine />
+            </Link>
         </div>
     </Container>
 </template>

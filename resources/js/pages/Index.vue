@@ -3,8 +3,6 @@ import AppBaseLayout from "@layouts/AppBaseLayout.vue";
 import OlympiadSection from "@sections/OlympiadSection.vue";
 import FilterSection from "@forms/IndexPageFilterForm.vue";
 import PageTitle from '@titles/PageTitle.vue'
-import Pagination from "@other/Pagination.vue";
-
 
 const PROPS = defineProps([
     'olympiads',

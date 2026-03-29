@@ -15,7 +15,7 @@ abstract class BaseUserRequest extends FormRequest
             'patronymic' => ['required', 'string'],
             'email' => ['required', 'string', 'unique:users,email'],
             'password' => ['required', 'string', 'min:8'],
-            'education_school_id' => ['required', 'string', 'exists:education_schools,id'],
+            'education_school_id' => ['required', 'integer', 'exists:education_schools,id'],
             'phone' => ['required', 'string', 'regex:/^\+7 \(9\d{2}\) \d{3}-\d{2}-\d{2}$/', new PhoneRule()],
             'role' => ['required', 'string', 'exists:roles,title']
         ];

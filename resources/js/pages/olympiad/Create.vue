@@ -22,13 +22,6 @@ const OLYMPIAD_TYPES = computed(() => {
     }
 });
 
-const FREE_POSITION = computed(() => {
-    const playerLimit = OLYMPIAD_DATA.value.player_limit;
-    const playerCount = OLYMPIAD_DATA.value.player_count;
-
-    return `${playerLimit - playerCount} из ${playerLimit}`
-});
-
 const SPONSOR = computed(() => {
     return OLYMPIAD_DATA.value.organizer ?? 'Не указан';
 });
@@ -44,8 +37,8 @@ const OLYMPIAD_DATA_BLOCK = computed(() => {
             title: OLYMPIAD_TYPES.value ?? 'Не указан',
         },
         {
-            subtitle: 'Свободных мест',
-            title: FREE_POSITION.value,
+            subtitle: 'Количество мест',
+            title: OLYMPIAD_DATA.value.player_count,
         },
     ];
 });

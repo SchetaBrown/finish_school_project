@@ -18,10 +18,9 @@ use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
 {
-    private array $base_input_data = ['surname', 'name', 'patronymic', 'email', 'phone', 'password'];
     public function create()
     {
-        $schools = EducationSchoolResource::collection(EducationSchool::with(['directions'])->get());
+        $schools = EducationSchoolResource::collection(EducationSchool::with(['educationDirections'])->get());
 
         return inertia('auth/Register', compact('schools'));
     }

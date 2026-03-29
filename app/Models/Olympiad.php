@@ -24,7 +24,6 @@ class Olympiad extends Model
         'start_date',
         'end_date',
         'player_count',
-        'player_limit',
         'slug',
         'olympiad_status_id',
         'olympiad_direction_id',

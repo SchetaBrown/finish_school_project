@@ -9,6 +9,9 @@ class OlympiadOrder extends Model
     // Поля
     protected $fillable = [
         'score',
+        'is_hostel',
+        'arrival_date',
+        'departure_date',
         'participant_id',
         'manager_id',
         'olympiad_id',

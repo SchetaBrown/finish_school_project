@@ -1,5 +1,5 @@
 import { useForm } from "@inertiajs/vue3";
-import { onUnmounted } from "vue";
+import { computed, onUnmounted } from "vue";
 
 export function useCustomForm(fields = {}) {
 
@@ -8,6 +8,10 @@ export function useCustomForm(fields = {}) {
     });
 
     const form = useForm({ ...fields });
+
+    const getForm = computed(() => {
+        return form;
+    });
 
     const updateValue = (data) => {
         form[data.name] = data.value;
@@ -22,6 +26,7 @@ export function useCustomForm(fields = {}) {
 
     return {
         form,
+        getForm,
         updateValue,
         submit,
     };

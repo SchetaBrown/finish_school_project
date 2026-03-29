@@ -14,6 +14,7 @@ return new class extends Migration {
             $table->id();
 
             $table->string('title');
+            $table->tinyText('short_description')->nullable();
             $table->text('description');
             $table->string('slug')->unique()->nullable();
 
@@ -27,6 +28,8 @@ return new class extends Migration {
                 ->constrained()
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
+
+            $table->index(['slug']);
 
             $table->dateTime('published_at');
             $table->timestamps();

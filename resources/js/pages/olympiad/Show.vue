@@ -94,7 +94,7 @@ const OLYMPIAD_DETAILS = computed(() => {
                 </p>
             </Container>
             <OlympiadDetailBlock :details="OLYMPIAD_DETAILS" :labelTitle="'Детали олимпиады'" />
-            <OlympiadNewBlock :news="DATA.news" />
+            <OlympiadNewBlock :news="DATA.news" :olympiadSlug="DATA.slug" />
             <OlympiadRegisterBlock :title="'Регистрация'" :count="PLAYER_COUNT" :limit="PLAYER_LIMIT"
                 :progressBarWidth="PROGRESS_BAR_WIDTH" :register-end-date="REGISTER_END_DATE"
                 :register-start-date="REGISTER_START_DATE" :slug="DATA.slug" :status="DATA.status">

@@ -11,22 +11,22 @@ use App\Models\User;
 
 class GetUsersDataForAdminPageAction
 {
-    public function execute($search, ?int $perPage = 15)
+    public function execute($search)
     {
-        $users = User::with(['role'])->search($search)->orderBy('role_id', 'desc')->paginate($perPage);
+        $users = User::with(['role'])->search($search)->orderBy('role_id', 'desc')->paginate(config('constants.per_page'));
         $users_count = User::get()->count();
 
-        $participants = Participant::paginate($perPage);
+        $participants = Participant::paginate(config('constants.per_page'));
 
         $participants_count = Participant::get()->count();
 
-        $managers = Manager::paginate($perPage);
+        $managers = Manager::paginate(config('constants.per_page'));
         $managers_count = $managers->count();
 
         $excludedRoles = Role::whereIn('title', ['участник', 'руководитель'])->pluck('id');
         $employees = User::with(['role'])
             ->whereNotIn('role_id', $excludedRoles)
-            ->paginate($perPage);
+            ->paginate(config('constants.per_page'));
         $employees_count = $employees->count();
 
         $roles = RoleResource::collection(Role::get());

@@ -16,7 +16,7 @@ class AdminOlympiadController extends Controller
 {
     public function index(Request $request)
     {
-        $olympiads = Olympiad::withDefaultRelations()->filter($request->all())->paginate(10);
+        $olympiads = Olympiad::withDefaultRelations()->filter($request->all())->paginate(config('constants.per_page'));
 
         $olympiads_count = $olympiads->count();
 
@@ -33,7 +33,7 @@ class AdminOlympiadController extends Controller
 
     public function create()
     {
-
+        
     }
 
     public function store()

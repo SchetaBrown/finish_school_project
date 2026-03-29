@@ -12,10 +12,8 @@ class Participant extends Model
     protected $fillable = [
         'birth_date',
         'cours_number',
-        'is_hostel',
-        'arrival_date',
-        'departure_date',
         'education_school_id',
+        'education_direction_id',
         'user_id',
         'attached_manager_id',
     ];
@@ -41,8 +39,13 @@ class Participant extends Model
         return $this->hasMany(OlympiadOrder::class);
     }
 
+    public function educationDirection()
+    {
+        return $this->belongsTo(EducationDirection::class);
+    }
+
     // Мутаторы/аксессоры
-    protected function birthDate() : Attribute
+    protected function birthDate(): Attribute
     {
         return Attribute::make(
             get: function ($value) {

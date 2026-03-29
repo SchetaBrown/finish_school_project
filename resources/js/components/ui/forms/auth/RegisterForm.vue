@@ -18,7 +18,7 @@ function getActiveTab(id) {
     <Container class="max-w-196 p-8">
         <ChangeRoleSection @change-role="getActiveTab" />
 
-        <ParticipantRegisterForm :schools="schools" :directions="directions" v-if="identificator === 'participant'" />
+        <ParticipantRegisterForm :schools="schools" v-if="identificator === 'participant'" />
         <ManagarRegisterForm :schools="schools" v-else />
     </Container>
 </template>

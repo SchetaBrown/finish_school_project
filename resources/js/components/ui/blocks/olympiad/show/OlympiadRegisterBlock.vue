@@ -43,7 +43,7 @@ const IS_AVAILABLE_LINK = computed(() => {
             <Link v-if="IS_AVAILABLE_LINK"
                 class="flex items-center justify-center text-white py-3.5 w-full font-medium rounded-lg bg-indigo-600"
                 :href="route('olympiad.order.create', {
-                    slug
+                    olympiad: slug
                 })">
             Перейти к регистрации</Link>
         </div>

@@ -14,11 +14,12 @@ const createOlympiad = () => {
 <template>
     <AppAdminLayout>
         <div class="flex items-center justify-between mb-6">
-            <h1 class="text-2xl lg:text-3xl font-bold text-gray-900">Управление олимпиадами</h1>
+            <h1 class="text-2xl lg:text-3xl font-bold text-gray-900">Олимпиады</h1>
             <BaseButton @click="createOlympiad" :text="'Добавить'" :icon="'fas fa-plus'"
                 class="max-w-fit px-4 py-2 text-sm" />
         </div>
         <AdminOlympiadFilterForm :directions="directions.data" :statuses="statuses.data" />
         <AdminOlympiadTable :olympiads="olympiads.data" />
+        <Pagination :links="olympiads.links" />
     </AppAdminLayout>
 </template>

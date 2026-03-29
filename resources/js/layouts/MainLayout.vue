@@ -16,6 +16,7 @@ const userInfo = computed(() => {
 
     if (user?.user_info) {
         const info = user;
+        console.log(info)
         return {
             initial: `${info.user_info.surname?.[0] || ''}${info.user_info.name?.[0] || ''}`,
             fullName: `${info.user_info.surname || ''} ${info.user_info.name || ''}`.trim(),
@@ -25,7 +26,8 @@ const userInfo = computed(() => {
             email: info.user_info.email || 'Не указан',
             phone: info.user_info.phone || 'Не указан',
             birthDate: info.birth_date || 'Не указан',
-            school: info.school[0] || 'Не указан',
+            school: info.school.short_name || 'Не указан',
+            direction: info.direction.title || 'Не указан',
             role: info.user_info.role || 'Не указан',
             coursNumber: info.cours_number || 'Не указан',
             isAccept: info.is_accept || 'Не указан',

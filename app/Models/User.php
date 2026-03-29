@@ -136,4 +136,14 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->role?->title === self::OLYMPIAD_MANAGER_ROLE;
     }
+
+    public function isManager()
+    {
+        return $this->role?->title === self::MANAGER_ROLE;
+    }
+
+    public function fullName()
+    {
+        return "{$this->surname} {$this->name} {$this->patronymic}";
+    }
 }

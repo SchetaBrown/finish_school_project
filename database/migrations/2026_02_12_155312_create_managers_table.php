@@ -14,6 +14,7 @@ return new class extends Migration {
             $table->id();
 
             $table->boolean('is_accept')->default(false);
+            $table->tinyText('reject_message')->nullable();
 
             $table
                 ->foreignId('user_id')

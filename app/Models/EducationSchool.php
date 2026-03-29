@@ -20,7 +20,7 @@ class EducationSchool extends Model
     ];
 
     // Связи
-    public function directions()
+    public function educationDirections()
     {
         return $this->belongsToMany(
             EducationDirection::class,

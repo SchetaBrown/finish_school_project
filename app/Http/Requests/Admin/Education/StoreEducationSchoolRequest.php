@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Olympiad\Admin;
+namespace App\Http\Requests\Admin\Education;
 
+use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreOlympiadRequest extends FormRequest
+class StoreEducationSchoolRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -17,7 +18,7 @@ class StoreOlympiadRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     * @return array<string, ValidationRule|array<mixed>|string>
      */
     public function rules(): array
     {

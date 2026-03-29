@@ -13,6 +13,7 @@ use App\Models\Manager;
 use App\Models\Participant;
 use App\Models\Role;
 use App\Models\User;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Exception;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -59,5 +60,15 @@ class AdminUserController extends Controller
         } catch (Exception $e) {
             return back()->with('error', 'Возникла ошибка, попробуйте позже');
         }
+    }
+
+    public function export()
+    {
+        $users = User::get();
+
+        $pdf = Pdf::loadView('docs.pdf', [
+            'users' => $users
+        ]);
+        return $pdf->download('invoice.pdf');
     }
 }

@@ -58,7 +58,7 @@ const infoInputData = computed(() => {
                 },
                 {
                     subtitle: 'Специальность',
-                    title: '456',
+                    title: userData?.direction,
                 },
             ],
         },
@@ -71,7 +71,7 @@ const infoInputData = computed(() => {
         <div class="flex flex-col space-y-4">
             <div v-for="infoInput in infoInputData" :key="infoInput.mainTitle">
                 <h3 class="text-[#364153] mb-3">{{ infoInput.mainTitle }}</h3>
-                <div class="flex justify-between flex-wrap">
+                <div class="flex justify-between flex-wrap gap-5">
                     <InfoInputBlock v-for="data in infoInput.data" :key="data.title" :subtitle="data.subtitle"
                         :title="data.title" />
                 </div>

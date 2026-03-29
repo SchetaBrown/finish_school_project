@@ -19,12 +19,12 @@ class OlympiadController extends Controller
         );
     }
 
-    public function show(string $slug)
+    public function show($olympiad)
     {
         return Inertia::render(
             'olympiad/Show',
             [
-                'olympiad' => new OlympiadResource(Olympiad::withDefaultRelations()->whereSlug($slug)->first()),
+                'olympiad' => new OlympiadResource(Olympiad::withDefaultRelations()->whereSlug($olympiad)->first()),
             ]
         );
     }

@@ -16,6 +16,9 @@ return new class extends Migration {
             $table->float('score')->default(0);
             $table->integer('place')->nullable();
             $table->boolean('is_receive')->nullable();
+            $table->boolean('is_hostel')->nullable();
+            $table->date('arrival_date')->nullable();
+            $table->date('departure_date')->nullable();
 
             $table
                 ->foreignId('participant_id')

@@ -18,9 +18,9 @@ const error = computed(() => {
 watch(value, (newValue) => {
     isDirty.value = false;
 
-    if (error.value) {
-        form.clearErrors(props.name);
-    }
+    // if (error.value) {
+    //     form.clearErrors(props.name);
+    // }
 
     emit("update-value", {
         name: props.name,
@@ -47,7 +47,6 @@ watch(error, () => {
                     :placeholder="placeholder ?? 'Введите значение...'"
                     class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition min-h-12.5 max-h-12.5" />
             </div>
-
 
             <InputError :error="error" :is-dirty="isDirty" />
         </div>

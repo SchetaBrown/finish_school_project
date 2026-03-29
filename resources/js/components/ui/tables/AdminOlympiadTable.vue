@@ -4,7 +4,7 @@ import Status from '@other/Status.vue'
 import TableContainer from '@other/TableContainer.vue';
 
 const props = defineProps(['olympiads', 'olympiads_count']);
-const ths = computed(() => ['Название', 'Статус', 'Направление']);
+const ths = computed(() => ['Название', 'Статус', 'Направление', 'Действия']);
 </script>
 <template>
     <TableContainer :ths="ths">
@@ -14,6 +14,11 @@ const ths = computed(() => ['Название', 'Статус', 'Направл�
                 <Status :status="olympiad.status" font-size="12" />
             </td>
             <td class="px-6 py-4">{{ olympiad.direction }}</td>
+            <td class="px-6 py-4">
+                <Link class="text-indigo-600 mr-3">
+                <i class="fas fa-edit"></i>
+                </Link>
+            </td>
         </tr>
     </TableContainer>
 </template>

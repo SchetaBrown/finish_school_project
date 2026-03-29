@@ -9,10 +9,11 @@ class EducationDirection extends Model
     // Поля
     protected $fillable = [
         'title',
+        'code',
     ];
 
     // Связи
-    public function schools()
+    public function educationSchools()
     {
         return $this->belongsToMany(
             EducationSchool::class,
@@ -20,5 +21,10 @@ class EducationDirection extends Model
             'education_direction_id',
             'education_school_id'
         );
+    }
+
+    public function participants()
+    {
+        return $this->hasMany(Participant::class);
     }
 }
