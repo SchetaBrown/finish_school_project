@@ -65,6 +65,13 @@ const OLYMPIAD_DATA_BLOCK = computed(() => {
                 </Container>
                 <Container>
                     <BlockTitle :title="'Подтверждение'" />
+                    <div class="bg-gray-50 rounded-lg p-5 mt-4">
+                        <div class="flex items-center mb-4">
+                            <input name="is_hostel" type="checkbox"
+                                class="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500">
+                            <label for="is_hostel" class="ml-2 block text-sm text-gray-700">Нужно ли общежитие?</label>
+                        </div>
+                    </div>
                 </Container>
             </div>
         </div>
