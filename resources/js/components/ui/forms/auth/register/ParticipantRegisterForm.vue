@@ -1,8 +1,6 @@
 <script setup>
 const props = defineProps(['schools']);
 
-console.log(props.schools)
-
 import { computed, onUnmounted, ref, watch } from "vue";
 import BaseButton from "@buttons/BaseButton.vue";
 import AuthLink from "@links/AuthLink.vue";
@@ -115,8 +113,6 @@ onUnmounted(() => {
                     :options="input.options" @update-value="(data) => {
                         updateValue(data)
                         if (input.name === 'education_school_id') {
-                            console.log(data)
-
                             schools.forEach(school => {
                                 if (school.id === data.value) {
                                     educationDirections = school.directions;
@@ -127,7 +123,8 @@ onUnmounted(() => {
             </div>
         </div>
         <!-- <YandexCaptcha class="mb-6" /> -->
-        <BaseButton :text="'Зарегистрироваться'" :icon="'fas fa-user-plus'" />
+        <BaseButton :text="'Зарегистрироваться'" :icon="'fas fa-user-plus'"
+            class="flex items-center justify-center py-2.5 px-6 font-medium rounded-lg bg-indigo-600 text-sm text-white w-full text-[16px]" />
         <AuthLink :href="'login.create'" :text-sm="'Есть аккаунт?'" :link-text="'Войти'" />
     </form>
 </template>

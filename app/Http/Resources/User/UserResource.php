@@ -17,6 +17,11 @@ class UserResource extends JsonResource
                 'email' => $this->email,
                 'is_ban' => $this->is_ban,
             ];
+        } else if ($request->routeIs('admin.olympiad.create') || $request->routeIs('admin.olympiad.edit')) {
+            return [
+                'id' => $this->id,
+                'title' => "$this->surname $this->name $this->patronymic",
+            ];
         }
 
         return [

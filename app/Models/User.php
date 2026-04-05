@@ -71,6 +71,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(OlympiadDocument::class);
     }
 
+    public function olympiad()
+    {
+        return $this->hasMany(Olympiad::class);
+    }
+
     // Скоупы
     public function scopeSearch(Builder $query, array $search)
     {

@@ -29,7 +29,7 @@ const error = computed(() => {
 
 const inputClasses = computed(() => {
     const baseClasses = [
-        'w-full px-4 py-2.5 bg-gray-50 border rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition min-h-12.5 max-h-12.5',
+        'w-full px-4 py-2.5 bg-gray-50 border rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition min-h-11 max-h-11',
         props.icon ? 'pl-10' : '',
         props.type === 'button' ? 'cursor-pointer' : '',
     ];
@@ -51,7 +51,7 @@ watch(error, () => {
             {{ label }}
         </label>
         <select :name="name" @change="handleChange"
-            class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition flex flex-1 max-h-12.5"
+            class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition flex flex-1 max-h-11"
             :class="inputClasses">
             <option :value="null" disabled selected v-if="label">
                 Выберите {{ label.toLowerCase() }}

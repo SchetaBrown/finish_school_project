@@ -20,7 +20,8 @@ const { submit, setField, clear } = useFilter({
                 @update-value="setField" />
             <BaseList label="Направление" name="direction" :options="directions" @update-value="setField" />
             <BaseList label="Статус" name="status" :options="statuses" @update-value="setField" />
-            <BaseButton base-title="Выберите роль" text="Поиск" class="max-w-fit px-8" />
+            <BaseButton text="Поиск"
+                class="flex items-center justify-center py-2.5 font-medium rounded-lg bg-indigo-600 text-sm text-white min-h-11 px-8" />
             <ResetFilterButton :callback="clear" />
         </form>
     </section>

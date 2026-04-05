@@ -11,6 +11,11 @@ import Container from '@other/Container.vue'
                 <h2 class="text-center">Учебные заведения</h2>
             </Container>
             </Link>
+            <Link :href="route('admin.education.direction.index')">
+            <Container>
+                <h2 class="text-center">Учебные направления</h2>
+            </Container>
+            </Link>
         </div>
     </AppAdminLayout>
 </template>

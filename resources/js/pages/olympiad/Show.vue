@@ -16,11 +16,22 @@ const DATA = computed(() => {
 });
 
 const OLYMPIAD_TYPES = computed(() => {
-    const TYPES = DATA.value.types;
+    const types = DATA.value?.types;
 
-    if (typeof TYPES === 'object') {
-        return TYPES.length !== 0 ? TYPES : 'Не указано';
+    if (!types || types.length === 0) {
+        return '';
     }
+
+    const formattedTypes = types.map((type, index) => {
+        if (!type) return '';
+
+        if (index === 0) {
+            return type.charAt(0).toUpperCase() + type.slice(1).toLowerCase();
+        }
+        return type.toLowerCase();
+    }).filter(Boolean);
+
+    return formattedTypes.join(', ');
 });
 
 const REGISTER_START_DATE = computed(() => {

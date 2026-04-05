@@ -7,11 +7,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\User\StoreUserRequest;
 use App\Http\Resources\User\ManagerResource;
 use App\Http\Resources\User\ParticipantResource;
-use App\Http\Resources\User\RoleResource;
 use App\Http\Resources\User\UserResource;
 use App\Models\Manager;
 use App\Models\Participant;
-use App\Models\Role;
 use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Exception;
@@ -23,13 +21,6 @@ class AdminUserController extends Controller
     public function index(GetUsersDataForAdminPageAction $action, Request $request)
     {
         return Inertia::render('admin/user/Index', $action->execute($request->all()));
-    }
-
-    public function create()
-    {
-        $roles = RoleResource::collection(Role::whereNotIn('title', ['участник', 'руководитель'])->get());
-
-        return Inertia::render('admin/user/Create', compact(['roles']));
     }
 
     public function store(StoreUserRequest $request)
@@ -60,6 +51,10 @@ class AdminUserController extends Controller
         } catch (Exception $e) {
             return back()->with('error', 'Возникла ошибка, попробуйте позже');
         }
+    }
+
+    public function update() {
+        
     }
 
     public function export()

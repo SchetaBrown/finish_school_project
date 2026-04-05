@@ -30,6 +30,7 @@ class GetUsersDataForAdminPageAction
         $employees_count = $employees->count();
 
         $roles = RoleResource::collection(Role::get());
+        $roles_for_create = RoleResource::collection(Role::whereNotIn('title', ['участник', 'руководитель'])->get());
 
         return [
             'users' => UserResource::collection($users),
@@ -40,7 +41,8 @@ class GetUsersDataForAdminPageAction
             'managers_count' => $managers_count,
             'employees' => $employees,
             'employees_count' => $employees_count,
-            'roles' => $roles
+            'roles' => $roles,
+            'roles_for_create' => $roles_for_create,
         ];
     }
 }

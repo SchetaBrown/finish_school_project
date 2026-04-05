@@ -12,9 +12,12 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Olympiad extends Model
 {
+    use SoftDeletes;
+
     // Поля
     protected $fillable = [
         'title',
@@ -23,9 +26,10 @@ class Olympiad extends Model
         'register_end_date',
         'start_date',
         'end_date',
-        'player_count',
+        'max_player_register_count',
         'slug',
         'olympiad_status_id',
+        'olympiad_maintainer_id',
         'olympiad_direction_id',
         'olympiad_manager_id',
     ];
@@ -46,7 +50,7 @@ class Olympiad extends Model
         return $this->belongsTo(OlympiadDirection::class);
     }
 
-    public function applications()
+    public function olympiadOrders()
     {
         return $this->hasMany(OlympiadOrder::class);
     }
@@ -59,6 +63,16 @@ class Olympiad extends Model
     public function olympiadDocuments()
     {
         return $this->hasMany(OlympiadDocument::class);
+    }
+
+    public function olympiadManager()
+    {
+        return $this->belongsTo(User::class, 'olympiad_manager_id');
+    }
+
+    public function olympiadMaintainer()
+    {
+        return $this->belongsTo(User::class, 'olympiad_maintainer_id');
     }
 
     // Мутаторы и аксессоры

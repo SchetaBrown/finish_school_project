@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class EducationDirection extends Model
 {
@@ -26,5 +27,17 @@ class EducationDirection extends Model
     public function participants()
     {
         return $this->hasMany(Participant::class);
+    }
+
+    public function scopeFilter(Builder $query, array $filters): Builder
+    {
+        $query
+            ->when($filters['title'] ?? null, function ($q, $title) {
+                $q
+                    ->where('title', 'LIKE', "%{$title}%")
+                    ->orWhere('code', 'LIKE', "%{$title}%");
+            });
+
+        return $query;
     }
 }

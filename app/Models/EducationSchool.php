@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Illuminate\Contracts\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 
 class EducationSchool extends Model
@@ -16,6 +18,7 @@ class EducationSchool extends Model
         'director_surname',
         'director_name',
         'director_patronymic',
+        'max_player_count',
         'city_id',
     ];
 
@@ -30,6 +33,7 @@ class EducationSchool extends Model
         );
     }
 
+    // Связи
     public function managers()
     {
         return $this->hasMany(Manager::class);
@@ -38,5 +42,33 @@ class EducationSchool extends Model
     public function city()
     {
         return $this->belongsTo(City::class);
+    }
+
+    public function scopeFilter(Builder $query, array $filters): Builder
+    {
+        $query
+            ->when($filters['title'] ?? null, function ($q, $title) {
+                $q
+                    ->where('full_name', 'LIKE', "%{$title}%")
+                    ->orWhere('short_name', 'LIKE', "%{$title}%");
+            });
+
+        return $query;
+    }
+
+    protected function phone(): Attribute
+    {
+        return Attribute::make(
+            get: fn(string $value) => $this->formatPhoneForDisplay($value),
+            set: fn(string $value) => preg_replace('/[^0-9]/', '', $value)
+        );
+    }
+
+    private function formatPhoneForDisplay(string $phone): string
+    {
+        return '+7 (' . substr($phone, 1, 3) . ') '
+            . substr($phone, 4, 3) . '-'
+            . substr($phone, 7, 2) . '-'
+            . substr($phone, 8, 2);
     }
 }

@@ -16,7 +16,6 @@ const userInfo = computed(() => {
 
     if (user?.user_info) {
         const info = user;
-        console.log(info)
         return {
             initial: `${info.user_info.surname?.[0] || ''}${info.user_info.name?.[0] || ''}`,
             fullName: `${info.user_info.surname || ''} ${info.user_info.name || ''}`.trim(),

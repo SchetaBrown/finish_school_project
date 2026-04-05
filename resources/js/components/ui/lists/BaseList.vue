@@ -3,31 +3,65 @@ import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
 import Label from '@other/Label.vue';
 import InputError from "@other/InputError.vue"
 
-const props = defineProps(['label', 'name', 'baseTitle', 'options', 'form']);
+const props = defineProps(['label', 'name', 'baseTitle', 'options', 'form', 'value']);
 const emit = defineEmits(['update-value']);
 
-// Создаём уникальный ID для каждого экземпляра компонента
 const dropdownId = ref(`dropdown-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`);
-const dropdownRef = ref(null); // Ссылка на DOM-элемент
+const dropdownRef = ref(null);
 
-const value = ref(null);
 const isOpen = ref(false);
 const isDirty = ref(false);
 const searchQuery = ref('');
-const selectedOption = ref(null);
 const form = props?.form;
+
+const selectedOption = ref(null);
+
+const findSelectedOption = (val) => {
+    if (!val) return null;
+
+    if (typeof val === 'object' && val.id) {
+        return val;
+    }
+
+    if (props.options) {
+        const searchId = String(val);
+        return props.options.find(option => String(option.id) === searchId) || null;
+    }
+
+    return null;
+};
+
+watch(() => props.value, (newValue) => {
+    const option = findSelectedOption(newValue);
+    if (option) {
+        selectedOption.value = option;
+    } else {
+        selectedOption.value = null;
+    }
+}, { immediate: true });
+
+watch(() => props.options, (newOptions) => {
+    if (newOptions && props.value && typeof props.value !== 'object') {
+        const option = findSelectedOption(props.value);
+        if (option && selectedOption.value?.id !== option.id) {
+            selectedOption.value = option;
+        }
+    }
+}, { deep: true });
 
 const error = computed(() => {
     return form?.errors[props.name];
 });
 
 const filteredOptions = computed(() => {
+    if (!props.options) return [];
+
     if (!searchQuery.value.trim()) {
         return props.options;
     }
 
     return props.options.filter(option =>
-        option.title.toLowerCase().includes(searchQuery.value.toLowerCase())
+        option.title?.toLowerCase().includes(searchQuery.value.toLowerCase())
     );
 });
 
@@ -39,7 +73,6 @@ const buttonText = computed(() => {
 });
 
 const selectOption = (option) => {
-    value.value = option;
     selectedOption.value = option;
 
     emit('update-value', {
@@ -49,6 +82,7 @@ const selectOption = (option) => {
 
     closeDropdown();
 };
+
 
 const closeDropdown = () => {
     isOpen.value = false;
@@ -62,7 +96,6 @@ const toggleDropdown = () => {
     }
 };
 
-// Используем реф вместо querySelector
 const handleClickOutside = (event) => {
     if (dropdownRef.value && !dropdownRef.value.contains(event.target)) {
         closeDropdown();
@@ -85,7 +118,7 @@ onUnmounted(() => {
     document.removeEventListener('keydown', handleEscape);
 });
 
-watch(value, () => {
+watch(() => selectedOption.value, () => {
     isDirty.value = false;
 });
 
@@ -95,12 +128,11 @@ watch(error, () => {
 </script>
 
 <template>
-    <!-- Добавляем ref и уникальный класс/атрибут для идентификации -->
-    <div :ref="dropdownRef" :data-dropdown-id="dropdownId" class="relative flex flex-col gap-1">
+    <div ref="dropdownRef" :data-dropdown-id="dropdownId" class="relative flex flex-col gap-1">
         <Label :label="label" :name="name" />
 
         <button @click="toggleDropdown"
-            class="w-full px-4 py-2.5 bg-gray-50 border rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition min-h-12.5 max-h-12.5 flex justify-between items-center border-gray-200"
+            class="w-full px-4 py-2.5 bg-gray-50 border rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition min-h-11 max-h-11 flex justify-between items-center border-gray-200"
             type="button" :aria-expanded="isOpen" aria-haspopup="listbox">
             <span class="truncate mr-3">{{ buttonText }}</span>
             <svg class="w-5 h-5 transition-transform duration-200" :class="{ 'rotate-180': isOpen }" fill="none"
@@ -123,7 +155,7 @@ watch(error, () => {
                     Ничего не найдено
                 </div>
 
-                <button v-for="option in filteredOptions" :key="option.id" @click="selectOption(option)"
+                <button v-for="option in filteredOptions" :key="option.id" @click="selectOption(option)" type="button"
                     class="w-full px-4 py-2 text-left hover:bg-gray-50 transition-colors focus:outline-none focus:bg-gray-50"
                     :class="{ 'bg-indigo-50 text-indigo-700': selectedOption?.id === option.id }" role="option"
                     :aria-selected="selectedOption?.id === option.id">

@@ -8,15 +8,10 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AdminMiddleware
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
-     */
     public function handle(Request $request, Closure $next): Response
     {
         if (auth()->user()->role->title !== 'Администратор') {
-            return redirect()->back()->with('error', 'Повысьте уровень доступа.');
+            return redirect()->route('olympiad.index')->with('error', 'Повысьте уровень доступа.');
         }
 
         return $next($request);

@@ -16,10 +16,22 @@ const OLYMPIAD_DATA = computed(() => {
 });
 
 const OLYMPIAD_TYPES = computed(() => {
-    const types = OLYMPIAD_DATA.value.types
-    if (types.length !== 0) {
-        return types;
+    const types = OLYMPIAD_DATA.value?.types;
+
+    if (!types || types.length === 0) {
+        return '';
     }
+
+    const formattedTypes = types.map((type, index) => {
+        if (!type) return '';
+
+        if (index === 0) {
+            return type.charAt(0).toUpperCase() + type.slice(1).toLowerCase();
+        }
+        return type.toLowerCase();
+    }).filter(Boolean);
+
+    return formattedTypes.join(', ');
 });
 
 const SPONSOR = computed(() => {
@@ -35,10 +47,6 @@ const OLYMPIAD_DATA_BLOCK = computed(() => {
         {
             subtitle: 'Тип участия',
             title: OLYMPIAD_TYPES.value ?? 'Не указан',
-        },
-        {
-            subtitle: 'Количество мест',
-            title: OLYMPIAD_DATA.value.player_count,
         },
     ];
 });

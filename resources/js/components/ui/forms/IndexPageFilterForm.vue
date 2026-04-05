@@ -1,7 +1,7 @@
 <script setup>
 const props = defineProps(["directions", "statuses"]);
 import { computed } from "vue";
-import SubmitButton from '@buttons/BaseButton.vue'
+import BaseButton from '@buttons/BaseButton.vue'
 import InputBlock from '@blocks/InputBlock.vue'
 import SelectBlock from '@blocks/SelectBlock.vue'
 import DivideLine from '@other/DivideLine.vue';
@@ -20,7 +20,6 @@ const inputs = computed(() => [
         label: 'Поиск',
         name: 'title',
         component: InputBlock,
-        icon: 'fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm',
     },
     {
         label: 'Направление',
@@ -49,7 +48,7 @@ const inputs = computed(() => [
                 <button type="button" @click="clear" class="px-6 py-2.5 text-gray-600 hover:text-gray-900 transition">
                     Сбросить
                 </button>
-                <SubmitButton class="max-w-fit px-6" :text="'Применить фильтры'" />
+                <BaseButton :text="'Применить фильтры'" />
             </div>
         </form>
     </Container>

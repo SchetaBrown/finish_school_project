@@ -40,6 +40,15 @@ class UserSeeder extends Seeder
                 'role_id' => 2,
             ],
             [
+                'surname' => 'Maintainerov',
+                'name' => 'Maintainer',
+                'patronymic' => 'Maintainerovich',
+                'email' => 'maintainer@gmail.com',
+                'phone' => '7999887760',
+                'password' => '123123123',
+                'role_id' => 3,
+            ],
+            [
                 'surname' => 'Olympiadov',
                 'name' => 'Manager',
                 'patronymic' => 'Managerovich',
@@ -56,7 +65,7 @@ class UserSeeder extends Seeder
                 'email' => 'admin@gmail.com',
                 'phone' => '79998889988',
                 'password' => 'admin',
-                // 'email_verified_at' => now(),
+                'email_verified_at' => now(),
                 'role_id' => 5,
             ],
         ];

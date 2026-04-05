@@ -60,13 +60,11 @@ const inputs = computed(() => [
         <DivideLine />
         <div class="my-4">
             <BlockTitle :title="'Контактные данные руководителя'" />
-            <InputBlock name="phone" label="Телефон" type="tel" placeholder="+7 (___) ___-__-__" :form="form"
-                @update-value="updateValue" />
-            <span class="text-[12px] text-[#99A1AF]">Телефон нужен для оперативной связи по организационным
-                вопросам</span>
+            <InputBlock name="phone" label="Телефон" type="tel" subtitle="Телефон нужен для оперативной связи по организационным
+                вопросам" placeholder="+7 (___) ___-__-__" :form="form" @update-value="updateValue" />
         </div>
         <!-- <YandexCaptcha class="mb-6" /> -->
-        <BaseButton :text="'Оставить заявку'" :icon="'fas fa-user-plus'" />
+        <BaseButton :text="'Оставить заявку'" :icon="'fas fa-user-plus'" class="flex items-center justify-center py-2.5 px-6 font-medium rounded-lg bg-indigo-600 text-sm text-white w-full text-[16px]" />
         <AuthLink :href="'login.create'" :text-sm="'Есть аккаунт?'" :link-text="'Войти'" />
     </form>
 </template>

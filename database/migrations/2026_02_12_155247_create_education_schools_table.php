@@ -5,9 +5,6 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('education_schools', function (Blueprint $table) {
@@ -15,8 +12,8 @@ return new class extends Migration {
 
             $table->string('full_name')->unique();
             $table->string('short_name')->unique();
-            $table->string('inn');
-            $table->string('phone');
+            $table->string('inn')->unique();
+            $table->string('phone')->unique();
             $table->string('director_surname');
             $table->string('director_name');
             $table->string('director_patronymic');
@@ -33,9 +30,6 @@ return new class extends Migration {
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('education_schools');

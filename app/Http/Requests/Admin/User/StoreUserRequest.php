@@ -16,7 +16,7 @@ class StoreUserRequest extends FormRequest
             'email' => ['required', 'string', 'unique:users,email'],
             'password' => ['required', 'string', 'min:8'],
             'phone' => ['required', 'string', 'regex:/^\+7 \(9\d{2}\) \d{3}-\d{2}-\d{2}$/', new PhoneRule()],
-            'role_id' => ['required', 'string', 'exists:roles,id'],
+            'role_id' => ['required', 'exists:roles,id'],
         ];
     }
 }

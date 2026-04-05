@@ -2,6 +2,7 @@
 const props = defineProps(['schools']);
 import { computed } from 'vue';
 import TableContainer from '@other/TableContainer.vue';
+import DestroyEntityModal from '@modals/DestroyEntityModal.vue';
 const ths = computed(() => ['Название', 'ИНН', 'Телефон', 'Директор', 'Город', 'Действия']);
 </script>
 <template>
@@ -16,6 +17,9 @@ const ths = computed(() => ['Название', 'ИНН', 'Телефон', 'Д�
                 <Link class="text-indigo-600 mr-3">
                 <i class="fas fa-edit"></i>
                 </Link>
+                <DestroyEntityModal href="admin.education.school.destroy" :params="{
+                    school: school.id
+                }" />
             </td>
         </tr>
     </TableContainer>

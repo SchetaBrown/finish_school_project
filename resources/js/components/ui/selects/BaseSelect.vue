@@ -15,7 +15,7 @@ const handleChange = (event) => {
 
 <template>
     <select :name="name" @change="handleChange"
-        class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition flex flex-1">
+        class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition flex flex-1 max-h-11">
         <option :value="null" disabled selected v-if="label">
             Выберите {{ label.toLowerCase() }}
         </option>

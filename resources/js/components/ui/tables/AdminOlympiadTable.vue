@@ -2,6 +2,7 @@
 import { computed } from 'vue';
 import Status from '@other/Status.vue'
 import TableContainer from '@other/TableContainer.vue';
+import DestroyEntityModal from '@modals/DestroyEntityModal.vue';
 
 const props = defineProps(['olympiads', 'olympiads_count']);
 const ths = computed(() => ['Название', 'Статус', 'Направление', 'Действия']);
@@ -14,10 +15,11 @@ const ths = computed(() => ['Название', 'Статус', 'Направл�
                 <Status :status="olympiad.status" font-size="12" />
             </td>
             <td class="px-6 py-4">{{ olympiad.direction }}</td>
-            <td class="px-6 py-4">
-                <Link class="text-indigo-600 mr-3">
+            <td class="flex gap-1 px-6 py-4">
+                <Link :href="route('admin.olympiad.edit', { slug: olympiad.slug })" class="text-indigo-600 mr-3">
                 <i class="fas fa-edit"></i>
                 </Link>
+                <DestroyEntityModal href="admin.olympiad.destroy" :params="{ slug: olympiad.slug }" />
             </td>
         </tr>
     </TableContainer>

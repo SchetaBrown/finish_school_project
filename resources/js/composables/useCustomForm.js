@@ -14,13 +14,32 @@ export function useCustomForm(fields = {}) {
     });
 
     const updateValue = (data) => {
-        form[data.name] = data.value;
+        const field = form[data.name];
+        if (typeof field === 'object') {
+            if (data.clear) {
+                const index = field.indexOf(data.value);
+
+                if (index !== -1) {
+                    field.splice(index, 1);
+                }
+            } else {
+                if (!field.includes(data.value)) {
+                    field.push(data.value);
+                }
+            }
+        } else {
+            form[data.name] = data.value;
+        }
     };
 
-    const submit = (routeName) => {
-        form.post(routeName, {
+    const submit = (routeName, method, params) => {
+        form[method || 'post'](routeName, {
             preserveState: true,
             preserveScroll: true,
+            onError: (error) => {
+                console.log('Произошла ошибка', error)
+            },
+            params
         });
     };
 

@@ -1,12 +1,11 @@
 <script setup>
-const props = defineProps(['users', 'users_count', 'participants', 'participants_count', 'managers', 'managers_count', 'employees', 'roles', 'employees_count']);
+const props = defineProps(['users', 'users_count', 'participants', 'participants_count', 'managers', 'managers_count', 'employees', 'roles', 'roles_for_create', 'employees_count']);
 import AppAdminLayout from '@layouts/AppAdminLayout.vue'
-import BaseButton from '@buttons/BaseButton.vue'
 import Container from '@other/Container.vue'
 import AdminUserTable from '@tables/AdminUserTable.vue';
-import AdminUserFilterForm from '@forms/admin/AdminUserFilterForm.vue';
+import AdminUserFilterForm from '@forms/admin/filter/AdminUserFilterForm.vue';
+import CreateUserModal from '@modals/create/CreateUserModal.vue';
 import { computed } from 'vue';
-import { router } from '@inertiajs/vue3';
 
 const containersData = computed(() => [
     {
@@ -26,17 +25,12 @@ const containersData = computed(() => [
         title: props.managers_count,
     },
 ]);
-
-const createUser = () => {
-    router.get(route('admin.user.create'));
-}
 </script>
 <template>
     <AppAdminLayout>
         <div class="flex items-center justify-between mb-6">
             <h1 class="text-2xl lg:text-3xl font-bold text-gray-900">Пользователи</h1>
-            <BaseButton @click="createUser" :text="'Добавить'" :icon="'fas fa-plus'"
-                class="max-w-fit px-4 py-2 text-sm" />
+            <CreateUserModal :roles="roles_for_create.data" />
         </div>
         <div class="grid grid-cols-4 gap-4 mb-8">
             <Container v-for="data in containersData">

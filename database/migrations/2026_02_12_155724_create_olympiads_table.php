@@ -5,9 +5,6 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('olympiads', function (Blueprint $table) {
@@ -18,9 +15,9 @@ return new class extends Migration {
             $table->text('description');
             $table->dateTime('register_start_date');
             $table->dateTime('register_end_date');
-            $table->date('start_date');
-            $table->date('end_date');
-            $table->integer('player_count');
+            $table->dateTime('start_date');
+            $table->dateTime('end_date');
+            $table->integer('max_player_register_count');
 
             $table
                 ->foreignId('olympiad_status_id')
@@ -34,6 +31,12 @@ return new class extends Migration {
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
             $table
+                ->foreignId('olympiad_maintainer_id')
+                ->references('id')
+                ->on('users')
+                ->cascadeOnUpdate()
+                ->cascadeOnDelete();
+            $table
                 ->foreignId('olympiad_direction_id')
                 ->constrained()
                 ->cascadeOnUpdate()
@@ -42,13 +45,11 @@ return new class extends Migration {
 
             $table->index(['slug', 'title']);
 
+            $table->softDeletes();
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('olympiads');

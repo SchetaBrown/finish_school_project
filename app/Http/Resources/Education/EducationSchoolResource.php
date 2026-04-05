@@ -10,6 +10,7 @@ class EducationSchoolResource extends JsonResource
     private function baseArray()
     {
         return [
+            'id' => $this->id,
             'full_name' => $this->full_name,
             'short_name' => $this->short_name,
             'city' => $this->whenLoaded('city', $this->city->title),
