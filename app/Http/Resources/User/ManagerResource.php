@@ -10,6 +10,16 @@ class ManagerResource extends JsonResource
 {
     public function toArray(Request $request): array
     {
+        if ($request->routeIs('olympiad.order.create')) {
+            return [
+                'id' => $this->id,
+                'title' => $this->whenLoaded('user', function () {
+                    $user = $this->user;
+                    return "$user->surname $user->name $user->patronymic";
+                }),
+            ];
+        }
+
         return [
             'is_accept' => $this->is_accept,
             'school' => $this->whenLoaded('educationSchool', function () {

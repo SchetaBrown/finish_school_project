@@ -28,6 +28,7 @@ Route::get('/', function () {
 Route::prefix('/olympiads')->name('olympiad.')->group(function () {
     Route::get('/', [OlympiadController::class, 'index'])->name('index'); // Главная страница
 
+    // Конкретная олимпиада
     Route::prefix('/{olympiad}')->group(function () {
         Route::get('/show', [OlympiadController::class, 'show'])->name('show'); // Просмотр конкретной олимпиады
         Route::middleware(['is_auth', 'verified'])->controller(OlympiadOrderController::class)->prefix('/order')->name('order.')->group(function () {

@@ -19,6 +19,7 @@ class UserSeeder extends Seeder
                 'email' => 'ivan@gmail.com',
                 'phone' => '7999887766',
                 'password' => '123123123',
+                'email_verified_at' => now(),
                 'role_id' => 1,
             ],
             [
@@ -28,6 +29,7 @@ class UserSeeder extends Seeder
                 'email' => 'petr@gmail.com',
                 'phone' => '7999887767',
                 'password' => '123123123',
+                'email_verified_at' => now(),
                 'role_id' => 1,
             ],
             [
@@ -37,6 +39,7 @@ class UserSeeder extends Seeder
                 'email' => 'manager@gmail.com',
                 'phone' => '7999887763',
                 'password' => '123123123',
+                'email_verified_at' => now(),
                 'role_id' => 2,
             ],
             [
@@ -46,6 +49,7 @@ class UserSeeder extends Seeder
                 'email' => 'maintainer@gmail.com',
                 'phone' => '7999887760',
                 'password' => '123123123',
+                'email_verified_at' => now(),
                 'role_id' => 3,
             ],
             [

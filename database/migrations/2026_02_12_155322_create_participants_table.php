@@ -12,7 +12,6 @@ return new class extends Migration {
 
             $table->date('birth_date');
             $table->integer('cours_number');
-            
 
             $table
                 ->foreignId('user_id')

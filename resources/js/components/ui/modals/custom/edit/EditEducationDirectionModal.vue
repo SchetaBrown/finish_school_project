@@ -44,7 +44,7 @@ const inputs = computed(() => [
                 }), 'put');
                 close();
             }">
-                <div class="grid grid-cols-2 gap-3 px-6 py-5 space-y-4 max-lg:grid-cols-1">
+                <div class="grid grid-cols- px-6 py-5 space-y-1">
                     <component v-for="input in inputs" :is="input.component" :key="input.label"
                         :placeholder="input.placeholder" :label="input.label" :name="input.name" :type="input.type"
                         :form="form" :options="input.options" @update-value="updateValue" :value="input.value" />
