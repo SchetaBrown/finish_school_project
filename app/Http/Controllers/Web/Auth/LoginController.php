@@ -26,7 +26,7 @@ class LoginController extends Controller
 
         $user = User::with('role')->find(Auth::id());
 
-        if ($user->isManager()) {
+        if ($user->isOlympiadManager()) {
             $manager = Manager::where('user_id', $user->id)->first();
 
             if (!$manager || $manager->is_accept === false) {

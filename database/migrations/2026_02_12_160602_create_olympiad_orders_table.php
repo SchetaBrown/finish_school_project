@@ -5,9 +5,6 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('olympiad_orders', function (Blueprint $table) {
@@ -15,7 +12,8 @@ return new class extends Migration {
 
             $table->float('score')->default(0);
             $table->integer('place')->nullable();
-            $table->boolean('is_receive')->nullable();
+            $table->boolean('is_manager_accept')->default(false);
+            $table->boolean('is_olympiad_manager_accept')->default(false);
             $table->boolean('is_hostel')->default(false);
             $table->dateTime('arrival_date')->nullable();
             $table->dateTime('departure_date')->nullable();

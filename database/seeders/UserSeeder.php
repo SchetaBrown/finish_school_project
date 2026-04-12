@@ -75,6 +75,7 @@ class UserSeeder extends Seeder
         ];
 
         foreach ($users as $user) {
+            $user['login'] = User::generateUniqueLogin(); // или просто оставь пустым, если автогенерация работает
             User::create($user);
         }
     }

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Str;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -19,6 +20,7 @@ class User extends Authenticatable implements MustVerifyEmail
     use HasFactory, Notifiable;
 
     protected $fillable = [
+        'login',
         'surname',
         'name',
         'patronymic',
@@ -45,6 +47,15 @@ class User extends Authenticatable implements MustVerifyEmail
         ];
     }
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($user) {
+            $user->login = self::generateUniqueLogin();
+        });
+    }
+
     // Связи
     public function role()
     {
@@ -59,11 +70,6 @@ class User extends Authenticatable implements MustVerifyEmail
     public function manager()
     {
         return $this->hasOne(Manager::class);
-    }
-
-    public function news()
-    {
-        return $this->hasMany(OlympiadNew::class);
     }
 
     public function olympiadDocuments()
@@ -142,7 +148,7 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->role?->title === self::OLYMPIAD_MANAGER_ROLE;
     }
 
-    public function isManager()
+    public function isEducationManager()
     {
         return $this->role?->title === self::MANAGER_ROLE;
     }
@@ -150,5 +156,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function fullName()
     {
         return "{$this->surname} {$this->name} {$this->patronymic}";
+    }
+
+    public static function generateUniqueLogin()
+    {
+        return 'user_' . time() . '_' . uniqid();
     }
 }

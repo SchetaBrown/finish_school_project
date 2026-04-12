@@ -19,11 +19,11 @@ const OLYMPIAD_TYPES = computed(() => {
     const types = DATA.value?.types;
 
     if (!types || types.length === 0) {
-        return '';
+        return;
     }
 
     const formattedTypes = types.map((type, index) => {
-        if (!type) return '';
+        if (!type) return;
 
         if (index === 0) {
             return type.charAt(0).toUpperCase() + type.slice(1).toLowerCase();
@@ -81,7 +81,7 @@ const OLYMPIAD_DETAILS = computed(() => {
         {
             icon: 'fa-user',
             subtitle: 'Тип участия',
-            title: OLYMPIAD_TYPES ?? 'Не указан',
+            title: OLYMPIAD_TYPES ? OLYMPIAD_TYPES : 'Не указан',
         },
         {
             icon: 'fa-calendar-alt',

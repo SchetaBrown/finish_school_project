@@ -14,7 +14,6 @@ class Manager extends Model
         'reject_message',
         'user_id',
         'education_school_id',
-        'education_direction_id',
     ];
 
     // Связи
@@ -26,6 +25,11 @@ class Manager extends Model
     public function educationSchool()
     {
         return $this->belongsTo(EducationSchool::class);
+    }
+
+    public function olympiadOrders()
+    {
+        return $this->hasMany(OlympiadOrder::class);
     }
 
     // Мутаторы/аксессоры

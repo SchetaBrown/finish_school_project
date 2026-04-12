@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web\Olympiad;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Olympiad\New\StoreOlympiadNewRequest;
 use App\Http\Resources\Olympiad\OlympiadNewResource;
 use App\Models\Olympiad;
 use App\Models\OlympiadNew;
@@ -25,5 +26,19 @@ class OlympiadNewController extends Controller
         } catch (Exception $e) {
             return back()->with('info', 'Такой новости не существует.');
         }
+    }
+
+    public function store(StoreOlympiadNewRequest $request)
+    {
+        try {
+            OlympiadNew::create($request->validated());
+            return redirect()->back()->with('success', config('constants.flash_statuses.success'));
+        } catch (Exception $e) {
+            return back()->with('info', config('constants.flash_statuses.error'));
+        }
+    }
+
+    public function destroy() {
+        
     }
 }

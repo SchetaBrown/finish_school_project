@@ -3,6 +3,9 @@
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\AuthMiddleware;
 use App\Http\Middleware\HandleInertiaRequests;
+use App\Http\Middleware\Olympiad\EducationManagerMiddleware;
+use App\Http\Middleware\Olympiad\OlympiadManagerMiddleware;
+use App\Http\Middleware\ParticipantMiddleware;
 use App\Http\Middleware\ShareRecaptchaKeyMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -18,6 +21,9 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'is_auth' => AuthMiddleware::class,
             'is_admin' => AdminMiddleware::class,
+            'is_participant' => ParticipantMiddleware::class,
+            'is_olympiad_manager' => OlympiadManagerMiddleware::class,
+            'is_education_manager' => EducationManagerMiddleware::class,
         ]);
 
         $middleware->web([

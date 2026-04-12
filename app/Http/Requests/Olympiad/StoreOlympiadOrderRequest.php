@@ -11,8 +11,8 @@ class StoreOlympiadOrderRequest extends FormRequest
     {
         return [
             'is_hostel' => ['boolean', new HostelRule()],
-            'arrival_date' => ['date', new HostelRule()],
-            'departure_date' => ['date', new HostelRule()],
+            'arrival_date' => ['nullable', 'date', new HostelRule()],
+            'departure_date' => ['nullable', 'date', new HostelRule()],
             'manager_id' => ['required', 'exists:managers,id'],
         ];
     }

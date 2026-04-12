@@ -1,5 +1,5 @@
 <script setup>
-const props = defineProps(['cities', 'directions']);
+const props = defineProps(['directions']);
 import AppAdminLayout from '@layouts/AppAdminLayout.vue'
 import AdminCreateEducationSchoolForm from '@forms/admin/create/AdminCreateEducationSchoolForm.vue';
 import PageTitle from '@titles/PageTitle.vue'
@@ -7,6 +7,6 @@ import PageTitle from '@titles/PageTitle.vue'
 <template>
     <AppAdminLayout>
         <PageTitle title="Создание учебного заведения" subtitle="Заполните информацию о новом учебном заведении" />
-        <AdminCreateEducationSchoolForm :cities="cities.data" :directions="directions.data" />
+        <AdminCreateEducationSchoolForm :directions="directions.data" />
     </AppAdminLayout>
 </template>

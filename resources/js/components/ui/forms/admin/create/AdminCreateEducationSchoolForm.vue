@@ -1,5 +1,5 @@
 <script setup>
-const props = defineProps(['cities', 'directions']);
+const props = defineProps(['directions']);
 
 import { useCustomForm } from '@composables/useCustomForm.js';
 const { form, submit, updateValue } = useCustomForm({

@@ -33,7 +33,7 @@ export function useFilter(options = {}) {
 
     const submit = async () => {
         if (!routeName) {
-            console.error("❌ routeName не указан");
+            console.error("routeName не указан");
             return;
         }
 
@@ -75,7 +75,7 @@ export function useFilter(options = {}) {
                 },
             });
         } catch (error) {
-            console.error("❌ Ошибка:", error);
+            console.error("Ошибка:", error);
         }
     };
 
@@ -89,7 +89,7 @@ export function useFilter(options = {}) {
 
             router.get(route(routeName));
         } catch (error) {
-            console.error("❌ Ошибка при очистке:", error);
+            console.error("Ошибка при очистке:", error);
         }
     };
 

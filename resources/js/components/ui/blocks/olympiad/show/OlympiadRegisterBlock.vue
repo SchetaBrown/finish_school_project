@@ -1,17 +1,43 @@
 <script setup>
-const PROPS = defineProps(['title', 'status', 'registerStartDate', 'registerEndDate', 'count', 'limit', 'progressBarWidth', 'slug']);
+const props = defineProps(['title', 'status', 'registerStartDate', 'registerEndDate', 'count', 'limit', 'progressBarWidth', 'slug']);
 import Container from '@other/Container.vue'
 import BlockTitle from '@titles/BlockTitle.vue'
-import { computed } from 'vue';
+import { computed, inject } from 'vue';
+
+const userData = inject('userData');
 
 const IS_AVAILABLE_LINK = computed(() => {
-    const STATUS = PROPS.status.toLowerCase().trim();
+    const STATUS = props.status.toLowerCase().trim();
 
     if (STATUS !== 'завершено' && STATUS !== 'регистрация закрыта') {
         return true;
     }
 
     return false;
+});
+
+const link = computed(() => {
+    let href = {
+        text: '',
+        href: '',
+    };
+    const role = userData.role.toLowerCase();
+    switch (role) {
+        case 'участник':
+            href.text = 'Перейти к регистрации';
+            href.href = route('olympiad.order.create', { olympiad: props.slug })
+            break;
+        case 'руководитель':
+            href.text = 'Перейти к заявкам';
+            href.href = route('olympiad.student-orders.index', { olympiad: props.slug })
+            break;
+        case 'ответственный':
+            href.text = 'Перейти к заявкам участников';
+            href.href = route('olympiad.olympiad-orders.index', { olympiad: props.slug })
+            break;
+    }
+
+    return href;
 });
 </script>
 <template>
@@ -42,10 +68,8 @@ const IS_AVAILABLE_LINK = computed(() => {
             </div>
             <Link v-if="IS_AVAILABLE_LINK"
                 class="flex items-center justify-center text-white py-3.5 w-full font-medium rounded-lg bg-indigo-600"
-                :href="route('olympiad.order.create', {
-                    olympiad: slug
-                })">
-            Перейти к регистрации</Link>
+                :href="link.href">
+                {{ link.text }}</Link>
         </div>
     </Container>
 </template>

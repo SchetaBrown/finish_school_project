@@ -3,7 +3,6 @@
 namespace App\Rules;
 
 use Closure;
-use Illuminate\Http\Request;
 use Illuminate\Contracts\Validation\ValidationRule;
 
 class HostelRule implements ValidationRule
@@ -13,7 +12,7 @@ class HostelRule implements ValidationRule
         $request = request();
         if ($value === true) {
             if (!$request->has('arrival_date') || !$request->has('depature_date')) {
-                $fail('Укажите дату');
+                $fail("Укажите {$attribute}");
             }
         }
     }

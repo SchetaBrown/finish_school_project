@@ -46,11 +46,12 @@ class HandleInertiaRequests extends Middleware
     private function getUserResource()
     {
         $user = User::with(['role'])->find(auth()->id());
+
         if (!$user) {
             return;
         }
 
-        if ($user->role->title === 'Участник') {
+        if ($user->isParticipant()) {
             $participant = Participant::where('user_id', $user->id)
                 ->with(['educationSchool', 'attachedManager', 'olympiadOrders', 'user', 'user.role'])
                 ->first();
@@ -58,7 +59,7 @@ class HandleInertiaRequests extends Middleware
             return new ParticipantResource($participant);
         }
 
-        if ($user->role->title === 'Руководитель') {
+        if ($user->isEducationManager()) {
             $manager = Manager::where('user_id', $user->id)
                 ->with(['educationSchool', 'user', 'user.role'])
                 ->first();

@@ -16,7 +16,6 @@ class OlympiadNew extends Model
         'description',
         'slug',
         'olympiad_id',
-        'user_id',
         'published_at',
     ];
 
@@ -24,11 +23,6 @@ class OlympiadNew extends Model
     public function olympiad()
     {
         return $this->belongsTo(Olympiad::class);
-    }
-
-    public function user()
-    {
-        return $this->belongsTo(User::class);
     }
 
     // Скоупы

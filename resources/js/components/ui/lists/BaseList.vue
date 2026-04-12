@@ -9,6 +9,8 @@ const emit = defineEmits(['update-value']);
 const dropdownId = ref(`dropdown-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`);
 const dropdownRef = ref(null);
 
+console.log(props.options)
+
 const isOpen = ref(false);
 const isDirty = ref(false);
 const searchQuery = ref('');

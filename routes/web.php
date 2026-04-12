@@ -12,6 +12,8 @@ use App\Http\Controllers\Web\Auth\RegisterController;
 use App\Http\Controllers\Web\Auth\Verify\EmailVerificationNotificationController;
 use App\Http\Controllers\Web\Auth\Verify\EmailVerificationPromptController;
 use App\Http\Controllers\Web\Auth\Verify\VerifyEmailController;
+use App\Http\Controllers\Web\Olympiad\Managment\OlympiadEducationManagerOrderController;
+use App\Http\Controllers\Web\Olympiad\Managment\OlympiadManagerOrderController;
 use App\Http\Controllers\Web\Olympiad\OlympiadController;
 use App\Http\Controllers\Web\Olympiad\OlympiadNewController;
 use App\Http\Controllers\Web\Olympiad\OlympiadOrderController;
@@ -22,31 +24,6 @@ use Illuminate\Support\Facades\Route;
 // Главная страница с редиректом на маршрут олимпиад
 Route::get('/', function () {
     return redirect()->route('olympiad.index');
-});
-
-// Олимпиады
-Route::prefix('/olympiads')->name('olympiad.')->group(function () {
-    Route::get('/', [OlympiadController::class, 'index'])->name('index'); // Главная страница
-
-    // Конкретная олимпиада
-    Route::prefix('/{olympiad}')->group(function () {
-        Route::get('/show', [OlympiadController::class, 'show'])->name('show'); // Просмотр конкретной олимпиады
-        Route::middleware(['is_auth', 'verified'])->controller(OlympiadOrderController::class)->prefix('/order')->name('order.')->group(function () {
-            Route::get('/create', 'create')->name('create'); // Страница для записи на олимпиаду
-            Route::post('/store', 'store')->name('store'); // Маршрут для записи на олимпиаду
-        });
-
-        // Просмотр результатов олимпиады
-        Route::controller(OlympiadResultController::class)->prefix('/results')->name('result.')->group(function () {
-            Route::get('/', 'index')->name('index');
-        });
-
-        // Просмотр новостей об олимпиаде
-        Route::middleware(['is_auth', 'verified'])->controller(OlympiadNewController::class)->prefix('/news')->name('new.')->group(function () {
-            Route::get('/', 'index')->name('index'); // Просмотр всех новостей об олимпиаде
-            Route::get('/{new}/show', 'show')->name('show'); // Просмотр конкретной новости об олимпиаде
-        });
-    });
 });
 
 // Регистрация
@@ -70,18 +47,57 @@ Route::prefix('/email')->name('verification.')->middleware(['is_auth'])->group(f
     Route::post('/verification-notification', EmailVerificationNotificationController::class)->name('send');
 });
 
-// Защищенные маршруты
-Route::middleware(['is_auth'])->group(function () {
-    // Профиль
-    Route::prefix('/profile')->name('profile.')->group(function () {
-        Route::controller(ProfileController::class)->group(function () {
-            Route::get('/', 'index')->name('index')->middleware(['verified']); // Главная страница профиля
-            Route::post('/destroy', 'destroy')->name('destroy'); // Выход из учетной записи пользователя
+// Олимпиады
+Route::prefix('/olympiads')->name('olympiad.')->group(function () {
+    Route::get('/', [OlympiadController::class, 'index'])->name('index'); // Главная страница
+
+    // Конкретная олимпиада
+    Route::prefix('/{olympiad}')->group(function () {
+        Route::get('/show', [OlympiadController::class, 'show'])->name('show'); // Просмотр конкретной олимпиады
+
+        // Просмотр результатов олимпиады
+        Route::controller(OlympiadResultController::class)->prefix('/results')->name('result.')->group(function () {
+            Route::get('/', 'index')->name('index');
         });
+
+        // Защищенные маршруты
+        Route::middleware(['is_auth', 'verified'])->group(function () {
+            // Заявка пользователя
+            Route::middleware(['is_participant'])->controller(OlympiadOrderController::class)->prefix('/order')->name('order.')->group(function () {
+                Route::get('/create', 'create')->name('create'); // Страница для записи на олимпиаду
+                Route::post('/store', 'store')->name('store'); // Маршрут для записи на олимпиаду
+            });
+
+            // Просмотр новостей об олимпиаде
+            Route::controller(OlympiadNewController::class)->prefix('/news')->name('new.')->group(function () {
+                Route::get('/', 'index')->name('index'); // Просмотр всех новостей об олимпиаде
+                Route::get('/{new}/show', 'show')->name('show'); // Просмотр конкретной новости об олимпиаде
+            });
+
+            // Управление заявками олимпиад для ответственного за олимпиаду
+            Route::middleware(['is_olympiad_manager'])->controller(OlympiadManagerOrderController::class)->prefix('/all-orders')->name('olympiad-orders.')->group(function () {
+                Route::get('/', 'index')->name('index');
+                Route::patch('/edit', 'edit')->name('edit');
+            });
+
+            // Управление заявками олимпиад от руководителя учебного заведения
+            Route::middleware(['is_education_manager'])->controller(OlympiadEducationManagerOrderController::class)->prefix('/student-orders')->name('student-orders.')->group(function () {
+                Route::get('/', 'index')->name('index');
+            });
+        });
+    });
+});
+
+// Защищенные маршруты
+Route::middleware(['is_auth', 'verified'])->group(function () {
+    // Профиль
+    Route::controller(ProfileController::class)->prefix('/profile')->name('profile.')->group(function () {
+        Route::get('/', 'index')->name('index'); // Главная страница профиля
+        Route::post('/destroy', 'destroy')->name('destroy'); // Выход из учетной записи пользователя
     });
 
     // Для администраторов
-    Route::middleware(['is_admin', 'verified'])->prefix('/admin-panel')->name('admin.')->group(function () {
+    Route::middleware(['is_admin'])->prefix('/admin-panel')->name('admin.')->group(function () {
         Route::get('/', [AdminIndexController::class, 'index'])->name('index'); // Главная страница админ-панели
 
         // Управление участниками
@@ -137,4 +153,5 @@ Route::fallback(function () {
     return inertia('Fallback')->with('error', 'Произошла ошибка');
 });
 
+// Экспорт данных
 Route::get('/export-data-user', [AdminUserController::class, 'export'])->name('export');

@@ -57,11 +57,19 @@ onBeforeUnmount(() => {
                 <p class="text-xs text-gray-400">{{ userData.email }}</p>
             </div>
 
-            <div class="py-2">
+            <div class="py-1">
                 <Link :href="route(link.href)" v-for="link in links" :key="link.title"
                     class="flex items-center space-x-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition">
                 <i class="fas w-4 text-gray-400" :class="link.icon"></i>
                 <span>{{ link.title }}</span>
+                </Link>
+            </div>
+
+            <div class="py-1" v-if="userData.role === 'Администратор'">
+                <Link :href="route('admin.index')"
+                    class="flex items-center space-x-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition">
+                <i class="fas w-4 text-gray-400"></i>
+                <span>Админ-панель</span>
                 </Link>
             </div>
 
