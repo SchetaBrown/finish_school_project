@@ -12,7 +12,8 @@ return new class extends Migration {
 
             $table->float('score')->default(0);
             $table->integer('place')->nullable();
-            $table->boolean('is_manager_accept')->default(false);
+            $table->boolean('is_education_manager_accept')->nullable();
+            $table->text('reject_message')->nullable();
             $table->boolean('is_olympiad_manager_accept')->default(false);
             $table->boolean('is_hostel')->default(false);
             $table->dateTime('arrival_date')->nullable();
@@ -30,6 +31,12 @@ return new class extends Migration {
                 ->onUpdate('cascade');
             $table
                 ->foreignId('olympiad_id')
+                ->constrained()
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+            $table
+                ->foreignId('olympiad_order_status_id')
+                ->default(1)
                 ->constrained()
                 ->onDelete('cascade')
                 ->onUpdate('cascade');

@@ -50,7 +50,7 @@ class OlympiadOrderController extends Controller
 
             $validated = $request->validated();
 
-            OlympiadOrder::create([
+            $order = OlympiadOrder::create([
                 'is_hostel' => $validated['is_hostel'] ?? false,
                 'arrival_date' => $validated['arrival_date'] ?? null,
                 'departure_date' => $validated['departure_date'] ?? null,
@@ -81,11 +81,12 @@ class OlympiadOrderController extends Controller
                 'type' => 'pdf',
                 'path' => $filename,
                 'user_id' => $participant->id,
-                'olympiad_id' => $olympiad->id,
+                'olympiad_order_id' => $order->id,
             ]);
 
             return redirect()->route('olympiad.index')->with('success', config('constants.flash_statuses.success'));
         } catch (Exception $e) {
+            dd($e->getMessage());
             return redirect()->back()->with('error', 'Возникла ошибка при оформлении');
         }
     }

@@ -22,7 +22,8 @@ class DatabaseSeeder extends Seeder
             EducationDirectionSeeder::class,
             ParticipantSeeder::class,
             ManagerSeeder::class,
-            OlympiadNewSeeder::class
+            OlympiadNewSeeder::class,
+            OlympiadOrderStatusSeeder::class
         ]);
     }
 }

@@ -3,20 +3,42 @@
 namespace App\Http\Controllers\Web\Olympiad\Managment;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Olympiad\OlympiadOrderResource;
+use App\Models\Olympiad;
+use App\Models\OlympiadDocument;
 use App\Models\OlympiadOrder;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 class OlympiadEducationManagerOrderController extends Controller
 {
     public function index(string $olympiad)
     {
-        $orders = OlympiadOrder::with(['participant', 'olympiad', 'educationManager'])
+        $orders = OlympiadOrder::with(['participant', 'olympiadDocument', 'participant.educationSchool', 'olympiad', 'educationManager', 'olympiadOrderStatus'])
             ->whereHas('olympiad', function ($query) use ($olympiad) {
                 $query->where('slug', $olympiad);
             })
-            ->get();
+            ->paginate(config('constants.per_page'));
+        $olympiad = Olympiad::where('slug', $olympiad)->first();
         return Inertia::render('olympiad/management/education-manager/Index', [
-            'orders' => $orders
+            'orders' => OlympiadOrderResource::collection($orders),
+            'olympiad' => $olympiad->slug,
         ]);
+    }
+
+    public function update()
+    {
+
+    }
+
+    public function download(string $olympiad, string $id)
+    {
+        $document = OlympiadDocument::findOrFail($id);
+
+        if (!Storage::disk('public')->exists($document->path)) {
+            abort(404, 'Файл не найден на сервере');
+        }
+
+        return Storage::disk('public')->download($document->path);
     }
 }

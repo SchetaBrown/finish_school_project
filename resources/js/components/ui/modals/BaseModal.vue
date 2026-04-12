@@ -2,6 +2,8 @@
 const props = defineProps(['btnClass', 'btnText', 'icon']);
 import { computed, ref } from 'vue';
 
+console.log(props.icon)
+
 const isOpen = ref(false);
 
 const buttonCls = computed(() => {

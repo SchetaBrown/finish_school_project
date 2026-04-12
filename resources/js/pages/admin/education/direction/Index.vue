@@ -2,7 +2,7 @@
 const props = defineProps(['directions']);
 import { computed } from 'vue';
 import AppAdminLayout from '@layouts/AppAdminLayout.vue'
-import AdminEducationDirectionTable from '@tables/AdminEducationDirectionTable.vue';
+import AdminEducationDirectionTable from '@tables/admin/AdminEducationDirectionTable.vue';
 import AdminEducationDirectionFilterForm from '@forms/admin/filter/AdminEducationDirectionFilterForm.vue';
 import CreateEducationDirectionModal from '@modals/create/CreateEducationDirectionModal.vue'
 

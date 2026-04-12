@@ -15,7 +15,7 @@ return new class extends Migration {
 
             $table->enum('type', ['docx', 'pdf']);
             $table->string('path');
-            $table->foreignId('olympiad_id')->constrained();
+            $table->foreignId('olympiad_order_id')->constrained();
             $table->foreignId('user_id')->constrained();
 
             $table->timestamps();

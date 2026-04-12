@@ -2,7 +2,7 @@
 const props = defineProps(['users', 'users_count', 'participants', 'participants_count', 'managers', 'managers_count', 'employees', 'roles', 'roles_for_create', 'employees_count']);
 import AppAdminLayout from '@layouts/AppAdminLayout.vue'
 import Container from '@other/Container.vue'
-import AdminUserTable from '@tables/AdminUserTable.vue';
+import AdminUserTable from '@tables/admin/AdminUserTable.vue';
 import AdminUserFilterForm from '@forms/admin/filter/AdminUserFilterForm.vue';
 import CreateUserModal from '@modals/create/CreateUserModal.vue';
 import { computed } from 'vue';

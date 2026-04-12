@@ -3,7 +3,7 @@ const props = defineProps(['schools']);
 import { computed } from 'vue';
 import { router } from '@inertiajs/vue3';
 import AppAdminLayout from '@layouts/AppAdminLayout.vue'
-import AdminEducationSchoolTable from '@tables/AdminEducationSchoolTable.vue';
+import AdminEducationSchoolTable from '@tables/admin/AdminEducationSchoolTable.vue';
 import AdminEducationSchoolForm from '@forms/admin/filter/AdminEducationSchoolForm.vue';
 import BaseButton from '@buttons/BaseButton.vue'
 

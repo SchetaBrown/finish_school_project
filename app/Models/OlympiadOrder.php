@@ -18,6 +18,7 @@ class OlympiadOrder extends Model
         'participant_id',
         'manager_id',
         'olympiad_id',
+        'olympiad_order_status_id',
     ];
 
     // Связи
@@ -31,7 +32,18 @@ class OlympiadOrder extends Model
         return $this->belongsTo(Olympiad::class);
     }
 
-    public function educationManager() {
+    public function educationManager()
+    {
         return $this->belongsTo(Manager::class);
+    }
+
+    public function olympiadDocument()
+    {
+        return $this->hasMany(OlympiadDocument::class);
+    }
+
+    public function olympiadOrderStatus()
+    {
+        return $this->belongsTo(OlympiadOrderStatus::class);
     }
 }

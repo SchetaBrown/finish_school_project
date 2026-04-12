@@ -3,7 +3,7 @@ import { router } from '@inertiajs/vue3';
 const props = defineProps(['olympiads', 'directions', 'statuses']);
 
 import AppAdminLayout from '@layouts/AppAdminLayout.vue'
-import AdminOlympiadTable from '@tables/AdminOlympiadTable.vue'
+import AdminOlympiadTable from '@tables/admin/AdminOlympiadTable.vue'
 import AdminOlympiadFilterForm from '@forms/admin/filter/AdminOlympiadFilterForm.vue';
 import BaseButton from '@buttons/BaseButton.vue'
 </script>

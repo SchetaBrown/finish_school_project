@@ -1,5 +1,5 @@
 <script setup>
-const props = defineProps(['title', 'description', 'href', 'params']);
+const props = defineProps(['title', 'description', 'href', 'params', 'icon']);
 import { computed } from 'vue';
 import { router } from '@inertiajs/vue3';
 import BaseModal from './../BaseModal.vue';
@@ -12,9 +12,13 @@ const title = computed(() => {
 const description = computed(() => {
     return props.description ? props.description : 'Данное действие нельзя будет отменить, данные будут потеряны.'
 });
+
+const icon = computed(() => {
+    return props.icon ? props.icon : 'fa-trash';
+});
 </script>
 <template>
-    <BaseModal btn-text="Добавить" icon="fa-trash">
+    <BaseModal btn-text="Добавить" :icon="icon">
         <template #default="{ close }">
             <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100">
                 <div>

@@ -3,15 +3,17 @@ import { computed } from 'vue';
 
 const PROPS = defineProps(['status', 'fontSize']);
 const STATUS_CLASSES = computed(() => {
-    const STATUS = PROPS.status;
+    const status = PROPS.status.toLowerCase();
 
-    switch (STATUS.toLowerCase()) {
-        case "открыта регистрация":
+    switch (status) {
+        case "открыта регистрация" || "принято":
             return "bg-green-100 text-green-700";
         case "регистрация закрыта":
             return "bg-red-100 text-red-700";
-        case "завершено":
+        case "завершено" || "отклонено":
             return "bg-gray-100 text-gray-600";
+        case "на рассмотрении":
+            return "bg-yellow-100 text-yellow-700";
     }
 });
 
