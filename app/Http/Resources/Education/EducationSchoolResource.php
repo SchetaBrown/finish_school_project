@@ -13,7 +13,6 @@ class EducationSchoolResource extends JsonResource
             'id' => $this->id,
             'full_name' => $this->full_name,
             'short_name' => $this->short_name,
-            'city' => $this->whenLoaded('city', $this->city->title),
             'directions' => $this->whenLoaded('educationDirections', $this->educationDirections),
         ];
     }

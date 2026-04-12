@@ -19,7 +19,7 @@ class EducationSchool extends Model
         'director_name',
         'director_patronymic',
         'max_player_count',
-        'city_id',
+        'city',
     ];
 
     // Связи
@@ -37,11 +37,6 @@ class EducationSchool extends Model
     public function managers()
     {
         return $this->hasMany(Manager::class);
-    }
-
-    public function city()
-    {
-        return $this->belongsTo(City::class);
     }
 
     public function scopeFilter(Builder $query, array $filters): Builder

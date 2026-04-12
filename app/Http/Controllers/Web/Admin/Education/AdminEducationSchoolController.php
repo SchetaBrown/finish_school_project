@@ -6,8 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Education\StoreEducationSchoolRequest;
 use App\Http\Resources\Education\EducationDirectionResource;
 use App\Http\Resources\Education\EducationSchoolResource;
-use App\Http\Resources\Other\CityResource;
-use App\Models\City;
 use App\Models\EducationDirection;
 use App\Models\EducationSchool;
 use Exception;
@@ -18,7 +16,7 @@ class AdminEducationSchoolController extends Controller
 {
     public function index(Request $request)
     {
-        $schools = EducationSchool::with(['city'])->filter($request->all())->paginate(config('constants.per_page'));
+        $schools = EducationSchool::filter($request->all())->paginate(config('constants.per_page'));
         return Inertia::render('admin/education/school/Index', [
             'schools' => EducationSchoolResource::collection($schools),
         ]);
@@ -26,9 +24,8 @@ class AdminEducationSchoolController extends Controller
 
     public function create()
     {
-        $cities = CityResource::collection(City::get());
         $directions = EducationDirectionResource::collection(EducationDirection::get());
-        return Inertia::render('admin/education/school/Create', compact(['cities', 'directions']));
+        return Inertia::render('admin/education/school/Create', compact(['directions']));
     }
 
     public function store(StoreEducationSchoolRequest $request)
@@ -46,7 +43,7 @@ class AdminEducationSchoolController extends Controller
                 'director_patronymic' => $validated['director_patronymic'],
                 'email' => $validated['email'],
                 'max_player_count' => $validated['max_player_count'],
-                'city_id' => $validated['city_id'],
+                'city' => $validated['city'],
             ]);
 
             $school->educationDirections()->attach($validated['education_directions']);

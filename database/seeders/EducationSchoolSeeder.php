@@ -17,7 +17,6 @@ class EducationSchoolSeeder extends Seeder
             'director_surname' => 'Userov',
             'director_name' => 'User',
             'director_patronymic' => 'Userovich',
-            'city_id' => 1,
         ],
         [
             'full_name' => 'Колледж Байкальского государственного университета',
@@ -28,7 +27,6 @@ class EducationSchoolSeeder extends Seeder
             'director_surname' => 'Userov',
             'director_name' => 'User',
             'director_patronymic' => 'Userovich',
-            'city_id' => 1,
         ],
     ];
     public function run(): void

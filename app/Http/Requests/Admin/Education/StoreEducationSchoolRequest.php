@@ -19,7 +19,7 @@ class StoreEducationSchoolRequest extends FormRequest
             'director_patronymic' => ['required', 'string'],
             'email' => ['string', 'email:dns,rfc', 'unique:users,email'],
             'max_player_count' => ['integer', 'min:5', 'max:20'],
-            'city_id' => ['required', 'exists:cities,id'],
+            'city' => ['nullable', 'string'],
             'education_directions' => ['nullable']
         ];
     }

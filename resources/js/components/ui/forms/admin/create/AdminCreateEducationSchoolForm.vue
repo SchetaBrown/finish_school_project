@@ -12,7 +12,7 @@ const { form, submit, updateValue } = useCustomForm({
     director_patronymic: '',
     email: '',
     max_player_count: '',
-    city_id: '',
+    city: '',
     education_directions: [],
 });
 
@@ -81,10 +81,8 @@ const inputs = computed(() => [
     },
     {
         label: 'Город',
-        name: 'city_id',
-        component: BaseList,
-        options: props.cities ? props.cities : [],
-        component: BaseList,
+        name: 'city',
+        component: InputBlock,
     },
 ]);
 
