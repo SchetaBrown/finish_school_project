@@ -83,7 +83,7 @@ Route::prefix('/olympiads')->name('olympiad.')->group(function () {
             // Управление заявками олимпиад от руководителя учебного заведения
             Route::middleware(['is_education_manager'])->controller(OlympiadEducationManagerOrderController::class)->prefix('/student-orders')->name('student-orders.')->group(function () {
                 Route::get('/', 'index')->name('index'); // Просмотр всех заявок
-                Route::post('/{id}/update', 'update')->name('update'); // Обновление данных об участнике
+                Route::patch('/{id}/update', 'update')->name('update'); // Обновление данных об участнике
                 Route::get('/{id}/download', 'download')->name('download'); // Скачивание документа конкретной заявки
             });
         });
