@@ -6,13 +6,8 @@ import { computed } from "vue";
 import { useCustomForm } from '@composables/useCustomForm.js'
 
 const { form, updateValue, submit } = useCustomForm({
-    surname: "",
-    name: "",
-    patronymic: "",
     email: "",
-    phone: "",
     password: "",
-    education_school_title: "",
 });
 
 const inputs = computed(() => [

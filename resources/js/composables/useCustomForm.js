@@ -2,12 +2,11 @@ import { useForm } from "@inertiajs/vue3";
 import { computed, onUnmounted } from "vue";
 
 export function useCustomForm(fields = {}) {
+    const form = useForm({ ...fields });
 
     onUnmounted(() => {
         form.clearErrors();
     });
-
-    const form = useForm({ ...fields });
 
     const getForm = computed(() => {
         return form;
@@ -15,20 +14,17 @@ export function useCustomForm(fields = {}) {
 
     const updateValue = (data) => {
         const field = form[data.name];
-<<<<<<< HEAD
         if (typeof data.value === 'object') {
-=======
-        if (typeof field === 'object' && field !== null) {
->>>>>>> bcb0195f5b2b32c235eaec7bd01ba7ed50efeae0
-            if (data.clear) {
-                const index = field.indexOf(data.value);
-
-                if (index !== -1) {
-                    field.splice(index, 1);
-                }
-            } else {
-                if (!field.includes(data.value)) {
-                    field.push(data.value);
+            if (typeof field === 'object' && field !== null) {
+                if (data.clear) {
+                    const index = field.indexOf(data.value);
+                    if (index !== -1) {
+                        field.splice(index, 1);
+                    }
+                } else {
+                    if (!field.includes(data.value)) {
+                        field.push(data.value);
+                    }
                 }
             }
         } else {
@@ -41,7 +37,7 @@ export function useCustomForm(fields = {}) {
             preserveState: true,
             preserveScroll: true,
             onError: (error) => {
-                console.log('Произошла ошибка', error)
+                console.log('Произошла ошибка', error);
             },
             params
         });

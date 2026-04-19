@@ -29,11 +29,7 @@ class OlympiadEducationManagerOrderController extends Controller
         ]);
     }
 
-<<<<<<< HEAD
     public function update(string $olympiad, string $id, UpdateOlympiadOrderByEducationManagerRequest $request)
-=======
-    public function update(UpdateOlympiadOrderByEducationManagerRequest $request, string $olympiad, string $id)
->>>>>>> bcb0195f5b2b32c235eaec7bd01ba7ed50efeae0
     {
         try {
             $order = OlympiadOrder::findOrFail($id);
@@ -42,7 +38,6 @@ class OlympiadEducationManagerOrderController extends Controller
 
             $validated = $request->validated();
 
-<<<<<<< HEAD
             if (!empty($validated['reject_message']) && $validated['reject_message'] !== null) {
                 $order->update([
                     'reject_message' => $validated['reject_message'],
@@ -54,27 +49,12 @@ class OlympiadEducationManagerOrderController extends Controller
                     'reject_message' => null,
                     'olympiad_order_status_id' => $accept_status->id,
                     'is_education_manager_accept' => true,
-=======
-
-
-            if ($validated['reject_message'] !== null) {
-                $order->update([
-                    'reject_message' => $validated['reject_message'],
-                    'olympiad_order_status_id' => $reject_status->id
-                ]);
-            } else {
-                $order->update([
-                    'olympiad_order_status_id' => $accept_status->id
->>>>>>> bcb0195f5b2b32c235eaec7bd01ba7ed50efeae0
                 ]);
             }
 
             return redirect()->back()->with('success', config('constants.flash_statuses.success'));
         } catch (Exception $e) {
-<<<<<<< HEAD
             dd($e->getMessage());
-=======
->>>>>>> bcb0195f5b2b32c235eaec7bd01ba7ed50efeae0
             return redirect()->back()->with('error', config('constants.flash_statuses.error'));
         }
     }

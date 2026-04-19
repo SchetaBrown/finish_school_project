@@ -11,8 +11,6 @@ import Status from '@other/Status.vue'
 
 const PROPS = defineProps(["olympiad", 'is_register_participant']);
 
-console.log(PROPS.is_register_participant)
-
 const DATA = computed(() => {
     return PROPS.olympiad.data
 });
