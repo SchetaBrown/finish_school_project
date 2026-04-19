@@ -15,7 +15,11 @@ export function useCustomForm(fields = {}) {
 
     const updateValue = (data) => {
         const field = form[data.name];
+<<<<<<< HEAD
         if (typeof data.value === 'object') {
+=======
+        if (typeof field === 'object' && field !== null) {
+>>>>>>> bcb0195f5b2b32c235eaec7bd01ba7ed50efeae0
             if (data.clear) {
                 const index = field.indexOf(data.value);
 
