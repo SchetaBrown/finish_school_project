@@ -5,11 +5,16 @@ import RejectParticipantOrderModal from '@modals/RejectParticipantOrderModal.vue
 import TableContainer from '@other/TableContainer.vue';
 import Status from '@other/Status.vue';
 import NoData from '@other/NoData.vue'
-const ths = computed(() => ['Участник', 'Контакты', 'Учебное заведение', 'Курс', 'Дата заявки', 'Статус', 'Документы', 'Действия']);
+import { router } from '@inertiajs/vue3';
+const ths = computed(() => ['Участник', 'Контакты', 'Учебное заведение', 'Курс', 'Дата заявки', 'Статус', 'Причина отклонения', 'Документы', 'Действия']);
 
 const orders = computed(() => {
     return props.data.data ? props.data.data : [];
 });
+
+const updateSuccessOrder = (olympiad, id) => {
+    router.patch(route('olympiad.student-orders.update', { olympiad, id }));
+}
 </script>
 <template>
     <TableContainer :ths="ths" v-if="orders.length > 0">
@@ -22,20 +27,26 @@ const orders = computed(() => {
             </td>
             <td class="px-6 py-4">{{ order.phone }}</td>
             <td class="px-6 py-4">{{ order.school }}</td>
-            <td class="px-6 py-4">{{ order.cours_number }} курс</td>
+            <td class="px-6 py-4">{{ order.cours_number }}</td>
             <td class="px-6 py-4">Без данных</td>
             <td class="px-6 py-4">
-                <Status :status="order.status" />
+                <Status :status="order.status" font-size="12" />
+            </td>
+            <td class="px-6 py-4">
+                {{ order.reject_message ? order.reject_message : '-' }}
             </td>
             <td class="px-6 py-4">
                 <div v-for="document in order.documents">
-                    <button
-                        @click="$inertia.get(route('olympiad.student-orders.download', { olympiad, id: document.id }))">Скачать
-                        {{ document.type }}</button>
+                    <a :href="route('olympiad.student-orders.download', { olympiad, id: document.id })">Скачать
+                        {{ document.type }}</a>
                 </div>
             </td>
-            <td class="px-6 py-4">
-                <RejectParticipantOrderModal icon="fa-times" :olympiad="olympiad" :id="order.id" />
+            <td class="px-6 py-4 space-x-2">
+                <button @click="updateSuccessOrder(olympiad, order.id)"
+                    class="confirm-btn text-green-600 rounded-lg transition">
+                    <i class="fas fa-check"></i>
+                </button>
+                <RejectParticipantOrderModal icon="fa-trash" :olympiad="olympiad" :id="order.id" />
             </td>
         </tr>
     </TableContainer>

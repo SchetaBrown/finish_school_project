@@ -21,7 +21,6 @@ const PROGRESS_BAR_WIDTH = computed(() => {
             <i class="fas fa-tag mr-1 text-indigo-400"></i>
             {{ direction }}
         </span>
-        <span class="font-medium text-gray-900" v-if="player_count">Участники: {{ player_count }}</span>
     </div>
     <div class="w-full bg-gray-100 rounded-full mb-4">
         <div class="h-1.5 rounded-full" :class="status === 'Завершено' ? 'bg-[#99A1AF]' : 'bg-indigo-600'"

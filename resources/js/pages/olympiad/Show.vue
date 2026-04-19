@@ -9,7 +9,9 @@ import OlympiadNewBlock from "@blocks/olympiad/show/OlympiadNewBlock.vue";
 import OlympiadRegisterBlock from "@blocks/olympiad/show/OlympiadRegisterBlock.vue";
 import Status from '@other/Status.vue'
 
-const PROPS = defineProps(["olympiad"]);
+const PROPS = defineProps(["olympiad", 'is_register_participant']);
+
+console.log(PROPS.is_register_participant)
 
 const DATA = computed(() => {
     return PROPS.olympiad.data
@@ -108,7 +110,8 @@ const OLYMPIAD_DETAILS = computed(() => {
             <OlympiadNewBlock :news="DATA.news" :olympiadSlug="DATA.slug" />
             <OlympiadRegisterBlock :title="'Регистрация'" :count="PLAYER_COUNT" :limit="PLAYER_LIMIT"
                 :progressBarWidth="PROGRESS_BAR_WIDTH" :register-end-date="REGISTER_END_DATE"
-                :register-start-date="REGISTER_START_DATE" :slug="DATA.slug" :status="DATA.status">
+                :register-start-date="REGISTER_START_DATE" :slug="DATA.slug" :status="DATA.status"
+                :is-register-participant="is_register_participant">
             </OlympiadRegisterBlock>
         </section>
     </AppBaseLayout>

@@ -10,7 +10,7 @@ class EducationManagerMiddleware
 {
     public function handle(Request $request, Closure $next): Response
     {
-        if (!auth()->user()->isEducationManager()) {
+        if (!auth()->user()->isManager()) {
             return redirect()->back()->with('warning', 'Доступ запрещен');
         }
 

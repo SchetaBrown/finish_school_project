@@ -9,7 +9,7 @@ class StoreOlympiadDirectionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['required', 'string', 'unique:olympiad_directions,title']
+            'title' => ['required', 'string', 'unique:olympiad_directions,title'],
         ];
     }
 }

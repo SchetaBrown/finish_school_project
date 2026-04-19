@@ -29,9 +29,7 @@ Route::get('/', function () {
 // Регистрация
 Route::controller(RegisterController::class)->prefix('/register')->name('register.')->group(function () {
     Route::get('/', 'create')->name('create'); // Страница для регистрации
-    Route::post('/store', 'store')->name('store');
-    Route::post('/store-participant', 'storeParticipant')->name('storeParticipant'); // Маршрут для регистрации участника
-    Route::post('/store-manager', 'storeManager')->name('storeManager'); // Маршрут для регистрации участника
+    Route::post('/store', 'store')->name('store'); // Маршрут для регистрации пользователя
 });
 
 // Аутентификация, Авторизация
@@ -77,13 +75,13 @@ Route::prefix('/olympiads')->name('olympiad.')->group(function () {
             // Управление заявками олимпиад для ответственного за олимпиаду
             Route::middleware(['is_olympiad_manager'])->controller(OlympiadManagerOrderController::class)->prefix('/all-orders')->name('olympiad-orders.')->group(function () {
                 Route::get('/', 'index')->name('index');
-                Route::patch('/edit', 'edit')->name('edit');
+                Route::patch('{id}/update', 'update')->name('update');
             });
 
             // Управление заявками олимпиад от руководителя учебного заведения
             Route::middleware(['is_education_manager'])->controller(OlympiadEducationManagerOrderController::class)->prefix('/student-orders')->name('student-orders.')->group(function () {
                 Route::get('/', 'index')->name('index'); // Просмотр всех заявок
-                Route::post('/{id}/update', 'update')->name('update'); // Обновление данных об участнике
+                Route::patch('/{id}/update', 'update')->name('update'); // Обновление данных об участнике
                 Route::get('/{id}/download', 'download')->name('download'); // Скачивание документа конкретной заявки
             });
         });

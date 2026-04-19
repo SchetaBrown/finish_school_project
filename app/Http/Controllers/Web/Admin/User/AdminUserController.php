@@ -53,8 +53,9 @@ class AdminUserController extends Controller
         }
     }
 
-    public function update() {
-        
+    public function update()
+    {
+
     }
 
     public function export()

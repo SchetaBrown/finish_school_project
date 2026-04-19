@@ -50,7 +50,6 @@ class AdminEducationSchoolController extends Controller
 
             return redirect()->route('admin.education.school.index')->with('success', 'Учебное заведение создано');
         } catch (Exception $e) {
-            dd($e->getMessage());
             return back()->with('error', 'Возникла ошибка при создании учебного заведения, попробуйте позже');
         }
     }

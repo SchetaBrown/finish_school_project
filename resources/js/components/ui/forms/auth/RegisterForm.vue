@@ -1,6 +1,6 @@
 <script setup>
 const PROPS = defineProps(['schools']);
-import SelectTabSection from '@sections/SelectTabSection.vue'
+import SelectTabSectionV1 from '@sections/SelectTabSectionV1.vue'
 import ManagarRegisterForm from "./register/ManagerRegisterForm.vue";
 import ParticipantRegisterForm from "./register/ParticipantRegisterForm.vue";
 import Container from '@other/Container.vue'
@@ -24,7 +24,7 @@ const activeTab = ref(buttons.value[0].id);
 <template>
     <Container class="max-w-196 p-8">
         <div class="flex justify-center">
-            <SelectTabSection :buttons="buttons" @select-tab="(id) => {
+            <SelectTabSectionV1 :buttons="buttons" @select-tab="(id) => {
                 activeTab = id
             }" />
         </div>

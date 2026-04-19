@@ -8,7 +8,6 @@ class UpdateOlympiadOrderByEducationManagerRequest extends FormRequest
 {
     public function rules(): array
     {
-        dd($this);
         return [
             'reject_message' => ['nullable', 'max:100']
         ];

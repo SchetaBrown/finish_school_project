@@ -2,8 +2,8 @@
 
 namespace App\Action\User;
 
-use App\Models\EducationSchool;
 use App\Models\Manager;
+use App\Models\EducationSchool;
 use App\Models\Participant;
 use App\Models\User;
 

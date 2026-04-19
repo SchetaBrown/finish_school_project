@@ -2,6 +2,8 @@
 import TheHeader from "@components/partials/TheHeader.vue";
 import TheFooter from "@components/partials/TheFooter.vue";
 import MainLayout from "./MainLayout.vue";
+import { inject } from "vue";
+
 </script>
 <template>
     <MainLayout>

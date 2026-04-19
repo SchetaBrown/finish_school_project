@@ -30,7 +30,8 @@ class UserResource extends JsonResource
             'patronymic' => $this->patronymic,
             'email' => $this->email,
             'phone' => $this->phone,
-            'role' => $this->whenLoaded('role', fn() => $this->role->title),
+            'role' => $this->role->title,
+            'initial_name' => $this->surname . ' ' . $this->name[0] . '.' . $this->patronymic[0] . '.'
         ];
     }
 }

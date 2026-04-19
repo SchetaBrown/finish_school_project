@@ -86,7 +86,6 @@ class OlympiadOrderController extends Controller
 
             return redirect()->route('olympiad.index')->with('success', config('constants.flash_statuses.success'));
         } catch (Exception $e) {
-            dd($e->getMessage());
             return redirect()->back()->with('error', 'Возникла ошибка при оформлении');
         }
     }

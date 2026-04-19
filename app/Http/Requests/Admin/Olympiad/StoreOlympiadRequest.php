@@ -3,7 +3,6 @@
 namespace App\Http\Requests\Admin\Olympiad;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class StoreOlympiadRequest extends FormRequest
 {

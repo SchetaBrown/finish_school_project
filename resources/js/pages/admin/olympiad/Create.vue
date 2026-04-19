@@ -4,7 +4,7 @@ import AppAdminLayout from '@layouts/AppAdminLayout.vue'
 import AdminCreateOlympiadForm from '@forms/admin/create/AdminCreateOlympiadForm.vue';
 import AdminCreateOlympiadDirectionForm from '@forms/admin/create/AdminCreateOlympiadDirectionForm.vue';
 import PageTitle from '@titles/PageTitle.vue'
-import SelectTabSection from '@sections/SelectTabSection.vue';
+import SelectTabSectionV1 from '@sections/SelectTabSectionV1.vue';
 import { computed, ref } from 'vue';
 const buttons = computed(() => [
     {
@@ -24,7 +24,7 @@ const activeTab = ref(buttons.value[0].id);
 <template>
     <AppAdminLayout>
         <PageTitle title="Создание олимпиады" subtitle="Заполните информацию о новой олимпиаде" />
-        <SelectTabSection :buttons="buttons" @select-tab="(id) => {
+        <SelectTabSectionV1 :buttons="buttons" @select-tab="(id) => {
             activeTab = id;
         }" />
         <AdminCreateOlympiadForm v-if="activeTab == 1" :directions="directions" :managers="olympiad_managers"

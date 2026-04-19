@@ -84,7 +84,6 @@ class AdminOlympiadController extends Controller
 
             return redirect()->route('admin.olympiad.index')->with('success', 'Олимпиада создан');
         } catch (Exception $e) {
-            dd($e->getMessage());
             return redirect()->back()->with('error', 'Возникла ошибка, попробуйте позже');
         }
     }
@@ -96,7 +95,6 @@ class AdminOlympiadController extends Controller
 
             return redirect()->back()->with('success', 'Олимпиада удалена');
         } catch (Exception $e) {
-            dd($e->getMessage());
             return redirect()->back()->with('error', 'Возникла ошибка, попробуйте позже');
         }
     }

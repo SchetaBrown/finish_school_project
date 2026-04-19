@@ -59,7 +59,7 @@ class HandleInertiaRequests extends Middleware
             return new ParticipantResource($participant);
         }
 
-        if ($user->isEducationManager()) {
+        if ($user->isManager()) {
             $manager = Manager::where('user_id', $user->id)
                 ->with(['educationSchool', 'user', 'user.role'])
                 ->first();

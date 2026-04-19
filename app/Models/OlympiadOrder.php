@@ -12,6 +12,7 @@ class OlympiadOrder extends Model
         'place',
         'is_manager_accept',
         'is_olympiad_manager_accept',
+        'reject_message',
         'is_hostel',
         'arrival_date',
         'departure_date',
@@ -34,7 +35,7 @@ class OlympiadOrder extends Model
 
     public function educationManager()
     {
-        return $this->belongsTo(Manager::class);
+        return $this->belongsTo(Manager::class, 'manager_id');
     }
 
     public function olympiadDocument()
