@@ -36,7 +36,7 @@ class UserSeeder extends Seeder
                 'surname' => 'Managerov',
                 'name' => 'Manager',
                 'patronymic' => 'Managerovich',
-                'email' => 'manager@gmail.com',
+                'email' => 'educationmanager@gmail.com',
                 'phone' => '7999887763',
                 'password' => '123123123',
                 'email_verified_at' => now(),

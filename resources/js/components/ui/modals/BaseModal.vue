@@ -2,8 +2,6 @@
 const props = defineProps(["btnClass", "btnText", "icon", "reject"]);
 import { computed, ref } from "vue";
 
-console.log(props.icon);
-
 const buttonCls = computed(() => {
     return (
         props?.btnClass ||

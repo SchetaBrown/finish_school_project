@@ -6,7 +6,7 @@ const props = defineProps(['school', 'manager', 'orders']);
 
 const isOpen = ref(false);
 
-console.log(props.orders[0].data)
+
 </script>
 
 <template>

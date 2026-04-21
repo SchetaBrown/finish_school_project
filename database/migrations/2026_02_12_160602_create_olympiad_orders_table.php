@@ -25,7 +25,7 @@ return new class extends Migration {
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
             $table
-                ->foreignId('manager_id')
+                ->foreignId('education_manager_id')
                 ->constrained()
                 ->onDelete('cascade')
                 ->onUpdate('cascade');

@@ -5,10 +5,10 @@ namespace App\Http\Controllers\Web\Admin\User;
 use App\Action\User\GetUsersDataForAdminPageAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\User\StoreUserRequest;
-use App\Http\Resources\User\ManagerResource;
+use App\Http\Resources\User\EducationManagerResource;
 use App\Http\Resources\User\ParticipantResource;
 use App\Http\Resources\User\UserResource;
-use App\Models\Manager;
+use App\Models\EducationManager;
 use App\Models\Participant;
 use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -41,7 +41,7 @@ class AdminUserController extends Controller
         try {
             $resource = match ($user->role->title) {
                 'Участник' => new ParticipantResource(Participant::with(['user'])->where('user_id', $user->id)->first()),
-                'Руководитель' => new ManagerResource(Manager::with(['user'])->where('user_id', $user->id)->first()),
+                'Руководитель' => new EducationManagerResource(EducationManager::with(['user'])->where('user_id', $user->id)->first()),
                 default => new UserResource($user)
             };
 

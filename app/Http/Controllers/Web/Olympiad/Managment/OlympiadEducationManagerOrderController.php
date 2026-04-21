@@ -17,7 +17,7 @@ class OlympiadEducationManagerOrderController extends Controller
 {
     public function index(string $olympiad)
     {
-        $orders = OlympiadOrder::with(['participant', 'olympiadDocument', 'participant.educationSchool', 'olympiad', 'Manager', 'olympiadOrderStatus'])
+        $orders = OlympiadOrder::with(['participant', 'olympiadDocument', 'participant.educationSchool', 'olympiad', 'educationManager', 'olympiadOrderStatus'])
             ->whereHas('olympiad', function ($query) use ($olympiad) {
                 $query->where('slug', $olympiad);
             })

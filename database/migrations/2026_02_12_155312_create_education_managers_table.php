@@ -10,7 +10,7 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('managers', function (Blueprint $table) {
+        Schema::create('education_managers', function (Blueprint $table) {
             $table->id();
 
             $table->boolean('is_accept')->default(false);

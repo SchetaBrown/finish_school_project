@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Web\Olympiad;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Olympiad\StoreOlympiadOrderRequest;
 use App\Http\Resources\Olympiad\OlympiadResource;
-use App\Http\Resources\User\ManagerResource;
-use App\Models\Manager;
+use App\Http\Resources\User\EducationManagerResource;
+use App\Models\EducationManager;
 use App\Models\Olympiad;
 use App\Models\OlympiadDocument;
 use App\Models\OlympiadOrder;
@@ -22,7 +22,7 @@ class OlympiadOrderController extends Controller
 {
     public function create(string $slug)
     {
-        $managers = ManagerResource::collection(Manager::with(['user', 'educationSchool'])->whereHas('educationSchool', function (Builder $query) {
+        $managers = EducationManagerResource::collection(EducationManager::with(['user', 'educationSchool'])->whereHas('educationSchool', function (Builder $query) {
             $participant = Participant::with(['educationSchool'])->first();
             $query->where('id', $participant->education_school_id);
         })->get());
@@ -55,7 +55,7 @@ class OlympiadOrderController extends Controller
                 'arrival_date' => $validated['arrival_date'] ?? null,
                 'departure_date' => $validated['departure_date'] ?? null,
                 'participant_id' => $participant->id,
-                'manager_id' => $validated['manager_id'],
+                'education_manager_id' => $validated['education_manager_id'],
                 'olympiad_id' => $olympiad->id,
             ]);
 

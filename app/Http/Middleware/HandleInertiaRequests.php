@@ -2,10 +2,10 @@
 
 namespace App\Http\Middleware;
 
-use App\Http\Resources\User\ManagerResource;
+use App\Http\Resources\User\EducationManagerResource;
 use App\Http\Resources\User\ParticipantResource;
 use App\Http\Resources\User\UserResource;
-use App\Models\Manager;
+use App\Models\EducationManager;
 use App\Models\Participant;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -59,11 +59,11 @@ class HandleInertiaRequests extends Middleware
         }
 
         if ($user->isManager()) {
-            $manager = Manager::where('user_id', $user->id)
+            $manager = EducationManager::where('user_id', $user->id)
                 ->with(['educationSchool', 'user', 'user.role'])
                 ->first();
 
-            return new ManagerResource($manager);
+            return new EducationManagerResource($manager);
         } else {
             return new UserResource($user);
         }

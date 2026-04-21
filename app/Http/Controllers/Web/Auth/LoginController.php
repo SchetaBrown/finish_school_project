@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Web\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
-use App\Models\Manager;
+use App\Models\EducationManager;
 use App\Models\User;
 use Exception;
 use Illuminate\Support\Facades\Auth;
@@ -29,7 +29,7 @@ class LoginController extends Controller
             $user = User::with('role')->find(Auth::id());
 
             if ($user->isManager()) {
-                $manager = Manager::where('user_id', $user->id)->first();
+                $manager = EducationManager::where('user_id', $user->id)->first();
 
                 if (!$manager || $manager->is_accept === false) {
                     Auth::logout();

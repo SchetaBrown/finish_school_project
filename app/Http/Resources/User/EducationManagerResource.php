@@ -6,7 +6,7 @@ use App\Http\Resources\Education\EducationSchoolResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ManagerResource extends JsonResource
+class EducationManagerResource extends JsonResource
 {
     public function toArray(Request $request): array
     {

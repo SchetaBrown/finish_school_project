@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\Manager;
+use App\Models\EducationManager;
 use Illuminate\Database\Seeder;
 
-class ManagerSeeder extends Seeder
+class EducationManagerSeeder extends Seeder
 {
     private array $managers = [
         [
@@ -17,7 +17,7 @@ class ManagerSeeder extends Seeder
     public function run(): void
     {
         foreach ($this->managers as $manager) {
-            Manager::create($manager);
+            EducationManager::create($manager);
         }
     }
 }

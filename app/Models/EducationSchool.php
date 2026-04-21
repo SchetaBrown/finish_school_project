@@ -34,9 +34,9 @@ class EducationSchool extends Model
     }
 
     // Связи
-    public function managers()
+    public function educationManagers()
     {
-        return $this->hasMany(Manager::class);
+        return $this->hasMany(EducationManager::class);
     }
 
     public function scopeFilter(Builder $query, array $filters): Builder

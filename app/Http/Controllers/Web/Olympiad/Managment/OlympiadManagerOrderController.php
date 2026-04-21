@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\Education\EducationSchoolResource;
 use App\Http\Resources\Olympiad\OlympiadOrderResource;
 use App\Http\Resources\Olympiad\OlympiadResource;
-use App\Http\Resources\User\ManagerResource;
+use App\Http\Resources\User\EducationManagerResource;
 use App\Models\Olympiad;
 use App\Models\OlympiadOrder;
 use Inertia\Inertia;
@@ -39,7 +39,7 @@ class OlympiadManagerOrderController extends Controller
 
             if (!isset($groupedBySchool[$key])) {
                 $groupedBySchool[$key] = [
-                    'manager' => new ManagerResource($order->educationManager),
+                    'manager' => new EducationManagerResource($order->educationManager),
                     'school' => new EducationSchoolResource($order->participant->educationSchool),
                     'orders' => [],
                 ];

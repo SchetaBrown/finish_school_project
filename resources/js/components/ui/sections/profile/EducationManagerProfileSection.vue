@@ -52,13 +52,17 @@ const updateSuccessOrder = (olympiad, id) => {
                             <span>{{ order.phone }}</span>
                         </div>
                         <div class="flex items-start space-x-2 text-sm text-gray-600 mt-2">
+                            <i class="fas fa-graduation-cap text-gray-400 mt-0.5"></i>
+                            <span>{{ order.school }}</span>
+                        </div>
+                        <div class="flex items-start space-x-2 text-sm text-gray-600 mt-2">
                             <i class="far fa-calendar text-gray-400 mt-0.5"></i>
                             <span>Дата заявки: Нет данных</span>
                         </div>
                         <div class="mt-2 p-2 bg-red-50 rounded-lg w-full" v-if="order.reject_message">
                             <div class="flex items-start space-x-2 w-full">
                                 <i class="fas fa-info-circle text-red-400 text-xs mt-0.5"></i>
-                                <p class="text-xs text-red-600">Причина отклонения: 21321</p>
+                                <p class="text-xs text-red-600">Причина отклонения: {{ order.reject_message }}</p>
                             </div>
                         </div>
                     </div>

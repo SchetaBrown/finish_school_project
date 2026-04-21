@@ -11,12 +11,13 @@ use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
+    use HasFactory, Notifiable;
+
     const ADMIN_ROLE = 'Администратор';
     const OLYMPIAD_MANAGER_ROLE = 'Ответственный';
+    const CHAREPONE_ROLE = 'Сопровождающий';
     const MANAGER_ROLE = 'Руководитель';
     const PARTICIPANT_ROLE = 'Участник';
-
-    use HasFactory, Notifiable;
 
     protected $fillable = [
         'login',
@@ -66,9 +67,9 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasOne(Participant::class);
     }
 
-    public function manager()
+    public function educationManager()
     {
-        return $this->hasOne(Manager::class);
+        return $this->hasOne(EducationManager::class);
     }
 
     public function olympiadDocuments()
@@ -150,6 +151,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function isManager()
     {
         return $this->role?->title === self::MANAGER_ROLE;
+    }
+
+    public function isCharepone()
+    {
+        return $this->role?->title === self::CHAREPONE_ROLE;
     }
 
     public function fullName()

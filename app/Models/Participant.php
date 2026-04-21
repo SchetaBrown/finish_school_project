@@ -15,7 +15,7 @@ class Participant extends Model
         'education_school_id',
         'education_direction_id',
         'user_id',
-        'attached_manager_id',
+        'attached_education_manager_id',
     ];
 
     // Связи
@@ -26,7 +26,7 @@ class Participant extends Model
 
     public function attachedManager()
     {
-        return $this->belongsTo(User::class, 'attached_manager_id');
+        return $this->belongsTo(User::class, 'attached_education_manager_id');
     }
 
     public function educationSchool()

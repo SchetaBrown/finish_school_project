@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\StoreManagerRequest;
 use App\Http\Requests\Auth\StoreParticipantRequest;
 use App\Http\Resources\Education\EducationSchoolResource;
+use App\Models\EducationManager;
 use App\Models\EducationSchool;
-use App\Models\Manager;
 use App\Models\Participant;
 use App\Models\Role;
 use App\Models\User;
@@ -36,7 +36,7 @@ class RegisterController extends Controller
             ],
             'руководитель' => [
                 'request' => StoreManagerRequest::class,
-                'model' => Manager::class,
+                'model' => EducationManager::class,
             ],
         };
 

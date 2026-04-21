@@ -17,7 +17,7 @@ class OlympiadOrder extends Model
         'arrival_date',
         'departure_date',
         'participant_id',
-        'manager_id',
+        'education_manager_id',
         'olympiad_id',
         'olympiad_order_status_id',
     ];
@@ -35,7 +35,7 @@ class OlympiadOrder extends Model
 
     public function educationManager()
     {
-        return $this->belongsTo(Manager::class, 'manager_id');
+        return $this->belongsTo(EducationManager::class);
     }
 
     public function olympiadDocument()

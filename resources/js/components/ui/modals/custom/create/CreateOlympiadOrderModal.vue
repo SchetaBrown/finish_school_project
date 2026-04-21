@@ -12,7 +12,7 @@ const { form, updateValue, submit } = useCustomForm({
   arrival_date: null,
   departure_date: null,
   olympiad_id: "",
-  manager_id: "",
+  education_manager_id: "",
 });
 
 const dateInputs = computed(() => [
@@ -83,7 +83,7 @@ const managers = computed(() => {
             </div>
           </div>
           <BaseList
-            name="manager_id"
+            name="education_manager_id"
             label="Руководитель"
             :options="managers"
             :form="form"

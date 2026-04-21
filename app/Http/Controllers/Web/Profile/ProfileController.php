@@ -14,13 +14,14 @@ class ProfileController extends Controller
     {
         $participantOlympiadOrders = [];
         $educationManagerOlympiadOrders = [];
+        $query = OlympiadOrder::with(['participant', 'olympiad', 'educationManager', 'olympiadDocument', 'olympiadOrderStatus', 'olympiad.olympiadStatus', 'olympiad.olympiadDirection']);
         if (auth()->user()->role->title === 'Участник') {
-            $participantOlympiadOrders = OlympiadOrder::with(['participant', 'olympiad', 'Manager', 'olympiadDocument', 'olympiadOrderStatus', 'olympiad.olympiadStatus', 'olympiad.olympiadDirection'])
+            $participantOlympiadOrders = $query
                 ->where('participant_id', Auth::user()->participant->id)
                 ->paginate(config('constants.per_page'));
         } elseif (auth()->user()->role->title === 'Руководитель') {
-            $educationManagerOlympiadOrders = OlympiadOrder::with(['participant', 'olympiad', 'Manager', 'olympiadDocument', 'olympiadOrderStatus', 'olympiad.olympiadStatus', 'olympiad.olympiadDirection'])
-                ->where('manager_id', Auth::user()->manager->id)
+            $educationManagerOlympiadOrders = $query
+                ->where('education_manager_id', Auth::user()->educationManager->id)
                 ->orderByDesc('created_at')
                 ->paginate(config('constants.per_page'));
         }

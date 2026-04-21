@@ -2,7 +2,7 @@
 
 namespace App\Action\User;
 
-use App\Models\Manager;
+use App\Models\EducationManager;
 use App\Models\EducationSchool;
 use App\Models\Participant;
 use App\Models\User;
@@ -10,7 +10,7 @@ use App\Models\User;
 class StoreManagerOrParticipantAction
 {
     private array $base_input_keys = ['surname', 'name', 'patronymic', 'email', 'phone', 'password'];
-    public function execute(Participant|Manager $model, string $role, array $data): User
+    public function execute(Participant|EducationManager $model, string $role, array $data): User
     {
         $education_school = EducationSchool::where('full_name', $data['education_school_title'])->first();
 

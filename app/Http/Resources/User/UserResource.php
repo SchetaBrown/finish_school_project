@@ -31,7 +31,7 @@ class UserResource extends JsonResource
             'email' => $this->email,
             'phone' => $this->phone,
             'role' => $this->role->title,
-            'initial_name' => $this->surname . ' ' . mb_substr($this->name, 0, 1, 'UTF-8') . '.' . mb_substr($this->patronymic, 0, 1, 'UTF-8') . '.'
+            'initial_name' => "{$this->surname} {$this->name}.{$this->patronymic}."
         ];
     }
 }

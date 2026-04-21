@@ -4,7 +4,7 @@ namespace App\Action\User;
 
 use App\Http\Resources\User\RoleResource;
 use App\Http\Resources\User\UserResource;
-use App\Models\Manager;
+use App\Models\EducationManager;
 use App\Models\Participant;
 use App\Models\Role;
 use App\Models\User;
@@ -20,7 +20,7 @@ class GetUsersDataForAdminPageAction
 
         $participants_count = Participant::get()->count();
 
-        $managers = Manager::paginate(config('constants.per_page'));
+        $managers = EducationManager::paginate(config('constants.per_page'));
         $managers_count = $managers->count();
 
         $excludedRoles = Role::whereIn('title', ['участник', 'руководитель'])->pluck('id');
