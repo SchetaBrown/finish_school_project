@@ -32,6 +32,7 @@ class Olympiad extends Model
         'olympiad_maintainer_id',
         'olympiad_direction_id',
         'olympiad_manager_id',
+        'education_direction_id',
     ];
 
     // Связи
@@ -73,6 +74,11 @@ class Olympiad extends Model
     public function olympiadMaintainer()
     {
         return $this->belongsTo(User::class, 'olympiad_maintainer_id');
+    }
+
+    public function educationDirection()
+    {
+        return $this->belongsTo(EducationDirection::class);
     }
 
     // Мутаторы и аксессоры

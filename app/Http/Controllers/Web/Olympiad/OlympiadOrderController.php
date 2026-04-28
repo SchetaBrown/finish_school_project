@@ -12,6 +12,7 @@ use App\Models\OlympiadDocument;
 use App\Models\OlympiadOrder;
 use App\Models\Participant;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
@@ -38,7 +39,8 @@ class OlympiadOrderController extends Controller
             $participant = Participant::with(['user', 'attachedManager', 'educationSchool', 'educationDirection'])->whereHas('user', function (Builder $query) {
                 $query->where('id', Auth::id());
             })->first();
-            $olympiad = Olympiad::where('slug', $olympiad)->first();
+
+            $olympiad = Olympiad::with(['educationDirection'])->whereSlug($olympiad)->first();
 
             $existingOrder = OlympiadOrder::where('participant_id', $participant->id)
                 ->where('olympiad_id', $olympiad->id)
@@ -50,6 +52,8 @@ class OlympiadOrderController extends Controller
 
             $validated = $request->validated();
 
+            $age = Carbon::parse($participant->birth_date)->diffInYears(Carbon::parse($olympiad->register_start_date));
+
             $order = OlympiadOrder::create([
                 'is_hostel' => $validated['is_hostel'] ?? false,
                 'arrival_date' => $validated['arrival_date'] ?? null,
@@ -59,13 +63,15 @@ class OlympiadOrderController extends Controller
                 'olympiad_id' => $olympiad->id,
             ]);
 
-
             $pdf = Pdf::loadView('docs.user.participant-document-pdf', [
                 'full_name' => $participant->user->fullName(),
                 'birth_date' => $participant->birth_date,
                 'cours_number' => $participant->cours_number,
                 'direction' => "{$participant->educationDirection->code} {$participant->educationDirection->title}",
                 'manager_info' => "{$participant->attachedManager->fullname()}, {$participant->attachedManager->phone}",
+                'needParentData' => $age < 18,
+                'direction_code' => $olympiad->educationDirection->code,
+                'direction_title' => $olympiad->educationDirection->title,
             ]);
 
             $output = $pdf->output();
@@ -86,6 +92,7 @@ class OlympiadOrderController extends Controller
 
             return redirect()->route('olympiad.index')->with('success', config('constants.flash_statuses.success'));
         } catch (Exception $e) {
+            dd($e->getMessage());
             return redirect()->back()->with('error', 'Возникла ошибка при оформлении');
         }
     }

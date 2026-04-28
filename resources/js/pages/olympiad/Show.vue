@@ -1,4 +1,5 @@
 <script setup>
+const props = defineProps(["olympiad", 'is_register_participant', 'order_status']);
 import { computed } from "vue";
 import AppBaseLayout from "@layouts/AppBaseLayout.vue";
 import PageTitle from '@titles/PageTitle.vue'
@@ -9,11 +10,11 @@ import OlympiadNewBlock from "@blocks/olympiad/show/OlympiadNewBlock.vue";
 import OlympiadRegisterBlock from "@blocks/olympiad/show/OlympiadRegisterBlock.vue";
 import Status from '@other/Status.vue'
 
-const PROPS = defineProps(["olympiad", 'is_register_participant']);
-
 const DATA = computed(() => {
-    return PROPS.olympiad.data
+    return props.olympiad.data
 });
+
+console.log(props.order_status)
 
 const OLYMPIAD_TYPES = computed(() => {
     const types = DATA.value?.types;
@@ -109,7 +110,7 @@ const OLYMPIAD_DETAILS = computed(() => {
             <OlympiadRegisterBlock :title="'Регистрация'" :count="PLAYER_COUNT" :limit="PLAYER_LIMIT"
                 :progressBarWidth="PROGRESS_BAR_WIDTH" :register-end-date="REGISTER_END_DATE"
                 :register-start-date="REGISTER_START_DATE" :slug="DATA.slug" :status="DATA.status"
-                :is-register-participant="is_register_participant">
+                :is-register-participant="is_register_participant" :order-status="order_status">
             </OlympiadRegisterBlock>
         </section>
     </AppBaseLayout>

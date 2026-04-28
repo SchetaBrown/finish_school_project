@@ -29,6 +29,11 @@ class EducationDirection extends Model
         return $this->hasMany(Participant::class);
     }
 
+    public function olympiads()
+    {
+        return $this->hasMany(Olympiad::class);
+    }
+
     public function scopeFilter(Builder $query, array $filters): Builder
     {
         $query

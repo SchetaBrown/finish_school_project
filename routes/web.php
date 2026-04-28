@@ -54,7 +54,7 @@ Route::prefix('/olympiads')->name('olympiad.')->group(function () {
         Route::get('/show', [OlympiadController::class, 'show'])->name('show'); // Просмотр конкретной олимпиады
 
         // Просмотр результатов олимпиады
-        Route::controller(OlympiadResultController::class)->prefix('/results')->name('result.')->group(function () {
+        Route::middleware(['is_admin', 'is_olympiad_manager'])->controller(OlympiadResultController::class)->prefix('/result')->name('result.')->group(function () {
             Route::get('/', 'index')->name('index');
         });
 

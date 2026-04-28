@@ -12,7 +12,7 @@ return new class extends Migration {
 
             $table->float('score')->default(0);
             $table->integer('place')->nullable();
-            $table->boolean('is_education_manager_accept')->nullable();
+            $table->boolean('is_education_manager_accept')->default(true);
             $table->text('reject_message')->nullable();
             $table->boolean('is_olympiad_manager_accept')->default(false);
             $table->boolean('is_hostel')->default(false);

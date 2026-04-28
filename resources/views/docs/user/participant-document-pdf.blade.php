@@ -89,7 +89,7 @@
         .underline {
             border-bottom: 1px solid #000;
             display: inline-block;
-            min-width: 120px;
+            min-width: 200px;
         }
 
         .font-semibold {
@@ -105,8 +105,8 @@
         </div>
         <div class="text-center text-14 mb-4 font-semibold">
             в областной олимпиаде по программированию для студентов,<br>
-            обучающихся по специальностям и профессиям СПО укрупненной группы<br>
-            09.00.00 «Информатика и вычислительная техника»
+            обучающихся по специальностям и профессиям СПО<br>
+            {{ $direction_code }} «{{ $direction_title }}»
         </div>
 
         <table class="form-table">
@@ -134,13 +134,23 @@
                 <td class="label-cell">ФИО руководителей команды, контактный телефон (сотовый)</td>
                 <td class="value-cell">{{ $manager_info ?? '____________________' }}</td>
             </tr>
+            @if ($needParentData)
+                <tr>
+                    <td class="label-cell">ФИО законного представителя</td>
+                    <td class="value-cell">__________________________________________________</td>
+                </tr>
+                <tr>
+                    <td class="label-cell">Подпись</td>
+                    <td class="value-cell">_________________</td>
+                </tr>
+            @endif
         </table>
 
         <table class="signature-table">
             <tr>
                 <td class="signature-label">Директор ОО</td>
                 <td class="signature-value">
-                    ____________________ <span class="underline">(подпись)</span>
+                    <span class="underline">(подпись)</span>
                 </td>
             </tr>
             <tr>

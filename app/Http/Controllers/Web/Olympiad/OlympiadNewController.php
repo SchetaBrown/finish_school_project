@@ -19,7 +19,7 @@ class OlympiadNewController extends Controller
     public function show(string $olympiad, string $new)
     {
         try {
-            $new = new OlympiadNewResource(OlympiadNew::with(['olympiad', 'user'])->where('slug', $new)->first());
+            $new = new OlympiadNewResource(OlympiadNew::with(['olympiad'])->where('slug', $new)->first());
             return Inertia::render('olympiad/new/Show', [
                 'new' => $new
             ]);
@@ -38,7 +38,8 @@ class OlympiadNewController extends Controller
         }
     }
 
-    public function destroy() {
-        
+    public function destroy()
+    {
+
     }
 }

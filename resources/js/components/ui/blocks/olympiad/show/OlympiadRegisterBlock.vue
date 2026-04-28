@@ -8,7 +8,8 @@ const props = defineProps([
     'limit',
     'progressBarWidth',
     'slug',
-    'isRegisterParticipant'
+    'isRegisterParticipant',
+    'orderStatus'
 ]);
 import Container from '@other/Container.vue'
 import BlockTitle from '@titles/BlockTitle.vue'
@@ -17,9 +18,9 @@ import { computed, inject } from 'vue';
 const userData = inject('userData');
 
 const IS_AVAILABLE_LINK = computed(() => {
-    const STATUS = props.status.toLowerCase().trim();
+    const status = props.status.toLowerCase().trim();
 
-    if (STATUS !== 'завершено' && STATUS !== 'регистрация закрыта') {
+    if (status !== 'завершено' && status !== 'регистрация закрыта') {
         return true;
     }
 
@@ -31,11 +32,7 @@ const canRegister = computed(() => {
         return false;
     }
 
-    if (!IS_AVAILABLE_LINK.value) {
-        return false;
-    }
-
-    return true;
+    return !IS_AVAILABLE_LINK.value ? false : true;
 });
 
 const buttonText = computed(() => {
@@ -52,6 +49,8 @@ const buttonText = computed(() => {
             return 'Перейти к заявкам';
         case 'ответственный':
             return 'Перейти к заявкам участников';
+        case 'администратор':
+            return '123123';
         default:
             return 'Войдите в систему, чтобы зарегистрироваться';
     }
@@ -105,35 +104,28 @@ const buttonClasses = computed(() => {
 
     return `${baseClasses} bg-indigo-600 hover:bg-indigo-700`;
 });
-
-
 </script>
 
 <template>
     <Container>
         <BlockTitle :title="title"></BlockTitle>
         <div class="mt-3 flex flex-col gap-5 w-full">
-            <div class="flex flex-col gap-2">
-                <div class="flex justify-between">
-                    <span class="text-sm text-[#6A7282]">Участники:</span>
-                    <span class="font-medium text-sm text-gray-900">{{ count }}/{{ limit }}</span>
-                </div>
-                <div class="h-2.5 rounded-full w-full bg-[#E5E7EB]">
-                    <div class="h-full bg-indigo-600 rounded-full" :style="progressBarWidth"></div>
-                </div>
-            </div>
             <div class="flex flex-col gap-1">
                 <div class="flex justify-between">
                     <span class="text-[#6A7282] text-sm">Статус:</span>
                     <span class="font-medium text-gray-900">{{ status }}</span>
                 </div>
-                <div class="flex justify-between items-center">
+                <div class="flex justify-between">
                     <span class="text-[#6A7282] text-sm">Начало регистрации:</span>
                     <span class="font-medium text-gray-900">{{ registerStartDate }}</span>
                 </div>
-                <div class="flex justify-between items-center">
+                <div class="flex justify-between">
                     <span class="text-[#6A7282] text-sm">Окончание регистрации:</span>
                     <span class="font-medium text-gray-900">{{ registerEndDate }}</span>
+                </div>
+                <div class="flex justify-between" v-if="orderStatus">
+                    <span class="text-[#6A7282] text-sm">Статус заявки:</span>
+                    <span class="font-medium text-gray-900">{{ orderStatus }}</span>
                 </div>
             </div>
 

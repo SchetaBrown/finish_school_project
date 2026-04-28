@@ -21,6 +21,7 @@ class OlympiadSeeder extends Seeder
             'olympiad_maintainer_id' => 4,
             'olympiad_manager_id' => 4,
             'olympiad_direction_id' => 1,
+            'education_direction_id' => 2,
         ],
         [
             'title' => 'Разработка ИС на Laravel',
@@ -35,6 +36,7 @@ class OlympiadSeeder extends Seeder
             'olympiad_maintainer_id' => 4,
             'olympiad_manager_id' => 4,
             'olympiad_direction_id' => 1,
+            'education_direction_id' => 2,
         ],
         [
             'title' => 'Дипломатия протоколов: проектирование RESTful API',
@@ -49,6 +51,7 @@ class OlympiadSeeder extends Seeder
             'olympiad_maintainer_id' => 4,
             'olympiad_manager_id' => 4,
             'olympiad_direction_id' => 1,
+            'education_direction_id' => 2,
         ],
         [
             'title' => 'Архитектурный код: паттерны проектирования на C#',
@@ -63,6 +66,7 @@ class OlympiadSeeder extends Seeder
             'olympiad_maintainer_id' => 4,
             'olympiad_manager_id' => 4,
             'olympiad_direction_id' => 1,
+            'education_direction_id' => 2,
         ],
         [
             'title' => 'DevOps-инструменты: автоматизация от CI/CD до контейнеризации',
@@ -77,6 +81,7 @@ class OlympiadSeeder extends Seeder
             'olympiad_maintainer_id' => 4,
             'olympiad_manager_id' => 4,
             'olympiad_direction_id' => 1,
+            'education_direction_id' => 2,
         ],
     ];
     public function run(): void
