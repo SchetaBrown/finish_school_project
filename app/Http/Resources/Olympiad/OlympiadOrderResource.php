@@ -13,6 +13,7 @@ class OlympiadOrderResource extends JsonResource
             'id' => $this->id,
             'full_name' => $this->whenLoaded('participant', fn() => $this->participant->user->fullName()),
             'reject_message' => $this->reject_message,
+            'is_education_manager_accept' => $this->is_education_manager_accept,
             'email' => $this->whenLoaded('participant', fn() => $this->participant->user->email),
             'phone' => $this->whenLoaded('participant', fn() => $this->participant->user->phone),
             'school' => $this->whenLoaded('participant', fn() => $this->participant->educationSchool->short_name),

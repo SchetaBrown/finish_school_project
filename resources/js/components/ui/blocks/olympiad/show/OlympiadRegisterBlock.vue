@@ -112,10 +112,6 @@ const buttonClasses = computed(() => {
         <div class="mt-3 flex flex-col gap-5 w-full">
             <div class="flex flex-col gap-1">
                 <div class="flex justify-between">
-                    <span class="text-[#6A7282] text-sm">Статус:</span>
-                    <span class="font-medium text-gray-900">{{ status }}</span>
-                </div>
-                <div class="flex justify-between">
                     <span class="text-[#6A7282] text-sm">Начало регистрации:</span>
                     <span class="font-medium text-gray-900">{{ registerStartDate }}</span>
                 </div>

@@ -14,8 +14,6 @@ const DATA = computed(() => {
     return props.olympiad.data
 });
 
-console.log(props.order_status)
-
 const OLYMPIAD_TYPES = computed(() => {
     const types = DATA.value?.types;
 

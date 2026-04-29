@@ -18,7 +18,6 @@ const OLYMPIAD_STATUSES = PROPS.statuses;
         <PageTitle :title="'Все олимпиады'" :subtitle="'Найди событие по душе и прокачай свои навыки'" />
         <FilterSection :directions="OLYMPIAD_DIRECTIONS" :statuses="OLYMPIAD_STATUSES">
         </FilterSection>
-        <OlympiadSection :olympiads="olympiads.data"></OlympiadSection>
-        <Pagination :links="olympiads.links" />
+        <OlympiadSection :olympiads="olympiads"></OlympiadSection>
     </AppBaseLayout>
 </template>

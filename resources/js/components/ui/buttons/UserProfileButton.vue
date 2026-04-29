@@ -8,21 +8,15 @@ const dropdownRef = ref(null);
 
 const userData = inject('userData');
 
-const links = computed(() => {
-    return [
-        {
-            icon: "fas fa-user",
-            title: "Мой профиль",
-            href: "profile.index",
-        },
-    ];
-});
-
 const handleClickOutside = (event) => {
     if (dropdownRef.value && !dropdownRef.value.contains(event.target)) {
         isVisibleList.value = false;
     }
 };
+
+const isAvailableProfile = computed(() => {
+    return userData.role === 'Руководитель' || userData.role === 'Участник';
+});
 
 onMounted(() => {
     document.addEventListener("click", handleClickOutside);
@@ -41,7 +35,7 @@ onBeforeUnmount(() => {
             <div class="w-8 h-8 bg-indigo-100 rounded-lg flex items-center justify-center">
                 <span class="text-indigo-600 font-medium text-sm">{{ userData.initial }}</span>
             </div>
-            <span class="font-medium text-gray-700">
+            <span class="font-medium text-gray-700 max-lg:hidden">
                 {{ userData.fullName }}
             </span>
             <i class="fas fa-chevron-down text-xs text-gray-400 transition-transform"
@@ -57,11 +51,11 @@ onBeforeUnmount(() => {
                 <p class="text-xs text-gray-400">{{ userData.email }}</p>
             </div>
 
-            <div class="py-1">
-                <Link :href="route(link.href)" v-for="link in links" :key="link.title"
+            <div class="py-1" v-if="isAvailableProfile">
+                <Link :href="route('profile.index')"
                     class="flex items-center space-x-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition">
-                <i class="fas w-4 text-gray-400" :class="link.icon"></i>
-                <span>{{ link.title }}</span>
+                <i class="fas fa-user w-4 text-gray-400"></i>
+                <span>Профиль</span>
                 </Link>
             </div>
 

@@ -5,6 +5,7 @@ export function useFilter(options = {}) {
     const {
         storageKey = "form",
         routeName = null,
+        optionName = null,
         preserveScroll = true,
         clearOnUnmount = true,
         preserveState = true,
@@ -58,7 +59,7 @@ export function useFilter(options = {}) {
                 ),
             );
 
-            router.get(route(routeName), cleanData, {
+            router.get(route(routeName, optionName), cleanData, {
                 preserveState: preserveState,
                 preserveScroll: preserveScroll,
                 replace: true,
@@ -87,7 +88,7 @@ export function useFilter(options = {}) {
                 form[key] = "";
             });
 
-            router.get(route(routeName));
+            router.get(route(routeName, optionName));
         } catch (error) {
             console.error("Ошибка при очистке:", error);
         }

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class OlympiadOrder extends Model
 {
@@ -10,7 +11,7 @@ class OlympiadOrder extends Model
     protected $fillable = [
         'score',
         'place',
-        'is_manager_accept',
+        'is_education_manager_accept',
         'is_olympiad_manager_accept',
         'reject_message',
         'is_hostel',
@@ -46,5 +47,28 @@ class OlympiadOrder extends Model
     public function olympiadOrderStatus()
     {
         return $this->belongsTo(OlympiadOrderStatus::class);
+    }
+
+    // Скоупы
+    public function scopeFilter(Builder $query, array $filters): Builder
+    {
+        $query
+            ->when($filters['search'] ?? null, function ($q, $title) {
+                $q->whereHas('participant', function ($q) use ($title) {
+                    $q->whereHas('user', function ($q) use ($title) {
+                        $q->where('email', 'LIKE', "%{$title}%")
+                            ->orWhere('surname', 'LIKE', "%{$title}%")
+                            ->orWhere('name', 'LIKE', "%{$title}%");
+                    });
+                });
+            })
+            ->when($filters['status'] ?? null, function ($q, $status) {
+                $q->whereHas('olympiadOrderStatus', function ($q) use ($status) {
+                    $q->where('slug', $status)
+                        ->orWhere('title', $status);
+                });
+            });
+
+        return $query;
     }
 }

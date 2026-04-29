@@ -44,11 +44,12 @@ const inputs = computed(() => [
                     :name="input.name" :icon="input.icon" :options="input.options" @update-value="setField" />
             </div>
             <DivideLine />
-            <div class="flex w-full justify-end">
-                <button type="button" @click="clear" class="px-6 py-2.5 text-gray-600 hover:text-gray-900 transition">
+            <div class="flex w-full justify-end flex-wrap max-lg:justify-center gap-2">
+                <BaseButton :text="'Применить фильтры'" />
+                <button type="button" @click="clear"
+                    class="px-6 py-2.5 text-gray-600 hover:text-gray-900 transition max-lg:order-2">
                     Сбросить
                 </button>
-                <BaseButton :text="'Применить фильтры'" />
             </div>
         </form>
     </Container>

@@ -6,7 +6,7 @@ import TableContainer from "@other/TableContainer.vue";
 import Status from "@other/Status.vue";
 import NoData from "@other/NoData.vue";
 import Pagination from "@other/Pagination.vue";
-import { router } from "@inertiajs/vue3";
+import { router, useForm } from "@inertiajs/vue3";
 
 const ths = computed(() => [
     "Участник",
@@ -14,6 +14,7 @@ const ths = computed(() => [
     "Учебное заведение",
     "Курс",
     "Дата заявки",
+    "Участие в олимпиаде",
     "Статус",
     "Причина отклонения",
     "Документы",
@@ -27,8 +28,25 @@ const orders = computed(() => {
 const updateSuccessOrder = (olympiad, id) => {
     router.patch(route("olympiad.student-orders.update", { olympiad, id }));
 };
-</script>
 
+const updateParticipantStatus = (value, olympiad, id) => {
+    if (value === '#') {
+        return;
+    }
+
+    const form = useForm({
+        'is_education_manager_accept': value,
+    });
+
+    console.log('Отправляем данные')
+
+    form.patch(route("olympiad.student-orders.update", { olympiad, id }), {
+        onSuccess: (message) => {
+            console.log(message)
+        }
+    });
+}
+</script>
 <template>
     <TableContainer :ths="ths" v-if="orders.length > 0">
         <tr class="hover:bg-gray-50 transition" v-for="order in orders" :key="order.id">
@@ -40,8 +58,16 @@ const updateSuccessOrder = (olympiad, id) => {
             </td>
             <td class="px-6 py-4">{{ order.phone }}</td>
             <td class="px-6 py-4">{{ order.school }}</td>
-            <td class="px-6 py-4">{{ order.cours_number }} курс</td>
+            <td class="px-6 py-4">{{ order.cours_number }}</td>
             <td class="px-6 py-4">Без данных</td>
+            <td class="px-6 py-4">
+                <select :value="order.is_education_manager_accept"
+                    @change="(event) => updateParticipantStatus(event.target.value, olympiad, order.id)"
+                    class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition flex flex-1 max-h-11">
+                    <option :value="1">Да</option>
+                    <option :value="0">Нет</option>
+                </select>
+            </td>
             <td class="px-6 py-4">
                 <Status :status="order.status" font-size="12" />
             </td>

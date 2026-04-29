@@ -20,6 +20,10 @@ class OlympiadOrderStatusSeeder extends Seeder
             'title' => 'отклонено',
             'slug' => 'rejected',
         ],
+        [
+            'title' => 'вне заявки',
+            'slug' => 'out_application',
+        ]
     ];
 
     public function run(): void

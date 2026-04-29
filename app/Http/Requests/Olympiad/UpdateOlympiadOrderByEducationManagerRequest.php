@@ -9,7 +9,8 @@ class UpdateOlympiadOrderByEducationManagerRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'reject_message' => ['nullable', 'max:100']
+            'reject_message' => ['nullable', 'max:100'],
+            'is_education_manager_accept' => ['boolean']
         ];
     }
 }
