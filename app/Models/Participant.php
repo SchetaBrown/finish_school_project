@@ -34,14 +34,19 @@ class Participant extends Model
         return $this->belongsTo(EducationSchool::class);
     }
 
+    public function educationDirection()
+    {
+        return $this->belongsTo(EducationDirection::class);
+    }
+
     public function olympiadOrders()
     {
         return $this->hasMany(OlympiadOrder::class);
     }
 
-    public function educationDirection()
+    public function olympiadDocuments()
     {
-        return $this->belongsTo(EducationDirection::class);
+        return $this->hasMany(OlympiadDocument::class);
     }
 
     // Мутаторы/аксессоры

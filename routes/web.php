@@ -64,6 +64,7 @@ Route::prefix('/olympiads')->name('olympiad.')->group(function () {
             Route::middleware(['is_participant'])->controller(OlympiadOrderController::class)->prefix('/order')->name('order.')->group(function () {
                 Route::get('/create', 'create')->name('create'); // Страница для записи на олимпиаду
                 Route::post('/store', 'store')->name('store'); // Маршрут для записи на олимпиаду
+                Route::delete('/destroy', 'destroy')->name('destroy');
             });
 
             // Просмотр новостей об олимпиаде

@@ -1,6 +1,6 @@
 <script setup>
 const props = defineProps(['news', 'olympiadSlug']);
-import { computed } from 'vue';
+import { computed, inject } from 'vue';
 import Container from '@other/Container.vue'
 import NoData from '@other/NoData.vue'
 
@@ -8,12 +8,20 @@ const NEWS = computed(() => {
     const news = props?.news;
     return news && news.length !== 0 ? news : null;
 });
+const userData = inject('userData');
+
+const olympiadManagerRole = computed(() => {
+    return userData.role === 'Ответственный';
+});
 </script>
 <template>
     <Container>
-        <div class="flex items-center gap-2 max-h-5.5 mb-4">
-            <div class="self-stretch w-1 bg-indigo-600 rounded-full"></div>
-            <h2 class="font-semibold text-lg">Новости</h2>
+        <div class="flex items-center justify-between gap-2 max-h-5.5 mb-4">
+            <div>
+                <!-- <div class="self-stretch w-1 bg-indigo-600 rounded-full h-full"></div> -->
+                <h2 class="font-semibold text-lg">Новости</h2>
+            </div>
+            <button v-if="olympiadManagerRole">+</button>
         </div>
 
         <div class="flex flex-col justify-center items-center" v-if="$page.props.auth.isAuthenticated !== true">

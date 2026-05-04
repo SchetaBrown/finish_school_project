@@ -31,7 +31,7 @@ class UserResource extends JsonResource
             'email' => $this->email,
             'phone' => $this->phone,
             'role' => $this->role->title,
-            'initial_name' => "{$this->surname} {$this->name}.{$this->patronymic}."
+            'full_name' => $this->fullName(),
         ];
     }
 }

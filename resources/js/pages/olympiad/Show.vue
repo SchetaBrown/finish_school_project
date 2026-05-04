@@ -1,5 +1,5 @@
 <script setup>
-const props = defineProps(["olympiad", 'is_register_participant', 'order_status']);
+const props = defineProps(["olympiad", 'is_register_participant', 'order_status', 'olympiad_orders']);
 import { computed } from "vue";
 import AppBaseLayout from "@layouts/AppBaseLayout.vue";
 import PageTitle from '@titles/PageTitle.vue'
@@ -8,6 +8,7 @@ import Container from '@other/Container.vue'
 import OlympiadDetailBlock from "@blocks/olympiad/show/OlympiadDetailBlock.vue";
 import OlympiadNewBlock from "@blocks/olympiad/show/OlympiadNewBlock.vue";
 import OlympiadRegisterBlock from "@blocks/olympiad/show/OlympiadRegisterBlock.vue";
+import OlympiadParticipantShowTable from "@tables/olympiad/OlympiadParticipantShowTable.vue";
 import Status from '@other/Status.vue'
 
 const DATA = computed(() => {
@@ -96,7 +97,7 @@ const OLYMPIAD_DETAILS = computed(() => {
             <PageTitle :title="DATA.title" />
             <Status :status="DATA.status" />
         </div>
-        <section class="grid grid-cols-2 gap-5 max-lg:grid-cols-1">
+        <section class="grid grid-cols-2 gap-5 max-lg:grid-cols-1 mb-6">
             <Container>
                 <BlockTitle :title="'Описание'" />
                 <p class="mt-3 text-[#4A5565] text-justify">
@@ -111,5 +112,7 @@ const OLYMPIAD_DETAILS = computed(() => {
                 :is-register-participant="is_register_participant" :order-status="order_status">
             </OlympiadRegisterBlock>
         </section>
+
+        <OlympiadParticipantShowTable :olympiad_orders="olympiad_orders" :olympiad="olympiad.data.slug" />
     </AppBaseLayout>
 </template>

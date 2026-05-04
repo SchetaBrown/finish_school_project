@@ -8,12 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class OlympiadDocument extends Model
 {
     // Поля
-    protected $fillable = ['type', 'path', 'user_id', 'olympiad_order_id'];
+    protected $fillable = ['type', 'path', 'participant_id', 'olympiad_order_id'];
 
     // Связи
-    public function user()
+    public function participant()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Participant::class);
     }
 
     public function olympiadOrder()

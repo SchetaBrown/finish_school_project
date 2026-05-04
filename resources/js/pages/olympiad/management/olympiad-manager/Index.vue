@@ -5,7 +5,7 @@ import AppBaseLayout from '@layouts/AppBaseLayout.vue'
 import OlympiadTeam from '@blocks/olympiad/components/OlympiadTeam.vue';
 
 const subtitle = computed(() => {
-    return `Олимпиада: ${props.olympiad}`;
+    return `Олимпиада: ${props.olympiad.data.title}`;
 });
 </script>
 <template>
@@ -13,7 +13,7 @@ const subtitle = computed(() => {
         <PageTitle title="Управление участниками олимпиады" :subtitle="subtitle" />
         <div class="flex flex-col gap-2">
             <OlympiadTeam v-for="order in orders" :school="order.school.data" :manager="order.manager.data"
-                :orders="order.orders" />
+                :orders="order.orders" :olympiad="olympiad.data.slug" />
         </div>
     </AppBaseLayout>
 </template>

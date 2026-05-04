@@ -23,10 +23,11 @@ class OlympiadManagerOrderController extends Controller
             'educationManager.educationSchool',
             'educationManager.user',
             'participant.user',
-            'olympiadOrderStatus'
+            'olympiadOrderStatus',
+            'participant.user'
         ])
             ->whereHas('olympiad', function ($query) use ($olympiad) {
-                $query->where('slug', $olympiad);
+                $query->whereSlug($olympiad);
             })
             ->get();
 
@@ -52,7 +53,7 @@ class OlympiadManagerOrderController extends Controller
 
         return Inertia::render('olympiad/management/olympiad-manager/Index', [
             'orders' => array_values($groupedBySchool),
-            'olympiad' => $olympiad->title,
+            'olympiad' => $olympiad,
         ]);
     }
 

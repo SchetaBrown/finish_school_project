@@ -8,6 +8,7 @@ use App\Http\Resources\Olympiad\OlympiadNewResource;
 use App\Models\Olympiad;
 use App\Models\OlympiadNew;
 use Exception;
+use Illuminate\Database\Eloquent\Builder;
 use Inertia\Inertia;
 
 class OlympiadNewController extends Controller
@@ -19,9 +20,15 @@ class OlympiadNewController extends Controller
     public function show(string $olympiad, string $new)
     {
         try {
-            $new = new OlympiadNewResource(OlympiadNew::with(['olympiad'])->where('slug', $new)->first());
+            $olympiad_title = Olympiad::whereSlug($olympiad)->first();
+            $olympiad_new = new OlympiadNewResource(OlympiadNew::with(['olympiad'])->where('slug', $new)->first());
+            $olympiad_news = OlympiadNewResource::collection(OlympiadNew::with(['olympiad'])->whereHas('olympiad', function(Builder $query) use($olympiad) {
+                $query->whereSlug($olympiad);
+            })->get());
             return Inertia::render('olympiad/new/Show', [
-                'new' => $new
+                'new' => $olympiad_new,
+                'olympiad_title' => $olympiad_title->title,
+                'olympiad_news' => $olympiad_news
             ]);
         } catch (Exception $e) {
             return back()->with('info', 'Такой новости не существует.');

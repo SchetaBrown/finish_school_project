@@ -72,11 +72,6 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasOne(EducationManager::class);
     }
 
-    public function olympiadDocuments()
-    {
-        return $this->hasMany(OlympiadDocument::class);
-    }
-
     public function olympiad()
     {
         return $this->hasMany(Olympiad::class);

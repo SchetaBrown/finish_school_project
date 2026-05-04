@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web\Olympiad;
 
 use App\Action\Olympiad\GetOlympiadsIndexDataAction;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Olympiad\OlympiadOrderResource;
 use App\Http\Resources\Olympiad\OlympiadResource;
 use App\Models\Olympiad;
 use App\Models\OlympiadOrder;
@@ -22,10 +23,13 @@ class OlympiadController extends Controller
         );
     }
 
-    public function show(string $olympiad)
+    public function show(string $olympiad, Request $request)
     {
         $user = Auth::user();
         $show_olympiad = Olympiad::withDefaultRelations()->whereSlug($olympiad)->first();
+        $olympiad_orders = OlympiadOrder::with(['participant', 'olympiadOrderStatus'])->whereHas('olympiad', function (Builder $query) use ($olympiad) {
+            $query->whereSlug($olympiad);
+        })->paginate($request->per_page ?? config('constants.per_page'));
         $is_register_participant = null;
         $order_status = null;
 
@@ -48,7 +52,8 @@ class OlympiadController extends Controller
             [
                 'olympiad' => new OlympiadResource($show_olympiad),
                 'is_register_participant' => $is_register_participant ? true : false,
-                'order_status' => $order_status
+                'order_status' => $order_status,
+                'olympiad_orders' => OlympiadOrderResource::collection($olympiad_orders)
             ]
         );
     }

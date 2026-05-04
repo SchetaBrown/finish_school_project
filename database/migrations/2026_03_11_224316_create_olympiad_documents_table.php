@@ -15,16 +15,23 @@ return new class extends Migration {
 
             $table->enum('type', ['docx', 'pdf']);
             $table->string('path');
-            $table->foreignId('olympiad_order_id')->constrained();
-            $table->foreignId('user_id')->constrained();
+            $table
+                ->foreignId('olympiad_order_id')
+                ->constrained()
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+            ;
+            $table
+                ->foreignId('participant_id')
+                ->constrained()
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+            ;
 
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('olympiad_documents');

@@ -10,6 +10,7 @@ use App\Models\EducationManager;
 use App\Models\Olympiad;
 use App\Models\OlympiadDocument;
 use App\Models\OlympiadOrder;
+use App\Models\OlympiadOrderStatus;
 use App\Models\Participant;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
@@ -27,6 +28,7 @@ class OlympiadOrderController extends Controller
             $participant = Participant::with(['educationSchool'])->first();
             $query->where('id', $participant->education_school_id);
         })->get());
+
         return Inertia::render('olympiad/Create', [
             'olympiad' => new OlympiadResource(Olympiad::withDefaultRelations()->whereSlug($slug)->first()),
             'managers' => $managers
@@ -39,6 +41,7 @@ class OlympiadOrderController extends Controller
             $participant = Participant::with(['user', 'attachedManager', 'educationSchool', 'educationDirection'])->whereHas('user', function (Builder $query) {
                 $query->where('id', Auth::id());
             })->first();
+            $education_manager = EducationManager::where('id', $request->education_manager_id)->first();
 
             $olympiad = Olympiad::with(['educationDirection'])->whereSlug($olympiad)->first();
 
@@ -63,7 +66,7 @@ class OlympiadOrderController extends Controller
                 'olympiad_id' => $olympiad->id,
             ]);
 
-            $pdf = Pdf::loadView('docs.user.participant-document-pdf', [
+            $participant_document = Pdf::loadView('docs.participant.participant-document-pdf', [
                 'full_name' => $participant->user->fullName(),
                 'birth_date' => $participant->birth_date,
                 'cours_number' => $participant->cours_number,
@@ -74,26 +77,66 @@ class OlympiadOrderController extends Controller
                 'direction_title' => $olympiad->educationDirection->title,
             ]);
 
-            $output = $pdf->output();
+            $participant_output = $participant_document->output();
 
-            if (!Storage::disk('public')->exists('docs/participants')) {
-                Storage::disk('public')->makeDirectory('docs/participants');
+            $participant_directory_path = 'docs/participants';
+            $manager_directory_path = 'docs/managers';
+
+            if (!Storage::disk('public')->exists($participant_directory_path)) {
+                Storage::disk('public')->makeDirectory($participant_directory_path);
             }
 
-            $filename = "docs/participants/Олимпиада - {$olympiad->title}/{$participant->user->login}/Участие в олимпиаде {$olympiad->title}" . '.pdf';
-            Storage::disk('public')->put($filename, $output);
+            $participant_filename = "{$participant_directory_path}/Олимпиада - {$olympiad->title}/{$participant->user->login}/Участие в олимпиаде {$olympiad->title}" . '.pdf';
+            $manager_filename = "{$manager_directory_path}/Олимпиада - {$olympiad->title}/{$education_manager->user->login}/Участие в олимпиаде {$olympiad->title}" . '.pdf';
+
+            Storage::disk('public')->put($participant_directory_path, $participant_output);
+            Storage::disk('public')->put($manager_directory_path, $participant_output);
 
             OlympiadDocument::create([
                 'type' => 'pdf',
-                'path' => $filename,
-                'user_id' => $participant->id,
+                'path' => $participant_filename,
+                'participant_id' => $participant->id,
                 'olympiad_order_id' => $order->id,
             ]);
 
             return redirect()->route('olympiad.index')->with('success', config('constants.flash_statuses.success'));
         } catch (Exception $e) {
-            dd($e->getMessage());
             return redirect()->back()->with('error', 'Возникла ошибка при оформлении');
+        }
+    }
+
+    public function destroy(string $olympiad)
+    {
+        try {
+            $participant = auth()->user()->participant;
+            $statuses = OlympiadOrderStatus::get()->keyBy('slug');
+            $olympiad_order = OlympiadOrder::where('participant_id', $participant->id)
+                ->whereHas('olympiad', function ($query) use ($olympiad) {
+                    $query->whereSlug($olympiad);
+                })
+                ->first();
+
+            if (!$olympiad_order) {
+                throw new Exception('Заявка на участие не найдена');
+            }
+
+            if ($olympiad_order->olympiadOrderStatus->slug !== $statuses['for_consideration']->slug) {
+                throw new Exception('Отмена заявки невозможна, так как заявка уже обработана');
+            }
+
+            $document_path = "document/participants/{$participant->user->login}";
+
+            if (Storage::disk('public')->exists($document_path)) {
+                Storage::disk('public')->deleteDirectory($document_path);
+            }
+
+            $olympiad_order->delete();
+
+            return redirect()->route('olympiad.index')->with('success', 'Заявка на олимпиаду успешно отменена');
+
+        } catch (Exception $e) {
+            dd($e->getMessage());
+            return back()->with('error', $e->getMessage());
         }
     }
 }

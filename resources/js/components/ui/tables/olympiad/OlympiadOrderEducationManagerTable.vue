@@ -38,8 +38,6 @@ const updateParticipantStatus = (value, olympiad, id) => {
         'is_education_manager_accept': value,
     });
 
-    console.log('Отправляем данные')
-
     form.patch(route("olympiad.student-orders.update", { olympiad, id }), {
         onSuccess: (message) => {
             console.log(message)
