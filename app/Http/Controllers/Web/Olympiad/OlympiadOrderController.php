@@ -37,6 +37,7 @@ class OlympiadOrderController extends Controller
 
     public function store(string $olympiad, StoreOlympiadOrderRequest $request)
     {
+        $storage = Storage::disk('public');
         try {
             $participant = Participant::with(['user', 'attachedManager', 'educationSchool', 'educationDirection'])->whereHas('user', function (Builder $query) {
                 $query->where('id', Auth::id());
@@ -80,17 +81,14 @@ class OlympiadOrderController extends Controller
             $participant_output = $participant_document->output();
 
             $participant_directory_path = 'docs/participants';
-            $manager_directory_path = 'docs/managers';
 
-            if (!Storage::disk('public')->exists($participant_directory_path)) {
-                Storage::disk('public')->makeDirectory($participant_directory_path);
+            if (!$storage->exists($participant_directory_path)) {
+                $storage->makeDirectory($participant_directory_path);
             }
 
             $participant_filename = "{$participant_directory_path}/Олимпиада - {$olympiad->title}/{$participant->user->login}/Участие в олимпиаде {$olympiad->title}" . '.pdf';
-            $manager_filename = "{$manager_directory_path}/Олимпиада - {$olympiad->title}/{$education_manager->user->login}/Участие в олимпиаде {$olympiad->title}" . '.pdf';
 
-            Storage::disk('public')->put($participant_directory_path, $participant_output);
-            Storage::disk('public')->put($manager_directory_path, $participant_output);
+            $storage->put($participant_filename, $participant_output);
 
             OlympiadDocument::create([
                 'type' => 'pdf',

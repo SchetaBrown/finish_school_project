@@ -8,23 +8,13 @@ const props = defineProps(['school', 'manager', 'orders', 'olympiad']);
 
 const isOpen = ref(false);
 
-// const acceptOrder = (orderId) => {
-//     if (confirm('Подтвердить заявку?')) {
-//         router.patch(route('olympiad.student-orders.update', {
-//             olympiad: props.olympiad,
-//             id: orderId
-//         }), {
-//             is_education_manager_accept: true
-//         });
-//     }
-// };
+const acceptOrder = (orderId) => {
 
-console.log(props.orders[0].data.participant_info)
+}
 </script>
 
 <template>
     <div class="bg-white rounded-xl border border-gray-200 overflow-hidden">
-        <!-- Заголовок с информацией о школе -->
         <div @click="isOpen = !isOpen"
             class="flex items-center justify-between p-4 cursor-pointer hover:bg-gray-50 transition">
             <div class="flex items-center gap-3">
@@ -39,7 +29,6 @@ console.log(props.orders[0].data.participant_info)
             <i :class="['fas fa-chevron-down text-gray-400 transition-transform', { 'rotate-180': isOpen }]"></i>
         </div>
 
-        <!-- Развернутая информация -->
         <div v-show="isOpen" class="border-t border-gray-100 p-4">
             <!-- Информация о руководителе -->
             <div class="mb-4 pb-3 border-b border-gray-100">
@@ -92,9 +81,10 @@ console.log(props.orders[0].data.participant_info)
                                 class="px-3 py-1.5 bg-green-600 hover:bg-green-700 text-white text-sm font-medium rounded-lg transition">
                                 Принять
                             </button>
-                            <RejectParticipantOrderModal :icon="'fa-trash'" :olympiad="$props.olympiad"
-                                :id="order.data.id" btn-text="Отклонить"
-                                btn-class="px-3 py-1.5 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-lg transition" />
+                            <button type="submit"
+                                class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-medium rounded-lg transition shadow-sm h-full w-fit text-sm">
+                                Отклонить
+                            </button>
                         </div>
                         <div v-else-if="order.data.reject_message" class="pt-2 border-t border-gray-100">
                             <p class="text-xs text-red-600">

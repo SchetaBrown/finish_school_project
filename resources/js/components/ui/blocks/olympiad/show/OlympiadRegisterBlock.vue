@@ -104,6 +104,19 @@ const buttonClasses = computed(() => {
 
     return `${baseClasses} bg-indigo-600 hover:bg-indigo-700`;
 });
+
+const cancelOrder = () => {
+    router.delete(route('olympiad.order.destroy', { olympiad: olympiadData.value.slug }), {
+        preserveScroll: true,
+        onSuccess: () => {
+            close();
+        }
+    });
+}
+
+const linkClasses = computed(() => {
+    return canRegister.value ? 'w-full' : 'grid grid-cols-2 gap-2'
+});
 </script>
 
 <template>
@@ -125,11 +138,20 @@ const buttonClasses = computed(() => {
                 </div>
             </div>
 
-            <Link v-if="IS_AVAILABLE_LINK || isRegisterParticipant" :class="buttonClasses" :href="link.href"
-                :disabled="!canRegister || isRegisterParticipant"
-                @click.prevent="(!canRegister || isRegisterParticipant) ? null : null">
-                {{ link.text }}
-            </Link>
+            <div :class="linkClasses">
+                <form @submit.prevent="cancelOrder">
+                    <button type="submit" v-if="orderStatus === 'На рассмотрении'"
+                        class="w-full px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-medium rounded-lg transition shadow-sm h-full">
+                        <i class="fas fa-times mr-2"></i>
+                        Отменить заявку
+                    </button>
+                </form>
+                <Link v-if="IS_AVAILABLE_LINK || isRegisterParticipant" :class="buttonClasses" :href="link.href"
+                    :disabled="!canRegister || isRegisterParticipant"
+                    @click.prevent="(!canRegister || isRegisterParticipant) ? null : null">
+                    {{ link.text }}
+                </Link>
+            </div>
 
             <div v-if="!IS_AVAILABLE_LINK && !isRegisterParticipant"
                 class="flex items-center justify-center py-3.5 w-full font-medium rounded-lg bg-gray-100 text-gray-500 cursor-not-allowed">
